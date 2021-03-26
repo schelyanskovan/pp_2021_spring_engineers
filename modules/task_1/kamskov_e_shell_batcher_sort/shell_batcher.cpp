@@ -18,8 +18,8 @@ std::vector<int> shellSort(const std::vector<int>& v, int size) {
     std::vector<int>res(v);
     for (del = size / 2; del > 0; del = del / 2) {
         for (i = del; i < size; ++i) {
-            for (j = i - del; j >= 0 && res[j] > res[j + del]; j = j - del) {
-                std::swap(res[j], res[j + del]);
+            for (j = i - del; j >= 0 && res[j] > res[static_cast<long long>(j) + static_cast<long long>(del)]; j = j - del) {
+                std::swap(res[j], res[static_cast<long long>(j) + static_cast<long long>(del)]);
             }
         }
     }
@@ -99,11 +99,11 @@ std::vector<int> oddBatch(const std::vector<int>& A, const std::vector<int>& B) 
 }
 
 std::vector<int> mergeBatch(const std::vector<int>& even, const std::vector<int>& odd) {
-    int sizeE = even.size();
-    int sizeO = odd.size();
-    int size = sizeE + sizeO;
+    size_t sizeE = even.size();
+    size_t sizeO = odd.size();
+    size_t size = sizeE + sizeO;
     std::vector<int> res(size);
-    int i = 0, e = 0, o = 0;
+    size_t i = 0, e = 0, o = 0;
     while ((e < sizeE) && (o < sizeO)) {
         res[i] = even[e];
         res[i + 1] = odd[o];
@@ -112,12 +112,12 @@ std::vector<int> mergeBatch(const std::vector<int>& even, const std::vector<int>
         ++o;
     }
     if ((o >= sizeO) && (e < sizeE)) {
-        for (int l = i; l < size; l++) {
+        for (size_t l = i; l < size; l++) {
             res[l] = even[e];
             ++e;
         }
     }
-    for (int i = 0; i < size - 1; i++) {
+    for (size_t i = 0; i < size - 1; i++) {
         if (res[i] > res[i + 1]) {
             std::swap(res[i], res[i + 1]);
         }
