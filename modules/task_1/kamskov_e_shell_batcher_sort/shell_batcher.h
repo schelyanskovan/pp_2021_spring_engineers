@@ -10,7 +10,7 @@
 
 std::vector<int> getRandomVector(int);
 std::vector<int> shellSort(const std::vector<int>&, int size);
-std::vector<int> evenBatch(const std::vector<int>&, const std::vector<int>& );
+std::vector<int> evenBatch(const std::vector<int>&, const std::vector<int>&);
 std::vector<int> oddBatch(const std::vector<int>&, const std::vector<int>&);
 std::vector<int> mergeBatch(const std::vector<int>&, const std::vector<int>&);
 std::vector<int> batchShellSort(const std::vector<int>&, int);

@@ -8,8 +8,8 @@ TEST(test_Rand, rand) {
     ASSERT_EQ(static_cast<int>(vect.size()), 432);
 }
 
-TEST(test_Rand_Wrong_Size, wrong_Size) { 
-    ASSERT_ANY_THROW(getRandomVector(-1)); 
+TEST(test_Rand_Wrong_Size, wrong_Size) {
+    ASSERT_ANY_THROW(getRandomVector(-1));
 }
 
 TEST(test_Shell, shell_Rand) {
@@ -20,8 +20,8 @@ TEST(test_Shell, shell_Rand) {
 }
 
 TEST(test_Batcher_Manual_Dif_Size, batcher_Manual) {
-    std::vector<int> vec1 = {1,10,15,20,30,11,2};
-    std::vector<int> vec2 = {0,3,5,7,40};
+    std::vector<int> vec1 = {1, 10, 15, 20, 30, 11, 2};
+    std::vector<int> vec2 = {0, 3, 5, 7, 40};
     std::sort(vec1.begin(), vec1.end());
     std::sort(vec2.begin(), vec2.end());
     std::vector<int>stl_res(12);
@@ -46,7 +46,7 @@ TEST(test_Batcher_Manual_Dif_Random_Size, batcher_Manual_Rand) {
 }
 
 TEST(test_Shell_Batch_Manual, shell_Batch_Manual) {
-    std::vector<int> stl_res = { 1,10,15,20,30,11,2,32,11,432,222,6453,76,3 };
+    std::vector<int> stl_res = {1, 10, 15, 20, 30, 11, 2, 32, 11, 432, 222, 6453, 76, 3};
     std::vector<int> my_res = batchShellSort(stl_res, 14);
     std::sort(stl_res.begin(), stl_res.end());
     ASSERT_EQ(my_res, stl_res);
