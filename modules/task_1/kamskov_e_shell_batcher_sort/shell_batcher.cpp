@@ -1,5 +1,5 @@
 // Copyright 2021 Kamskov Eugene
-#include "../../../modules/task_1/kamskov_e_shell_batcher_sort/shell_batcher.h";
+#include "../../../modules/task_1/kamskov_e_shell_batcher_sort/shell_batcher.h"
 
 
 std::vector<int> getRandomVector(int size) {
