@@ -69,12 +69,10 @@ std::vector<int> evenBatch(const std::vector<int>& A, const std::vector<int>& B)
 }
 
 std::vector<int> oddBatch(const std::vector<int>& A, const std::vector<int>& B) {
-    int sizeA = A.size();
-    int sizeB = B.size();
-    int size_res = sizeA / 2 + sizeB / 2;
+    int size_res = A.size() / 2 + B.size() / 2;
     std::vector <int> res(size_res);
     size_t iA = 1, iB = 1, i = 0;
-    while ((iA < sizeA) && (iB < sizeB)) {
+    while ((iA < A.size()) && (iB < B.size())) {
         if (A[iA] <= B[iB]) {
             res[i] = A[iA];
             iA = iA + 2;
@@ -84,13 +82,13 @@ std::vector<int> oddBatch(const std::vector<int>& A, const std::vector<int>& B) 
         }
         ++i;
     }
-    if (iA >= sizeA) {
-        for (size_t j = iB; j < sizeB; j = j + 2) {
+    if (iA >= A.size()) {
+        for (size_t j = iB; j < B.size(); j = j + 2) {
             res[i] = B[j];
             ++i;
         }
     } else {
-        for (size_t j = iA; j < sizeA; j = j + 2) {
+        for (size_t j = iA; j < A.size(); j = j + 2) {
             res[i] = A[j];
             ++i;
         }
