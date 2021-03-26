@@ -17,9 +17,9 @@ std::vector<int> shellSort(const std::vector<int>& v, int size) {
     int del, i, j;
     std::vector<int>res(v);
     for (del = size / 2; del > 0; del = del / 2) {
-        for (i = del; i < size; ++i) {
-            for (j = i - del; j >= 0 && res[j] > res[static_cast<long long>(j) + static_cast<long long>(del)]; j = j - del) {
-                std::swap(res[j], res[static_cast<long long>(j) + static_cast<long long>(del)]);
+        for (i = del; i < static_cast<int>(res.size()); i++) {
+            for (j = i - del; j >= 0 && res[j] > res[j + del]; j = j - del) {
+                std::swap(res[j], res[j + del]);
             }
         }
     }
