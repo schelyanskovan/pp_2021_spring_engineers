@@ -43,7 +43,7 @@ std::vector<int> batchShellSort(const std::vector<int>& v, int size) {
 std::vector<int> evenBatch(const std::vector<int>& A, const std::vector<int>& B) {
     int size_res = A.size() / 2 + B.size() / 2 + A.size() % 2 + B.size() % 2;
     std::vector <int> res(size_res);
-    long unsigned int iA = 0, iB = 0, i = 0;
+    size_t iA = 0, iB = 0, i = 0;
     while ((iA < A.size()) && (iB < B.size())) {
         if (A[iA] <= B[iB]) {
             res[i] = A[iA];
@@ -55,12 +55,12 @@ std::vector<int> evenBatch(const std::vector<int>& A, const std::vector<int>& B)
         ++i;
     }
     if (iA >= A.size()) {
-        for (long unsigned int j = iB; j < B.size(); j = j + 2) {
+        for (size_t j = iB; j < B.size(); j = j + 2) {
             res[i] = B[j];
             ++i;
         }
     } else {
-        for (long unsigned int j = iA; j < A.size(); j = j + 2) {
+        for (size_t j = iA; j < A.size(); j = j + 2) {
             res[i] = A[j];
             ++i;
         }
