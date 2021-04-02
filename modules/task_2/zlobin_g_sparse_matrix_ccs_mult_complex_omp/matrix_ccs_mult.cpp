@@ -283,7 +283,7 @@ void MatrixCCS::FillRandom(unsigned seed, int min, int max) {
         }
         _collumnsIndexes.push_back(static_cast<int>(_values.size()));
         if (static_cast<int>(_values.size()) == _nNotZero) {
-            while (_collumnsIndexes.size() < _nCollumns + 1) {
+            while (static_cast<int>(_collumnsIndexes.size()) < _nCollumns + 1) {
                 _collumnsIndexes.push_back(0);
             }
             break;
