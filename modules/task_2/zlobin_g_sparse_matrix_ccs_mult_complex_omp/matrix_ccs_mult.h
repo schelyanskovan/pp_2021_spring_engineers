@@ -21,8 +21,7 @@ class MatrixCCS {
     int GetNumRows() { return _nRows; }
     int GetNumNotZero() { return _nNotZero; }
 
-   //  void Print();
-
+    //  void Print();
  private:
     int _nCollumns;
     int _nRows;

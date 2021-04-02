@@ -159,7 +159,7 @@ MatrixCCS SeqMultiplication(const MatrixCCS& A, const MatrixCCS& B) {
     }
 
     int nNotZero = 0;
-    for(int i = 0; i < B._nCollumns; i++) {
+    for (int i = 0; i < B._nCollumns; i++) {
         int tmp = collumnsIndexes[i];
         collumnsIndexes[i] = nNotZero;
         nNotZero += tmp;
@@ -231,7 +231,7 @@ MatrixCCS OMPMultiplication(const MatrixCCS& A, const MatrixCCS& B) {
     }
 
     int nNotZero = 0;
-    for(int i = 0; i < B._nCollumns; i++) {
+    for (int i = 0; i < B._nCollumns; i++) {
         int tmp = collumnsIndexes[i];
         collumnsIndexes[i] = nNotZero;
         nNotZero += tmp;

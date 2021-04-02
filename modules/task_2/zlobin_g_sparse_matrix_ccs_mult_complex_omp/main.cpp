@@ -1,8 +1,8 @@
 // Copyright 2021 Zlobin George
 #include <gtest/gtest.h>
-#include "./matrix_ccs_mult.h"
 #include <omp.h>
 #include <iostream>
+#include "./matrix_ccs_mult.h"
 
 // Tests for Constructor MatrixCCS(int nCollumns, int nRows, int nNotZero);
 TEST(MatrixCCSConstructorFromNCollumnsNRowsNNotZero, ThrowIfIncorrectNCollumns) {
