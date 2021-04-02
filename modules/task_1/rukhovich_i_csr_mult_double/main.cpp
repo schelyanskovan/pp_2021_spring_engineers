@@ -3,47 +3,64 @@
 #include <vector>
 #include "../../modules/task_1/rukhovich_i_csr_mult_double/csr_mult_double.h"
 
-TEST(Sequential, Test_Sum_10) {
-    const int count = 10;
-    int sum = 0;
-    for (size_t i = 0; i < count; i++) {
-        sum++;
-    }
-    ASSERT_EQ(count, sum);
+TEST(Sequential, TestCreate) {
+    CSRMatrix<int> mat(0, 0);
+    CSRMatrix<double> dmat(0, 0);
+    CSRMatrix<double> little_dmat(5, 5);
+    std::vector<double> empty_vec(5 * 5, 0);
+    CSRMatrix<double> little_dmat_with_zeros(5, 5, empty_vec);
+    ASSERT_TRUE(little_dmat == little_dmat_with_zeros);
 }
 
-TEST(Sequential, Test_Sum_20) {
-    const int count = 20;
-    int sum = 0;
-    for (size_t i = 0; i < count; i++) {
-        sum++;
-    }
-    ASSERT_EQ(count, sum);
+TEST(Sequential, TestMultEmpty) {
+    CSRMatrix<double> l_dmat(2, 5), r_dmat(5, 10);
+    l_dmat *= r_dmat;
+    CSRMatrix<double> res_dmat(2, 10);
+    ASSERT_TRUE(l_dmat == res_dmat);
 }
 
-TEST(Sequential, Test_Sum_50) {
-    const int count = 20;
-    int sum = 0;
-    for (size_t i = 0; i < count; i++) {
-        sum++;
+TEST(Sequential, TestMultDiag) {
+    std::vector<double> diag_mat(10, 10);
+    for (size_t i = 0; i < 10; ++i) {
+        diag_mat[i*10 + i] = 1;
     }
-    ASSERT_EQ(count, sum);
+    CSRMatrix<double> l_dmat(5, 5, diag_mat), r_dmat(5, 5, diag_mat);
+    l_dmat *= r_dmat;
+    CSRMatrix<double> res_dmat(5, 5, diag_mat);
+    ASSERT_TRUE(l_dmat == res_dmat);
 }
 
-TEST(Sequential, Test_Sum_70) {
-    const int count = 20;
-    int sum = 0;
-    for (size_t i = 0; i < count; i++) {
-        sum++;
+TEST(Sequential, TestMultSimpleToDiag) {
+    std::vector<double> diag_mat(10 * 10), init_mat(10 * 10);
+    for (size_t i = 0; i < 10; ++i) {
+        diag_mat[i*10 + i] = 1;
+        for (size_t j = 0; j < 10; ++j) {
+            init_mat[i*10 + j] = RandomDouble::Next();
+        }
     }
-    ASSERT_EQ(count, sum);
+    CSRMatrix<double> l_dmat(10, 10, init_mat), r_dmat(10, 10, diag_mat);
+    l_dmat *= r_dmat;
+    CSRMatrix<double> res_dmat(10, 10, init_mat);
+    ASSERT_TRUE(l_dmat == res_dmat);
 }
 
-TEST(Sequential, Test_Sum_100) {
-    const int count = 100;
-    int sum = 0;
-    for (size_t i = 0; i < count; i++) {
-        sum++;
+TEST(Sequential, TestMult) {
+    std::vector<double> l_init_mat(10 * 10), r_init_mat(10 * 10);
+    for (size_t i = 0; i < 10; ++i) {
+        for (size_t j = 0; j < 10; ++j) {
+            l_init_mat[i*10 + j] = RandomDouble::Next();
+            r_init_mat[i*10 + j] = RandomDouble::Next();
+        }
     }
-    ASSERT_EQ(count, sum);
+    std::vector<double> res_mat(10 * 10);
+    for(size_t i = 0; i < 10; ++i)
+        for(size_t j = 0; j < 10; ++j)
+            for(size_t k = 0; k < 10; ++k)
+            {
+                res_mat[i * 10 + j] += l_init_mat[i * 10 + k] * r_init_mat[k * 10 + j];
+            }
+    CSRMatrix<double> l_dmat(10, 10, l_init_mat), r_dmat(10, 10, r_init_mat);
+    l_dmat *= r_dmat;
+    CSRMatrix<double> res_dmat(10, 10, res_mat);
+    ASSERT_TRUE(l_dmat == res_dmat);
 }
