@@ -55,7 +55,11 @@ TEST(Linear_filter_test_4, can_apply_3x3_vector) {
   vector_calculation[6] = 2;
   vector_calculation[7] = 1;
 
-  ASSERT_NO_THROW(vector_calculation, gaussianFilterApply(vector, r, c, 1, 5));
+  ASSERT_NO_THROW(gaussianFilterApply(vector, r, c, 1, 5));
+}
+
+TEST(Linear_filter_test_5, gaussianCalculate_with_negative_radius) {
+  ASSERT_ANY_THROW(gaussianCalculate(-5, 1));
 }
 
 int main(int argc, char **argv) {
