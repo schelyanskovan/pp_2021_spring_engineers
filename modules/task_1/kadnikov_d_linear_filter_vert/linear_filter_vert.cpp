@@ -33,7 +33,7 @@ std::vector<double> createRandomVector(int r, int c) {
 std::vector<double> gaussianCalculate(int rad, int sigma) {
   if ((rad <= 0) || (sigma <= 0)) throw 1;
 
-  const size_t size = 2 * rad + 1;
+  const int size = 2 * rad + 1;
   double normal = 0;
 
   std::vector<double> filter(size * size);
