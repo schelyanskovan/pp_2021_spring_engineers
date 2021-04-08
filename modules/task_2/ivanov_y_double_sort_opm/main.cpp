@@ -9,22 +9,20 @@
 using std::vector;
 
 TEST(Local_compare, Test_works_sort_omp) {
-    
-    
     const int size = 100;
     std::vector<double> vec(size);
     std::vector<double> vec1(size);
     vec = generateDouble(size);
     vec1 = vec;
-    omp_set_num_threads(4); //Установить количество нитей
-    //unsigned int start_time = clock();
+    omp_set_num_threads(4);
+    // unsigned int start_time = clock();
     vec = loc_sort(vec, size);
-    //unsigned int end_time = clock();
-    //std::cout << "Sort: " << end_time - start_time << std::endl;
-    //start_time = clock();
+    // unsigned int end_time = clock();
+    // std::cout << "Sort: " << end_time - start_time << std::endl;
+    // start_time = clock();
     vec1 = loc_sort_omp(vec1, size);
-    //end_time = clock();
-    //std::cout << "Omp: " << end_time - start_time << std::endl;
+    // end_time = clock();
+    // std::cout << "Omp: " << end_time - start_time << std::endl;
     ASSERT_EQ(vec, vec1);
 }
 

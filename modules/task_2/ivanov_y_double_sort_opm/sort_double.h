@@ -1,6 +1,6 @@
 // Copyright 2021 Ivanov Yaroslav
-#ifndef MODULES_TASK_1_IVANOV_Y_DOUBLE_SORT_SORT_DOUBLE_H_
-#define MODULES_TASK_1_IVANOV_Y_DOUBLE_SORT_SORT_DOUBLE_H_
+#ifndef MODULES_TASK_2_IVANOV_Y_DOUBLE_SORT_OPM_SORT_DOUBLE_H_ 
+#define MODULES_TASK_2_IVANOV_Y_DOUBLE_SORT_OPM_SORT_DOUBLE_H_ 
 
 #include <vector>
 
@@ -11,4 +11,4 @@ std::vector<double> transit(std::vector<double> inputNumers, std::vector<double>
 std::vector<double> loc_sort_omp(std::vector<double> inputNumbers, const int size);
 std::vector<double> transit_omp(std::vector<double> inputNumbers, std::vector<double> loc, const int size, int add);
 
-#endif  // MODULES_TASK_1_IVANOV_Y_DOUBLE_SORT_SORT_DOUBLE_H_
+#endif  // MODULES_TASK_2_IVANOV_Y_DOUBLE_SORT_OPM_SORT_DOUBLE_H_
