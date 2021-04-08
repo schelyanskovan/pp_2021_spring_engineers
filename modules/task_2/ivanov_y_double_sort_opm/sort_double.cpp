@@ -39,21 +39,24 @@ std::vector<double> transit_omp(std::vector<double> inputNumbers, std::vector<do
     int counters[256] = { 0 };
     int sum = 0;
     // omp_set_num_threads(4);
-    #pragma omp for
-    for (int i = 0; i < size; i++) {
-        counters[pmem[8 * i + add]]++;
-    }
-    #pragma omp for
-    for (int i = 0; i < 256; i++) {
-        int tmp = counters[i];
-        counters[i] = sum;
-        sum += tmp;
-    }
-    #pragma omp for
-    for (int i = 0; i < size; i++) {
-        int index = 8 * i + add;
-        loc[counters[pmem[index]]] = inputNumbers[i];
-        counters[pmem[index]]++;
+    #pragma omp parallel
+    {
+        #pragma omp for
+        for (int i = 0; i < size; i++) {
+            counters[pmem[8 * i + add]]++;
+        }
+        #pragma omp for
+        for (int i = 0; i < 256; i++) {
+            int tmp = counters[i];
+            counters[i] = sum;
+            sum += tmp;
+        }
+        #pragma omp for
+        for (int i = 0; i < size; i++) {
+            int index = 8 * i + add;
+            loc[counters[pmem[index]]] = inputNumbers[i];
+            counters[pmem[index]]++;
+        }
     }
     return loc;
 }
