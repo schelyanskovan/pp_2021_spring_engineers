@@ -61,7 +61,7 @@ std::vector<double> transit_omp(std::vector<double> inputNumbers, std::vector<do
 std::vector<double> loc_sort_omp(std::vector<double> inputNumbers, const int size) {
     std::vector<double> loc(size);
     std::vector<double> tmp(size);
-	#pragma omp for
+    #pragma omp for
     for (int i = 0; i < size; i++) {
         loc[i] = 0;
         tmp[i] = 0;
