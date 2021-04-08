@@ -1,10 +1,11 @@
 // Copyright 2021 Dmitry Ryazanov
-#include <omp.h>
+#include <tbb/tbb.h>
 #include <gtest/gtest.h>
+#include <omp.h>
 #include <algorithm>
-#include <vector>
 #include <stdexcept>
-#include "./shell_and_batcher_sort_omp.h"
+#include <vector>
+#include "./shell_and_batcher_sort_tbb.h"
 
 TEST(getRandomVector, no_exceptions) { ASSERT_NO_THROW(getRandomVector(100)); }
 
@@ -38,7 +39,7 @@ TEST(Shell_and_Batcher_sort, works_size_4) {
 TEST(Shell_and_Batcher_sort, works_size_10_OMP) {
   std::vector<int> vect = getRandomVector(10);
   print(vect);
-  auto res = BatcherSortOMP(vect);
+  auto res = BatcherSortTBB(vect);
   print(res);
 }
 
@@ -50,16 +51,16 @@ TEST(Shell_and_Batcher_sort, works_random_size_100) {
 }
 
 TEST(Shell_and_Batcher_sort, test_time) {
-  auto vect = getRandomVector(100);
-  double start = omp_get_wtime();
+  auto vect = getRandomVector(1000);
+  tbb::tick_count start = tbb::tick_count::now();
   auto res = BatcherSort(vect);
-  double end = omp_get_wtime();
-  std::cout << "Seq sort time: " << end - start << std::endl;
+  tbb::tick_count end = tbb::tick_count::now();
+  std::cout << "Seq sort time: " << (end - start).seconds() << std::endl;
 
-  start = omp_get_wtime();
-  auto resOMP = BatcherSortOMP(vect);
-  end = omp_get_wtime();
-  std::cout << "OMP sort time: " << end - start << std::endl;
+  tbb::tick_count start2 = tbb::tick_count::now();
+  auto resOMP = BatcherSortTBB(vect);
+  tbb::tick_count end2 = tbb::tick_count::now();
+  std::cout << "OMP sort time: " << (end2 - start2).seconds() << std::endl;
 
   ASSERT_EQ(res, resOMP);
 }
@@ -74,7 +75,7 @@ TEST(Shell_and_Batcher_sort, works_random_vec_Shell_and_Batcher) {
 
 TEST(Shell_and_Batcher_sort, works_random_vec_Shell_and_Batcher_OMP) {
   auto vect = getRandomVector(10);
-  auto res2 = BatcherSortOMP(vect);
+  auto res2 = BatcherSortTBB(vect);
   std::sort(vect.begin(), vect.end());
   ASSERT_EQ(vect, res2);
 }

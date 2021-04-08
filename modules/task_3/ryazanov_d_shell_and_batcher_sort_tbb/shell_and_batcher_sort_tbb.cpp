@@ -1,12 +1,13 @@
 // Copyright 2021 Dmitry Ryazanov
+#include <tbb/tbb.h>
 #include <omp.h>
 #include <algorithm>
-#include <stdexcept>
 #include <ctime>
 #include <iostream>
 #include <random>
+#include <stdexcept>
 #include <vector>
-#include "../../../modules/task_2/ryazanov_d_shell_and_batcher_sort_omp/shell_and_batcher_sort_omp.h"
+#include "../../../modules/task_3/ryazanov_d_shell_and_batcher_sort_tbb/shell_and_batcher_sort_tbb.h"
 
 std::vector<int> getRandomVector(int sz) {
   std::mt19937 gen;
@@ -40,18 +41,25 @@ std::vector<int> SortShell(const std::vector<int> &vec) {
   return res;
 }
 
-std::vector<int> SortShellOMP(const std::vector<int> &vec) {
+std::vector<int> SortShellTBB(const std::vector<int> &vec) {
   std::vector<int> res(vec);
+  int size = static_cast<int>(res.size());
 
   for (int step = static_cast<int>(res.size()) / 2; step > 0; step /= 2) {
-#pragma omp parallel for
-    for (int i = step; i < static_cast<int>(res.size()); i++) {
-      for (int j = i - step; j >= 0 && res[j] > res[j + step]; j -= step) {
-        int tmp = res[j];
-        res[j] = res[j + step];
-        res[j + step] = tmp;
-      }
-    }
+    tbb::parallel_for(tbb::blocked_range<int>(step, size),
+                      [&res, &step](const tbb::blocked_range<int> &r) {
+                        int begin = r.begin();
+                        int end = r.end();
+                        for (int i = begin; i < end; i++) {
+                          for (int j = i - step;
+                               j >= 0 && res[j] > res[j + step]; j -= step) {
+                            int tmp = res[j];
+                            res[j] = res[j + step];
+                            res[j + step] = tmp;
+                          }
+                        }
+                      },
+                      tbb::simple_partitioner());
   }
   return res;
 }
@@ -149,7 +157,7 @@ std::vector<int> BatcherSort(const std::vector<int> &vec) {
   return res;
 }
 
-std::vector<int> unsOMP(const std::vector<int> &vec, int l, int r) {
+std::vector<int> unsTBB(const std::vector<int> &vec, int l, int r) {
   std::vector<int> auxLeft, auxRight, res;
   res = vec;
   if (res.size() % 2 != 0) {
@@ -182,41 +190,41 @@ std::vector<int> unsOMP(const std::vector<int> &vec, int l, int r) {
   return res;
 }
 
-std::vector<int> BatcherSortOMP(const std::vector<int> &vec) {
+std::vector<int> BatcherSortTBB(const std::vector<int> &vec) {
   std::vector<int> res(vec);
   std::vector<int> auxLeft, auxRight;
   int size = vec.size();
-  int r = size / 2;
-  int i;
+  int half = size / 2;
 
   if (vec.size() == 2) SortShell(vec);
   if (vec.size() == 1) return vec;
 
-  res = unsOMP(res, 0, size);
+  res = unsTBB(res, 0, size);
 
-#pragma omp parallel sections num_threads(1)
-  {
-#pragma omp section
-    { auxLeft = SortShell(res); }
-#pragma omp section
-    { auxRight = SortShell(res); }
-  }
+  tbb::task_scheduler_init init;
 
-#pragma omp parallel shared(res)
-  {
-#pragma omp for
-    for (i = 0; i < r; i++) {
+  tbb::parallel_invoke([&auxLeft, &res] { auxLeft = SortShell(res); },
+                       [&auxRight, &res] { auxRight = SortShell(res); });
+
+
+  tbb::parallel_for(tbb::blocked_range<int>(0, half),
+    [&res, &auxLeft](const tbb::blocked_range<int> &r) {
+    int begin = r.begin();
+    int end = r.end();
+    for (int i = begin; i < end; i++) {
       res[i] = auxLeft[i];
     }
-  }
+  }, tbb::simple_partitioner());
 
-#pragma omp parallel shared(res)
-  {
-#pragma omp for
-    for (i = r; i < size; i++) {
+  tbb::parallel_for(tbb::blocked_range<int>(half, size),
+        [&res, &auxRight](const tbb::blocked_range<int> &t) {
+    int begin = t.begin();
+    int end = t.end();
+    for (int i = begin; i < end; i++) {
       res[i] = auxRight[i];
     }
-  }
+  }, tbb::simple_partitioner());
+
 
   res = sh(res, 0, size);
 
