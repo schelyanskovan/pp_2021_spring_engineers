@@ -14,7 +14,6 @@ TEST(Local_compare, Test_works_sort_omp) {
     std::vector<double> vec1(size);
     vec = generateDouble(size);
     vec1 = vec;
-    omp_set_num_threads(4);
     // unsigned int start_time = clock();
     vec = loc_sort(vec, size);
     // unsigned int end_time = clock();
