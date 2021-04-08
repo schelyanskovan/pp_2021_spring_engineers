@@ -5,7 +5,7 @@
 #include <vector>
 #include <iostream>
 #include <omp.h>
-#include "../../../modules/task_1/ivanov_y_double_sort/sort_double.h"
+#include "../../../modules/task_2/ivanov_y_double_sort_opm/sort_double.h"
 
 std::vector<double> BubbleForCompare(std::vector<double> inputNumbers, const int size) {
     for (int i = 0; i < size; i++) {
