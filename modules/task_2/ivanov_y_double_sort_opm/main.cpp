@@ -1,8 +1,8 @@
 // Copyright 2021 Ivanov Yaroslav
+#include <omp.h>
 #include <gtest/gtest.h>
 #include <vector>
 #include <algorithm>
-#include <omp.h>
 #include <ctime>
 #include "./sort_double.h"
 

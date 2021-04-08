@@ -1,10 +1,10 @@
 // Copyright 2021 Ivanov Yaroslav
+#include <omp.h>
 #include <random>
 #include <ctime>
 #include <algorithm>
 #include <vector>
 #include <iostream>
-#include <omp.h>
 #include "../../../modules/task_2/ivanov_y_double_sort_opm/sort_double.h"
 
 std::vector<double> BubbleForCompare(std::vector<double> inputNumbers, const int size) {
