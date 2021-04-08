@@ -38,7 +38,7 @@ std::vector<double> transit_omp(std::vector<double> inputNumbers, std::vector<do
     unsigned char* pmem = reinterpret_cast<unsigned char*>(inputNumbers.data());
     int counters[256] = { 0 };
     int sum = 0;
-    omp_set_num_threads(4);
+    omp_set_num_threads(1);
     #pragma omp for
     for (int i = 0; i < size; i++) {
         counters[pmem[8 * i + add]]++;
@@ -61,6 +61,7 @@ std::vector<double> transit_omp(std::vector<double> inputNumbers, std::vector<do
 std::vector<double> loc_sort_omp(std::vector<double> inputNumbers, const int size) {
     std::vector<double> loc(size);
     std::vector<double> tmp(size);
+	#pragma omp for
     for (int i = 0; i < size; i++) {
         loc[i] = 0;
         tmp[i] = 0;
