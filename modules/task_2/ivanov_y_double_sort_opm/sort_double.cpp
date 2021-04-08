@@ -38,8 +38,8 @@ std::vector<double> transit_omp(std::vector<double> inputNumbers, std::vector<do
     unsigned char* pmem = reinterpret_cast<unsigned char*>(inputNumbers.data());
     int counters[256] = { 0 };
     int sum = 0;
-    // omp_set_num_threads(4);
-    #pragma omp parallel
+    omp_set_num_threads(4);
+    #pragma omp parallel private(inputNumbers)
     {
         #pragma omp for
         for (int i = 0; i < size; i++) {
