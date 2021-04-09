@@ -19,9 +19,9 @@ TEST(Local_compare, Test_works_sort_omp) {
     // unsigned int end_time = clock();
     // std::cout << "Sort: " << end_time - start_time << std::endl;
     // start_time = clock();
-    vec1 = loc_sort_omp(vec1, size);
+    vec1 = loc_sort(vec1, size);
     // end_time = clock();
-    // std::cout << "Omp: " << end_time - start_time << std::endl;
+    // std::cout << "Omp:" << end_time - start_time << std::endl;
     ASSERT_EQ(vec, vec1);
 }
 
