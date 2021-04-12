@@ -69,7 +69,7 @@ class GaussianParallel {
             for (int i = i_start; i < i_finish && i < width; i++) {
                 for (int j = j_start; j < j_finish && j < height; j++) {
                     int color = calculateNewPixelColor(img, width, height, i, j, radius, kernel);
-					res->at(j * width + i) = color;
+                    res->at(j * width + i) = color;
                 }
             }
         }
