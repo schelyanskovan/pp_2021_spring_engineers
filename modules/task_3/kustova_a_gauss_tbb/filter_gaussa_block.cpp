@@ -5,91 +5,6 @@
 #include <vector>
 #include <tuple>
 #include "../../../modules/task_3/kustova_a_gauss_tbb/filter_gaussa_block.h"
-/*
-std::vector<int> gaussianFilter(const std::vector<int> & img, int width,
-    int height, int radius, float sigma, int count_thread) {
-    std::vector<int> resultImage(height * width);
-    int size = 2 * radius + 1;
-    std::vector<float> kernel(size * size);
-    int l = 0;
-    int k = 0;
-    kernel = createGaussianKernel(radius, sigma);
-    std::vector<std::vector<int>> array;
-    int grid_size = ceil(static_cast<double>(sqrt(count_thread)));
-    int block_height = height / grid_size;
-    int block_width = width / grid_size;
-    while (l < height) {
-        k = 0;
-        while (k < width) {
-            std::vector<int> tup = { l, k };
-            array.push_back(tup);
-            k += block_width;
-        }
-        l += block_height;
-    }
-    tbb::task_scheduler_init init(count_thread);
-        for (int t = 0; t < static_cast<int>(array.size()); t++) {
-            int id = (int)tbb::this_tbb_thread::get_id();
-            if (t % count_thread == tbb::this_tbb_thread::get_id()) {
-                std::cout << tbb::this_tbb_thread::get_id() <<" ";
-                int j_start = array[t][0];
-                int j_finish = array[t][0] + block_height;
-                int i_start = array[t][1];
-                int i_finish = array[t][1] + block_width;
-                for (int i = i_start; i < i_finish && i < width; i++) {
-                    for (int j = j_start; j < j_finish && j < height; j++) {
-                        int color = calculateNewPixelColor(img, width, height, i, j, radius, kernel);
-                        resultImage[j * width + i] = color;
-                    }
-                }
-            }
-        }
-    for (int i = 0; i < width; i++) {
-        for (int j = 0; j < height; j++) {
-            int color = calculateNewPixelColor(img, width, height, i, j, radius, kernel);
-            resultImage[i * width + j] = color;
-        }
-    }
-
-    return resultImage;
-}*/
-class GaussianParallel {
- private:
-    const std::vector<int> &img;
-    std::vector<int> &res;
-    std::vector<float> kernel;
-    int width, height, radius, block_width, block_height;
-    std::vector<std::vector<int>> array;
-
- public:
-    void operator()(const tbb::blocked_range<int> &r) const {
-        for (int i = r.begin(); i != r.end(); ++i) {
-            int j_start = array[i][0];
-            int j_finish = array[i][0] + block_height;
-            int i_start = array[i][1];
-            int i_finish = array[i][1] + block_width;
-            for (int i = i_start; i < i_finish && i < width; i++) {
-                for (int j = j_start; j < j_finish && j < height; j++) {
-                    int color = calculateNewPixelColor(img, width, height, i, j, radius, kernel);
-                    res[j * width + i] = color;
-                }
-            }
-        }
-    }
-
-    GaussianParallel(const std::vector<int> &img, std::vector<int> &res, int width, int height,
-        std::vector<float> kernel, int radius, std::vector<std::vector<int>> array, int block_width, int block_height) :
-        img(img),
-        res(res),
-        width(width),
-        height(height),
-        kernel(kernel),
-        radius(radius),
-        array(array),
-        block_width(block_width),
-        block_height(block_height){}
-};
-
 
 std::vector<int> gaussianFilter(const std::vector<int> & img, int width,
     int height, int radius, float sigma, int count_thread) {
@@ -113,10 +28,11 @@ std::vector<int> gaussianFilter(const std::vector<int> & img, int width,
         l += block_height;
     }
     tbb::task_scheduler_init init(count_thread);
-    GaussianParallel tmp(img, res, width, height, kernel, radius, array1, block_width, block_height);
+    GaussianParallel tmp(img, &res, width, height, kernel, radius, array1, block_width, block_height);
     tbb::parallel_for(tbb::blocked_range<int>(0, static_cast<int>(array1.size())), tmp);
     return res;
 }
+
 std::vector<float> createGaussianKernel(int radius, float sigma) {
     int size = 2 * radius + 1;
     std::vector<float> kernel(size * size);
@@ -134,6 +50,43 @@ std::vector<float> createGaussianKernel(int radius, float sigma) {
     }
     return kernel;
 }
+
+class GaussianParallel {
+ private:
+    const std::vector<int> &img;
+    std::vector<int> *res;
+    std::vector<float> kernel;
+    int width, height, radius, block_width, block_height;
+    std::vector<std::vector<int>> array;
+
+ public:
+    void operator()(const tbb::blocked_range<int> &r) const {
+        for (int i = r.begin(); i != r.end(); ++i) {
+            int j_start = array[i][0];
+            int j_finish = array[i][0] + block_height;
+            int i_start = array[i][1];
+            int i_finish = array[i][1] + block_width;
+            for (int i = i_start; i < i_finish && i < width; i++) {
+                for (int j = j_start; j < j_finish && j < height; j++) {
+                    int color = calculateNewPixelColor(img, width, height, i, j, radius, kernel);
+					res->at(j * width + i) = color;
+                }
+            }
+        }
+    }
+
+    GaussianParallel(const std::vector<int> &img, std::vector<int> *res, int width, int height,
+        std::vector<float> kernel, int radius, std::vector<std::vector<int>> array, int block_width, int block_height) :
+        img(img),
+        res(res),
+        width(width),
+        height(height),
+        kernel(kernel),
+        radius(radius),
+        array(array),
+        block_width(block_width),
+        block_height(block_height){}
+};
 
 int calculateNewPixelColor(std::vector<int> img, int width, int height,
     int x, int y, int radius, std::vector<float> kernel) {
