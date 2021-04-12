@@ -30,8 +30,9 @@ class GaussianParallel {
         }
     }
 
-    GaussianParallel(const std::vector<int> &img, std::vector<int> *res, int width, int height, const std::vector<float> &kernel,
-        int radius, const std::vector<std::vector<int>> &array, int block_width, int block_height) :
+    GaussianParallel(const std::vector<int> &img, std::vector<int> *res, int width,
+        int height, const std::vector<float> &kernel, int radius,
+        const std::vector<std::vector<int>> &array, int block_width, int block_height) :
         img(img),
         res(res),
         width(width),
