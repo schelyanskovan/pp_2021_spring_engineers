@@ -30,7 +30,7 @@ TEST(Gaussian_Method, Test_can_gaussian_filter) {
     image1_decimal[52] = 3;    image1_decimal[53] = 9; image1_decimal[54] = 1; image1_decimal[55] = 4;
     image1_decimal[56] = 6;    image1_decimal[57] = 50; image1_decimal[58] = 2; image1_decimal[59] = 4;
     image1_decimal[60] = 3;    image1_decimal[61] = 9; image1_decimal[62] = 1; image1_decimal[63] = 4;
-	ASSERT_NO_THROW(gaussianFilter(image1_decimal, width, height, radius, sigma, count_thread));
+    ASSERT_NO_THROW(gaussianFilter(image1_decimal, width, height, radius, sigma, count_thread));
 }
 TEST(Gaussian_Method, Test_check_work_with_rectangle_matrix) {
     int radius = 1;
@@ -57,14 +57,9 @@ TEST(Gaussian_Method, Test_check_work_with_rectangle_matrix) {
     image1_decimal[52] = 3;    image1_decimal[53] = 9; image1_decimal[54] = 1; image1_decimal[55] = 4;
     image1_decimal[56] = 6;    image1_decimal[57] = 50; image1_decimal[58] = 2; image1_decimal[59] = 4;
     image1_decimal[60] = 3;    image1_decimal[61] = 9; image1_decimal[62] = 1; image1_decimal[63] = 4;
-
     image1_decimal[64] = 6;    image1_decimal[65] = 50; image1_decimal[66] = 2; image1_decimal[67] = 4;
     image1_decimal[68] = 3;    image1_decimal[69] = 9; image1_decimal[70] = 1; image1_decimal[71] = 4;
-	tbb::tick_count t1, t2;
-    t1 = tbb::tick_count::now();
     image2_decimal = gaussianFilter(image1_decimal, width, height, radius, sigma, count_thread);
-     t2 = tbb::tick_count::now();
-    std::cout << (t2 - t1).seconds();
     check[0] = 56; check[1] = 43; check[2] = 29; check[3] = 4;
     check[4] = 5; check[5] = 58; check[6] = 58; check[7] = 80;
     check[8] = 53; check[9] = 43; check[10] = 37; check[11] = 31;
@@ -89,6 +84,25 @@ TEST(Gaussian_Method, Test_check_work_with_rectangle_matrix) {
         }
     }
 }
+/*
+TEST(Gaussian_Method, Test_check_work_with_rectangle_matrix2) {
+    int radius = 1;
+    float sigma = 5.0;
+    int count_thread = 1;
+    int height = 400;
+    int width = 400;
+    std::vector<int> image1_decimal(height * width);
+    for (int i = 0; i < width * height; i++) {
+        image1_decimal[i] = 20;
+    }
+    std::vector<int> image2_decimal(height * width);
+    
+    tbb::tick_count t1, t2;
+    t1 = tbb::tick_count::now();
+    image2_decimal = gaussianFilter(image1_decimal, width, height, radius, sigma, count_thread);
+    t2 = tbb::tick_count::now();
+    std::cout << (t2 - t1).seconds();    
+}*/
 
 TEST(Gaussian_Method, Test_check_gaussian_filter) {
     int radius = 1;
