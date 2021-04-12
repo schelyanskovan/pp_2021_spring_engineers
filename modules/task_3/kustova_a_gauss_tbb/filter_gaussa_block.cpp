@@ -38,8 +38,8 @@ class GaussianParallel {
         kernel(kernel),
         array(array),
         width(width),
-        height(height),        
-        radius(radius),        
+        height(height),
+        radius(radius),
         block_width(block_width),
         block_height(block_height){}
 };
