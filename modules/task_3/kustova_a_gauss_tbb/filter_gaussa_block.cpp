@@ -30,9 +30,9 @@ class GaussianParallel {
         }
     }
 
-    GaussianParallel(const std::vector<int> &img, std::vector<int> *res, int width,
-        int height, const std::vector<float> &kernel, int radius,
-        const std::vector<std::vector<int>> &array, int block_width, int block_height) :
+    GaussianParallel(const std::vector<int> &img, std::vector<int> *res, const std::vector<float> &kernel,
+        const std::vector<std::vector<int>> &array, int width, int height, int radius,
+        int block_width, int block_height) :
         img(img),
         res(res),
         width(width),
@@ -66,7 +66,7 @@ std::vector<int> gaussianFilter(const std::vector<int> & img, int width,
         l += block_height;
     }
     tbb::task_scheduler_init init(count_thread);
-    GaussianParallel tmp(img, &res, width, height, kernel, radius, array1, block_width, block_height);
+    GaussianParallel tmp(img, &res, kernel, array1, width, height, radius, block_width, block_height);
     tbb::parallel_for(tbb::blocked_range<int>(0, static_cast<int>(array1.size())), tmp);
     return res;
 }
