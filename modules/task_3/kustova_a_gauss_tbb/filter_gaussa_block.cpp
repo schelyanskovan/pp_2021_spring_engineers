@@ -54,14 +54,14 @@ std::vector<int> gaussianFilter(const std::vector<int> & img, int width,
     return resultImage;
 }*/
 class GaussianParallel {
-private:
+ private:
     const std::vector<int> &img;
     std::vector<int> &res;
     std::vector<float> kernel;
     int width, height, radius, block_width, block_height;
     std::vector<std::vector<int>> array;
 
-public:
+ public:
     void operator()(const tbb::blocked_range<int> &r) const {
         for (int i = r.begin(); i != r.end(); ++i) {
             int j_start = array[i][0];
@@ -74,11 +74,10 @@ public:
                     res[j * width + i] = color;
                 }
             }
-            
         }
     }
 
-    GaussianParallel(const std::vector<int> &img, std::vector<int> &res, int width, int height, 
+    GaussianParallel(const std::vector<int> &img, std::vector<int> &res, int width, int height,
         std::vector<float> kernel, int radius, std::vector<std::vector<int>> array, int block_width, int block_height) :
         img(img),
         res(res),
