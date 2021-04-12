@@ -11,8 +11,8 @@ class GaussianParallel {
     const std::vector<int> &img;
     std::vector<int> *res;
     const std::vector<float> &kernel;
-    int width, height, radius, block_width, block_height;
     const std::vector<std::vector<int>> &array;
+    int width, height, radius, block_width, block_height;
 
  public:
     void operator()(const tbb::blocked_range<int> &r) const {
@@ -35,11 +35,11 @@ class GaussianParallel {
         int block_width, int block_height) :
         img(img),
         res(res),
-        width(width),
-        height(height),
         kernel(kernel),
-        radius(radius),
         array(array),
+        width(width),
+        height(height),        
+        radius(radius),        
         block_width(block_width),
         block_height(block_height){}
 };
