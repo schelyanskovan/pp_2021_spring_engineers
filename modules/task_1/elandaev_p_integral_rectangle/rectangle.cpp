@@ -19,7 +19,8 @@
 //    return (step * sum);
 // }
 void iterplus(std::vector<int> *B, int it, const std::vector<std::vector<double>> p) {
-    if (B->operator[](it) == (p[it].size() - 1)) {
+    int size = p[it].size();
+    if (B->operator[](it) == (size - 1)) {
         if ((it-1) < 0)
             return;
         B->operator[](it) = 0;
@@ -33,7 +34,8 @@ double RecInt(std::vector<double> start,
               std::function<double(std::vector<double>)> f,
               double step) {
     std::vector<int> countstep;
-    for (int i = 0; i < start.size(); i++) {
+    int size = start.size();
+    for (int i = 0; i < size; i++) {
         if (end[i] < start[i])
             throw "wrong segment";
         if (step > end[i] - start[i])
@@ -45,7 +47,7 @@ double RecInt(std::vector<double> start,
     std::vector<std::vector<double> > point;
     point.resize(start.size());
     std::int64_t countTrial = 1;
-    for (int i = 0; i < start.size(); i++) {
+    for (int i = 0; i < size; i++) {
         for (int j = 0; j < countstep[i]; j++) {
             point[i].push_back(start[i] + j * step);
         }
@@ -53,13 +55,13 @@ double RecInt(std::vector<double> start,
     }
     double sum = 0.0;
     std::vector<int> B(start.size());
-    for (int i = 0; i < start.size(); i++) {
+    for (int i = 0; i < size; i++) {
         B[i] = 0;
     }
     std::vector<double> Trial(start.size());
     int dim = static_cast<int>(start.size() - 1);
     for (int i = 0; i < countTrial; i++) {
-        for (int j = 0; j < start.size(); j++) {
+        for (int j = 0; j < size; j++) {
             Trial[j] = point[j][B[j]];
         }
         iterplus(&B, dim, point);
