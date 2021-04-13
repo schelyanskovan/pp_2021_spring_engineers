@@ -19,7 +19,7 @@
 //    return (step * sum);
 // }
 void iterplus(std::vector<int> *B, int it, const std::vector<std::vector<double>> p) {
-    if (B->operator[](it) == (p[it].size( ) - 1) ) {
+    if (B->operator[](it) == (p[it].size() - 1)) {
         if ((it-1) < 0)
             return;
         B->operator[](it) = 0;
@@ -28,7 +28,10 @@ void iterplus(std::vector<int> *B, int it, const std::vector<std::vector<double>
         B->operator[](it)++;
     }
 }
-double RecInt(std::vector<double> start, std::vector<double> end, std::function<double(std::vector<double>)> f, double step) {
+double RecInt(std::vector<double> start,
+              std::vector<double> end,
+              std::function<double(std::vector<double>)> f,
+              double step) {
     std::vector<int> countstep;
     for (int i = 0; i < start.size(); i++) {
         if (end[i] < start[i])
