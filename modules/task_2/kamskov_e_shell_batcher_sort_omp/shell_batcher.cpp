@@ -1,5 +1,5 @@
 // Copyright 2021 Kamskov Eugene
-#include "../../../modules/task_1/kamskov_e_shell_batcher_sort_omp/shell_batcher.h"
+#include "modules/task_2/kamskov_e_shell_batcher_sort_omp/shell_batcher.h"
 
 
 std::vector<int> getRandomVector(int size) {
@@ -11,7 +11,6 @@ std::vector<int> getRandomVector(int size) {
     return vec;
 }
 std::vector<std::vector<int>> split(const std::vector<int>& vec, size_t n) {
-
     size_t del = vec.size() / n;
     size_t bal = vec.size() % n;
     size_t begin = 0, end = 0;
@@ -20,8 +19,7 @@ std::vector<std::vector<int>> split(const std::vector<int>& vec, size_t n) {
     for (size_t i = 0; i < n; ++i) {
         if (bal > 0) {
             end = end + (del + !!(bal--));
-        }
-        else
+        }else
             end = end + del;
         res.push_back(std::vector<int>(vec.begin() + begin, vec.begin() + end));
         begin = end;
