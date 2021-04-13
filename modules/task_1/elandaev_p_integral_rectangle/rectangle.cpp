@@ -46,7 +46,7 @@ double RecInt(std::vector<double> start,
         throw "wrong splitting: smallest";
     std::vector<std::vector<double> > point;
     point.resize(start.size());
-    std::int64_t countTrial = 1;
+    int countTrial = 1;
     for (int i = 0; i < size; i++) {
         for (int j = 0; j < countstep[i]; j++) {
             point[i].push_back(start[i] + j * step);
