@@ -44,7 +44,7 @@ double RecInt(std::vector<double> start,
         throw "wrong splitting: smallest";
     std::vector<std::vector<double> > point;
     point.resize(start.size());
-    int64_t countTrial = 1;
+    std::int64_t countTrial = 1;
     for (int i = 0; i < start.size(); i++) {
         for (int j = 0; j < countstep[i]; j++) {
             point[i].push_back(start[i] + j * step);
@@ -65,7 +65,7 @@ double RecInt(std::vector<double> start,
         iterplus(&B, dim, point);
         sum += f(Trial);
     }
-    return sum * pow(step, dim+1);
+    return sum * (std::pow(step, dim+1));
 }
 
 
