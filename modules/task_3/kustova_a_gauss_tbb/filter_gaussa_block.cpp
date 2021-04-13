@@ -63,14 +63,12 @@ std::vector<int> gaussianFilter(const std::vector<int> & img, int width,
         while (k < width) {
             if (width - k < block_width + block_width / 2) {
                 block_w = width - k;
-            }
-            else {
+            } else {
                 block_w = block_width;
             }
             if (height - l < block_height / 2) {
                 block_h = height - l;
-            }
-            else {
+            } else {
                 block_h = block_height;
             }
             std::vector<int> tup = { l, k , block_h, block_w };
