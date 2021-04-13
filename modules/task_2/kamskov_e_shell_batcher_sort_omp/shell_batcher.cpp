@@ -19,8 +19,9 @@ std::vector<std::vector<int>> split(const std::vector<int>& vec, size_t n) {
     for (size_t i = 0; i < n; ++i) {
         if (bal > 0) {
             end = end + (del + !!(bal--));
-        }else
+        } else {
             end = end + del;
+        }
         res.push_back(std::vector<int>(vec.begin() + begin, vec.begin() + end));
         begin = end;
     }

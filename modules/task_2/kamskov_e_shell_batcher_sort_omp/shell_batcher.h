@@ -6,6 +6,8 @@
 #include <vector>
 #include <iostream>
 #include <iterator>
+#include <algorithm>
+#include <utility>
 #include <random>
 #include <ctime>
 
