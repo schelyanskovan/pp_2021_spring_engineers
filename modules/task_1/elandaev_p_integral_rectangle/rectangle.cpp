@@ -2,7 +2,7 @@
 
 #include "../../modules/task_1/elandaev_p_integral_rectangle/rectangle.h"
 
-//double RectangleIntegral(double start, double end, std::function<double(double)> f, double step) {
+// double RectangleIntegral(double start, double end, std::function<double(double)> f, double step) {
 //    if (end < start)
 //        throw "wrong interval";
 //    if (step <= 0)
@@ -17,18 +17,18 @@
 //        sum += f(x);
 //    }
 //    return (step * sum);
-//}
-void iterplus(std::vector<int> &B, int it, const std::vector<std::vector<double>> p) {
-    if (B[it] == (p[it].size() - 1) ) {
+// }
+void iterplus(std::vector<int> *B, int it, const std::vector<std::vector<double>> p) {
+    if (B->operator[](it) == (p[it].size( ) - 1) ) {
         if ((it-1) < 0)
             return;
-        B[it] = 0;
+        B->operator[](it) = 0;
         iterplus(B, --it, p);
     } else {
-        B[it]++;
+        B->operator[](it)++;
     }
 }
-double RectangleIntegral(std::vector<double> start, std::vector<double> end, std::function<double(std::vector<double>)> f, double step) {
+double RecInt(std::vector<double> start, std::vector<double> end, std::function<double(std::vector<double>)> f, double step) {
     std::vector<int> countstep;
     for (int i = 0; i < start.size(); i++) {
         if (end[i] < start[i])
@@ -41,7 +41,7 @@ double RectangleIntegral(std::vector<double> start, std::vector<double> end, std
         throw "wrong splitting: smallest";
     std::vector<std::vector<double> > point;
     point.resize(start.size());
-    long long countTrial = 1;
+    int64_t countTrial = 1;
     for (int i = 0; i < start.size(); i++) {
         for (int j = 0; j < countstep[i]; j++) {
             point[i].push_back(start[i] + j * step);
@@ -59,7 +59,7 @@ double RectangleIntegral(std::vector<double> start, std::vector<double> end, std
         for (int j = 0; j < start.size(); j++) {
             Trial[j] = point[j][B[j]];
         }
-        iterplus(B, dim, point);
+        iterplus(&B, dim, point);
         sum += f(Trial);
     }
     return sum * pow(step, dim+1);

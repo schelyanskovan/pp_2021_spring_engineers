@@ -7,5 +7,5 @@
 #include <functional>
 
 void iterplus(std::vector<int> &B, int it, const std::vector<std::vector<int>> p);
-double RectangleIntegral(std::vector<double> start, std::vector<double> end, std::function<double(std::vector<double>)> f, double step);
+double RecInt(std::vector<double> start, std::vector<double> end, std::function<double(std::vector<double>)> f, double step);
 #endif  // MODULES_TASK_1_ELANDAEV_P_INTEGRAL_RECTANGLE_RECTANGLE_H_
