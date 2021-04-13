@@ -7,7 +7,7 @@
 #include <functional>
 #include <cmath>
 
-void iterplus(std::vector<int> *B, int it, const std::vector<std::vector<int>> p);
+void iterplus(std::vector<int> *B, int it, const std::vector<std::vector<int>> &p);
 double RecInt(std::vector<double> start,
               std::vector<double> end,
               std::function<double(std::vector<double>)> f,

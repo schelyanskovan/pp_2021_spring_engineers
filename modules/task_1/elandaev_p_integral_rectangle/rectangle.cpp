@@ -18,7 +18,7 @@
 //    }
 //    return (step * sum);
 // }
-void iterplus(std::vector<int> *B, int it, const std::vector<std::vector<double>> p) {
+void iterplus(std::vector<int> *B, int it, const std::vector<std::vector<double>> &p) {
     int size = p[it].size();
     if (B->operator[](it) == (size - 1)) {
         if ((it-1) < 0)

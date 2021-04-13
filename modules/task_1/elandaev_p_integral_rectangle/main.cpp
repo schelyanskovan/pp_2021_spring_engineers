@@ -4,37 +4,37 @@
 #include <iostream>
 #include "../../modules/task_1/elandaev_p_integral_rectangle/rectangle.h"
 
-double f1(std::vector<double> x) {
+double f1(const std::vector<double> &x) {
     double res = 10;
     return res;
 }
 
-double f2(std::vector<double> x) {
+double f2(const std::vector<double> &x) {
     double res = x[0] * x[0];
     return res;
 }
 
-double f3(std::vector<double> x) {
+double f3(const std::vector<double> &x) {
     double res = sin(x[0]) + 1;
     return res;
 }
 
-double f4(std::vector<double> x) {
+double f4(const std::vector<double> &x) {
     double res = sin(x[0]) * cos(x[0]);
     return res;
 }
 
-double f5(std::vector<double> x) {
+double f5(const std::vector<double> &x) {
     double res = sin(x[0]) * cos(x[0]) * x[0] * x[0];
     return res;
 }
 
-double f6(std::vector<double> x) {
+double f6(const std::vector<double> &x) {
     double res = sin(x[0]) * cos(x[1]) * x[2];
     return res;
 }
 
-double f7(std::vector<double> x) {
+double f7(const std::vector<double> &x) {
     double res = x[0] * x[1];
     return res;
 }
