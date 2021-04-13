@@ -1,12 +1,12 @@
 // Copyright 2021 Kamskov Eugene
-#ifndef MODULES_TASK_1_KAMSKOV_E_SHELL_BATCHER_SORT_OMP_SHELL_BATCHER_H_
+#ifndef MODULES_TASK_2_KAMSKOV_E_SHELL_BATCHER_SORT_OMP_SHELL_BATCHER_H_
 #define MODULES_TASK_1_KAMSKOV_E_SHELL_BATCHER_SORT_OMP_SHELL_BATCHER_H_
 
+#include <omp.h>
 #include <vector>
 #include <iostream>
 #include <iterator>
 #include <random>
-#include <omp.h>
 #include <ctime>
 
 std::vector<int> getRandomVector(int);
@@ -18,4 +18,4 @@ std::vector<int> batchShellSortOmp(const std::vector<int>&, const int, int);
 std::vector<int> mergeOmp(const std::vector<std::vector<int>>&, const int, int);
 std::vector<int> batchShellSort(const std::vector<int>&, int);
 void print(std::vector<int> const&);
-#endif  // MODULES_TASK_1_KAMSKOV_E_SHELL_BATCHER_SORT_OMP_SHELL_BATCHER_H_
+#endif  // MODULES_TASK_2_KAMSKOV_E_SHELL_BATCHER_SORT_OMP_SHELL_BATCHER_H_
