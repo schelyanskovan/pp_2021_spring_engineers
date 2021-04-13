@@ -58,12 +58,26 @@ std::vector<int> gaussianFilter(const std::vector<int> & img, int width,
     int block_width = width / grid_size;
     while (l < height) {
         k = 0;
+        int block_w = block_width;
+        int block_h = block_height;
         while (k < width) {
-            std::vector<int> tup = { l, k };
+            if (width - k < block_width + block_width / 2) {
+                block_w = width - k;
+            }
+            else {
+                block_w = block_width;
+            }
+            if (height - l < block_height / 2) {
+                block_h = height - l;
+            }
+            else {
+                block_h = block_height;
+            }
+            std::vector<int> tup = { l, k , block_h, block_w };
             array1.push_back(tup);
-            k += block_width;
+            k += block_w;
         }
-        l += block_height;
+        l += block_h;
     }
     tbb::task_scheduler_init init(count_thread);
     GaussianParallel tmp(img, &res, kernel, array1, width, height, radius, block_width, block_height);

@@ -84,25 +84,6 @@ TEST(Gaussian_Method, Test_check_work_with_rectangle_matrix) {
         }
     }
 }
-/*
-TEST(Gaussian_Method, Test_check_work_with_rectangle_matrix2) {
-    int radius = 1;
-    float sigma = 5.0;
-    int count_thread = 1;
-    int height = 400;
-    int width = 400;
-    std::vector<int> image1_decimal(height * width);
-    for (int i = 0; i < width * height; i++) {
-        image1_decimal[i] = 20;
-    }
-    std::vector<int> image2_decimal(height * width);
-    
-    tbb::tick_count t1, t2;
-    t1 = tbb::tick_count::now();
-    image2_decimal = gaussianFilter(image1_decimal, width, height, radius, sigma, count_thread);
-    t2 = tbb::tick_count::now();
-    std::cout << (t2 - t1).seconds();    
-}*/
 
 TEST(Gaussian_Method, Test_check_gaussian_filter) {
     int radius = 1;
