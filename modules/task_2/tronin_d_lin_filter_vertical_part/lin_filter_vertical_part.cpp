@@ -1,10 +1,10 @@
 // Copyright 2020 Tronin Dmitry
 #include "../../modules/task_2/tronin_d_lin_filter_vertical_part/lin_filter_vertical_part.h"
-
+#include <omp.h>
 #include <cmath>
 #include <stdexcept>
-#include <omp.h>
 #include <iostream>
+
 static const double kPi = 3.141592653589793;
 
 std::vector<double> CalculateGaussFilterP(size_t size, double sigma) {
@@ -48,7 +48,6 @@ std::vector<uint8_t> ApplyFilterParallel(const std::vector<double> &filter,
                                          size_t width,
                                          size_t height,
                                          size_t filter_size) {
-
     if (image.size() != width * height) {
         throw std::invalid_argument("Incorrect image size");
     }
@@ -91,7 +90,6 @@ std::vector<uint8_t> ApplyFilterParallel(const std::vector<double> &filter,
                 }
                 result_image[row * width + col] =
                     static_cast<uint8_t>(ClampP(pixel_value, 0., 255.));
-
             }
         }
     }
