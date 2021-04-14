@@ -64,8 +64,7 @@ std::vector<uint8_t> ApplyFilterParallel(const std::vector<double> &filter,
 
 #pragma omp parallel default(none) shared(image, width, height, filter_size, filter, result_image, std::cout)
     {
-        size_t new_col;
-#pragma omp for private(pixel_value, test, image_row, image_col, new_col)
+#pragma omp for private(pixel_value, test, image_row, image_col)
         for (size_t col = 0; col < width; ++col) {
             for (size_t row = 0; row < height; ++row) {
                 pixel_value = 0;
