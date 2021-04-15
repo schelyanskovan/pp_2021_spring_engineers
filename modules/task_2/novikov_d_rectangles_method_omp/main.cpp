@@ -89,7 +89,7 @@ TEST(Novikov, TestTimings) {
     std::vector <double> begin_point = { 0, 0, 0 };
     std::vector <double> end_point = { 3, 3, 3 };
     double result1, result2;
-    int number_of_partitions = 300;
+    int number_of_partitions = 150;
 
     auto function = [](std::vector <double> vec) {
         return vec[0] + vec[1] + vec[2];
