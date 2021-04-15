@@ -46,7 +46,7 @@ double RecInt(std::vector<double> start,
         throw "wrong splitting: smallest";
     std::vector<std::vector<double> > point;
     point.resize(start.size());
-    int countTrial = 1;
+    long long countTrial = 1;
     for (int i = 0; i < size; i++) {
         for (int j = 0; j < countstep[i]; j++) {
             point[i].push_back(start[i] + j * step);
@@ -87,7 +87,60 @@ double RecIntOmp(std::vector<double> start,
         throw "wrong splitting: smallest";
     std::vector<std::vector<double> > point;
     point.resize(start.size());
-    int countTrial = 1;
+    long long countTrial = 1;
+    for (int i = 0; i < size; i++) {
+        for (int j = 0; j < countstep[i]; j++) {
+            point[i].push_back(start[i] + j * step);
+        }
+        countTrial *= point[i].size();
+    }
+    double sum = 0.0;
+    std::vector<int> B(size);
+    for (int i = 0; i < size; i++) {
+        B[i] = 0;
+    }
+    std::vector<double> Trial(size);
+    int dim = size - 1;
+    int flag = 1;
+#pragma omp parallel for schedule(static) reduction(+:sum) firstprivate(Trial, B, flag) shared(point, dim)
+    for (int i = 0; i < countTrial; i++) {
+        if (flag == 1) {
+            int k = i;
+            int count = 0;
+            while (k > 0) {
+                B[dim-count] = k % point[dim - count].size();
+                k = k / point[dim - count].size();
+                count++;
+            }
+            flag = 0;
+        }
+        for (int j = 0; j < size; j++) {
+            Trial[j] = point[j][B[j]];
+        }
+        iterplus(&B, dim, point);
+        sum += f(Trial);
+    }
+    return sum * (std::pow(step, size));
+}
+
+double RecIntT(std::vector<double> start,
+    std::vector<double> end,
+    std::function<double(std::vector<double>)> f,
+    double step) {
+    std::vector<int> countstep;
+    int size = start.size();
+    for (int i = 0; i < size; i++) {
+        if (end[i] < start[i])
+            throw "wrong segment";
+        if (step > end[i] - start[i])
+            throw "step is biggest";
+        countstep.push_back(static_cast<int>((end[i] - start[i]) / step));
+    }
+    if (step <= 0)
+        throw "wrong splitting: smallest";
+    std::vector<std::vector<double> > point;
+    point.resize(start.size());
+    long long countTrial = 1;
     for (int i = 0; i < size; i++) {
         for (int j = 0; j < countstep[i]; j++) {
             point[i].push_back(start[i] + j * step);
@@ -96,23 +149,20 @@ double RecIntOmp(std::vector<double> start,
     }
     double sum = 0.0;
     std::vector<int> B(start.size());
-    for (int i = 0; i < size; i++) {
-        B[i] = 0;
-    }
     std::vector<double> Trial(start.size());
     int dim = static_cast<int>(start.size() - 1);
-#pragma omp parallel
-    {
-    #pragma omp for reduction(+:sum) private(Trial)
-        for (int i = 0; i < countTrial; i++) {
-            for (int j = 0; j < size; j++) {
-                Trial[j] = point[j][B[j]];
+    for (int i = 0; i < countTrial; i++) {
+        for (int j = 0; j < size; j++) {
+            int k = i;
+            while (k > 0) {
+                int count = 0;
+                B[dim - count] = k % point[dim - count].size();
+                k = k / point[dim - count].size();
+                count++;
             }
-            iterplus(&B, dim, point);
-            sum += f(Trial);
+            Trial[j] = point[j][B[j]];
         }
+        sum += f(Trial);
     }
-    return sum * (std::pow(step, dim+1));
+    return sum * (std::pow(step, dim + 1));
 }
-
-

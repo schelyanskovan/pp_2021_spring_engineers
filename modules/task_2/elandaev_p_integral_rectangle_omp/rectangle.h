@@ -1,9 +1,8 @@
 // Copyright 2021 Elandaev Pavel
-#ifndef MODULES_TASK_1_ELANDAEV_P_INTEGRAL_RECTANGLE_OMP_RECTANGLE_H_
-#define MODULES_TASK_1_ELANDAEV_P_INTEGRAL_RECTANGLE_OMP_RECTANGLE_H_
+#ifndef MODULES_TASK_2_ELANDAEV_P_INTEGRAL_RECTANGLE_OMP_RECTANGLE_H_
+#define MODULES_TASK_2_ELANDAEV_P_INTEGRAL_RECTANGLE_OMP_RECTANGLE_H_
 
-#include "/usr/local/Cellar/libomp/11.1.0/include/omp.h"
-#include "/usr/local/opt/libomp/include/omp.h"
+#include "omp.h"
 #include <utility>
 #include <vector>
 #include <functional>
@@ -19,4 +18,13 @@ double RecIntOmp(std::vector<double> start,
               std::vector<double> end,
               std::function<double(std::vector<double>)> f,
               double step);
-#endif  // MODULES_TASK_1_ELANDAEV_P_INTEGRAL_RECTANGLE_OMP_RECTANGLE_H_
+
+double RecIntT(std::vector<double> start,
+    std::vector<double> end,
+    std::function<double(std::vector<double>)> f,
+    double step);
+double RecIntOmpT(std::vector<double> start,
+    std::vector<double> end,
+    std::function<double(std::vector<double>)> f,
+    double step);
+#endif  // MODULES_TASK_2_ELANDAEV_P_INTEGRAL_RECTANGLE_OMP_RECTANGLE_H_
