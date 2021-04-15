@@ -2,10 +2,10 @@
 #ifndef MODULES_TASK_2_ELANDAEV_P_INTEGRAL_RECTANGLE_OMP_RECTANGLE_H_
 #define MODULES_TASK_2_ELANDAEV_P_INTEGRAL_RECTANGLE_OMP_RECTANGLE_H_
 
-#include "omp.h"
 #include <utility>
 #include <vector>
 #include <functional>
+#include <omp.h>
 #include <cmath>
 #include <iostream>
 
