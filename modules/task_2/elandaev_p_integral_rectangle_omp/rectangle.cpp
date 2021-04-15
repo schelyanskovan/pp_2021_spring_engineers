@@ -1,6 +1,7 @@
 // Copyright 2021 Elandaev Pavel
 
 #include "../../modules/task_2/elandaev_p_integral_rectangle_omp/rectangle.h"
+#include <omp.h>
 
 // double RectangleIntegral(double start, double end, std::function<double(double)> f, double step) {
 //    if (end < start)
@@ -46,7 +47,7 @@ double RecInt(std::vector<double> start,
         throw "wrong splitting: smallest";
     std::vector<std::vector<double> > point;
     point.resize(start.size());
-    long long countTrial = 1;
+    int countTrial = 1;
     for (int i = 0; i < size; i++) {
         for (int j = 0; j < countstep[i]; j++) {
             point[i].push_back(start[i] + j * step);

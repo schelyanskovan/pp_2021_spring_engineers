@@ -1,6 +1,7 @@
 // Copyright 2021 Elandaev Pavel
 #include <gtest/gtest.h>
 #include <math.h>
+#include <omp.h>
 #include "../../modules/task_2/elandaev_p_integral_rectangle_omp/rectangle.h"
 
 double f1(const std::vector<double> &x) {
