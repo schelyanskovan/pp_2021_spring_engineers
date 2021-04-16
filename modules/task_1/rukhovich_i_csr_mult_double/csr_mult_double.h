@@ -51,7 +51,7 @@ public:
 
   explicit CSRMatrix(UIntType height, UIntType width, const std::vector<ValueType>& matrix)
       : num_cols_(width), counts_(height + 1) {
-    if (matrix.size() != height * width) {
+    if (static_cast<UIntType>(matrix.size()) != height * width) {
       throw std::runtime_error("Init matrix must consist of height*width elements");
     }
     counts_[0] = 0;
