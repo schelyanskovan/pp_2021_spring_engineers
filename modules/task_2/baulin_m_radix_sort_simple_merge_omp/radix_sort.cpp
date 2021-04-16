@@ -109,7 +109,6 @@ std::vector<double> RadixSort(const std::vector<double>& source) {
   std::vector<std::vector<double>> bunches;
   std::vector<std::vector<double>> sortedVectors;
 
-
   bunch_size = (source.size() - 1) / threadCount + 1;
   bunches = std::vector<std::vector<double>>((source.size() + bunch_size) /
                                              bunch_size);
@@ -124,7 +123,7 @@ std::vector<double> RadixSort(const std::vector<double>& source) {
 
   bunchesCount = bunches.size();
 
-#pragma omp parallel num_threads(threadCount) 
+#pragma omp parallel num_threads(threadCount)
 #pragma omp for
   for (auto i = 0; i < bunchesCount; i++) {
     auto sortedBunch = serialRadixSort(bunches[i]);
