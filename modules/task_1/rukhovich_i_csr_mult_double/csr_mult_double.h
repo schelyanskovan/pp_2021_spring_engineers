@@ -2,7 +2,7 @@
 #ifndef MODULES_TASK_1_RUKHOVICH_I_CSR_MULT_DOUBLE_CSR_MULT_DOUBLE_H_
 #define MODULES_TASK_1_RUKHOVICH_I_CSR_MULT_DOUBLE_CSR_MULT_DOUBLE_H_
 
-#include <iostream>
+#include <exception>
 #include <random>
 #include <vector>
 
@@ -21,6 +21,23 @@ private:
   std::uniform_real_distribution<double> dist_;
 };
 
+template <class T>
+bool Compare(const T& lhs, const T& rhs) {
+  static float float_eps = 1e-3;
+  static double double_eps = 1e-6;
+  static long double long_double_eps = 1e-8;
+  if (std::is_same<T, float>::value) {
+    return (lhs + float_eps > rhs) && (lhs - float_eps < rhs);
+  }
+  if (std::is_same<T, double>::value) {
+    return (lhs + double_eps > rhs) && (lhs - double_eps < rhs);
+  }
+  if (std::is_same<T, long double>::value) {
+    return (lhs + long_double_eps > rhs) && (lhs - long_double_eps < rhs);
+  }
+  return lhs == rhs;
+}
+
 template <class ValueType, typename UIntType = uint16_t>
 class CSRMatrix {
 public:
@@ -34,6 +51,9 @@ public:
 
   explicit CSRMatrix(UIntType height, UIntType width, const std::vector<ValueType>& matrix)
       : num_cols_(width), counts_(height + 1) {
+    if (matrix.size() != height * width) {
+      throw std::runtime_error("Init matrix must consist of height*width elements");
+    }
     counts_[0] = 0;
     for (UIntType row = 0; row < height; ++row) {
       counts_[row + 1] = counts_[row];
@@ -62,38 +82,30 @@ public:
 
   bool operator==(const CSRMatrix& rhs) const {
     const CSRMatrix& lhs = *this;
-    std::cerr << "1\n";
-    std::cerr << lhs.vals_.size() << ' ' <<  rhs.vals_.size() << '\n';
-    std::cerr << lhs.counts_.size() << ' ' << rhs.counts_.size() << '\n';
-    std::cerr << lhs.num_cols_ << ' ' <<  rhs.num_cols_ << '\n';
     if (lhs.vals_.size() != rhs.vals_.size() || lhs.counts_.size() != rhs.counts_.size() ||
         lhs.num_cols_ != rhs.num_cols_) {
       return false;
     }
-    std::cerr << "2\n";
     for (UIntType i = 1; i < lhs.counts_.size(); ++i) {
       if (lhs.counts_[i] != rhs.counts_[i]) {
         return false;
       }
     }
-    std::cerr << "3\n";
     for (UIntType i = 0; i < lhs.vals_.size(); ++i) {
-      if (lhs.cols_[i] != rhs.cols_[i] || lhs.vals_[i] != rhs.vals_[i]) {
+      if (lhs.cols_[i] != rhs.cols_[i] || !Compare(lhs.vals_[i], rhs.vals_[i])) {
         return false;
       }
     }
-    std::cerr << "4\n";
     return true;
   }
 
   CSRMatrix& operator*=(const CSRMatrix& other) {
-    CSRMatrix rhs(other.GetTransposed());
+    CSRMatrix rhs = other.GetTransposed();
     UIntType res_width = other.num_cols_;
     UIntType res_height = counts_.size() - 1;
     std::vector<ValueType> res_mat(res_width * res_height);
     UIntType row = 0, col = 0;
     while (row < res_height) {
-      std::cerr << "HI" << row << "\n";
       UIntType l_row_cur = counts_[row], r_row_cur = rhs.counts_[col];
       ValueType cur_val = 0;
       while (l_row_cur < counts_[row + 1] && r_row_cur < rhs.counts_[col + 1]) {
@@ -102,7 +114,7 @@ public:
         } else if (cols_[l_row_cur] > rhs.cols_[r_row_cur]) {
           ++r_row_cur;
         } else {
-          cur_val += vals_[l_row_cur] * rhs.vals_[r_row_cur];
+          cur_val += vals_[l_row_cur++] * rhs.vals_[r_row_cur++];
         }
       }
       res_mat[row * res_width + col] = cur_val;
@@ -113,14 +125,29 @@ public:
       }
     }
 
-    *this = CSRMatrix(res_width, res_height, res_mat);
+    num_cols_ = res_width;
+    vals_.resize(0);
+    cols_.resize(0);
+    counts_.resize(res_height + 1);
+    counts_[0] = 0;
+    for (row = 0; row < res_height; ++row) {
+      counts_[row + 1] = counts_[row];
+      for (col = 0; col < res_width; ++col) {
+        auto cur_val = res_mat[res_width * row + col];
+        if (cur_val) {
+          vals_.emplace_back(cur_val);
+          cols_.emplace_back(col);
+          ++counts_[row + 1];
+        }
+      }
+    }
     return *this;
   }
 
 protected:
   // CSR to CSC conversion and back
-  CSRMatrix GetTransposed() const {
-    CSRMatrix other(counts_.size() - 1, num_cols_);
+  const CSRMatrix GetTransposed() const {
+    CSRMatrix other(num_cols_, counts_.size() - 1);
     for (UIntType i = 0; i < cols_.size(); ++i) {
       ++other.counts_[cols_[i]];
     }
@@ -129,6 +156,8 @@ protected:
       other.counts_[col] = sum;
       sum += tmp;
     }
+    other.cols_.resize(other.counts_.back());
+    other.vals_.resize(other.counts_.back());
 
     for (UIntType row = 0; static_cast<UIntType>(row + 1) < counts_.size(); ++row) {
       for (UIntType cnt = counts_[row]; cnt < counts_[row + 1]; ++cnt) {
@@ -144,7 +173,7 @@ protected:
       other.counts_[col] = last;
       last = tmp;
     }
-    return std::move(other);
+    return other;
   }
 
   UIntType num_cols_;
