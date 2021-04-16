@@ -1,5 +1,5 @@
 // Copyright 2021 Rachin Igor
-#include "../../modules/task_1/rachin_i_lin_hist_stret/lin_hist_stret.h"
+#include "../../modules/task_2/rachin_i_lin_hist_stret_omp/lin_hist_stret.h"
 #include <random>
 #include <vector>
 #include <ctime>
