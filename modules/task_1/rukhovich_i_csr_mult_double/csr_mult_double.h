@@ -2,18 +2,19 @@
 #ifndef MODULES_TASK_1_RUKHOVICH_I_CSR_MULT_DOUBLE_CSR_MULT_DOUBLE_H_
 #define MODULES_TASK_1_RUKHOVICH_I_CSR_MULT_DOUBLE_CSR_MULT_DOUBLE_H_
 
-#include <exception>
 #include <random>
+#include <stdexcept>
+#include <utility>
 #include <vector>
 
 class RandomDouble {
-public:
+ public:
   static double Next() {
     static RandomDouble rand = RandomDouble();
     return rand.dist_(rand.gen_);
   }
 
-private:
+ private:
   RandomDouble() : gen_(std::random_device()()), dist_(-1e3, 1e3) {
   }
 
@@ -40,7 +41,7 @@ bool Compare(const T& lhs, const T& rhs) {
 
 template <class ValueType, typename UIntType = uint16_t>
 class CSRMatrix {
-public:
+ public:
   CSRMatrix() = delete;
 
   CSRMatrix(const CSRMatrix& other) = default;
@@ -144,7 +145,7 @@ public:
     return *this;
   }
 
-protected:
+ protected:
   // CSR to CSC conversion and back
   const CSRMatrix GetTransposed() const {
     CSRMatrix other(num_cols_, counts_.size() - 1);
