@@ -71,14 +71,8 @@ TEST(LinearStretchingOmp, Comparison_seq_with_omp) {
     std::vector<int> mx = getRandomMatrix(size, size);
     std::vector<int> seq;
     std::vector<int> omp;
-    double start = omp_get_wtime();
     seq = histogramStretching(mx, size, size);
-    double seq_finish = omp_get_wtime() - start;
-    start = omp_get_wtime();
     omp = histogramStretchingOmp(mx, size, size);
-    double omp_finish = omp_get_wtime() - start;
-    std::cout << "Seq time: " << seq_finish << " | " << "Omp time: " << omp_finish;
-    std::cout << " | " << "Boost: " << seq_finish - omp_finish << std::endl;
     ASSERT_EQ(seq, omp);
 }
 
