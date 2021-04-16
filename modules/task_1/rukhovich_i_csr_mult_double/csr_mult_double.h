@@ -26,15 +26,11 @@ template <class T>
 bool Compare(const T& lhs, const T& rhs) {
   static float float_eps = 1e-3;
   static double double_eps = 1e-6;
-  static long double long_double_eps = 1e-8;
   if (std::is_same<T, float>::value) {
     return (lhs + float_eps > rhs) && (lhs - float_eps < rhs);
   }
   if (std::is_same<T, double>::value) {
     return (lhs + double_eps > rhs) && (lhs - double_eps < rhs);
-  }
-  if (std::is_same<T, long double>::value) {
-    return (lhs + long_double_eps > rhs) && (lhs - long_double_eps < rhs);
   }
   return lhs == rhs;
 }
