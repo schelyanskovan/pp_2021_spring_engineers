@@ -3,7 +3,6 @@
 #include <random>
 #include <vector>
 #include <ctime>
-#include <omp.h>
 std::vector<int> getRandomMatrix(int rows, int clmns) {
     if (rows <= 0 || clmns <= 0) {
         return std::vector<int>();

@@ -1,7 +1,6 @@
 // Copyright 2021 Rachin Igor
 #include <gtest/gtest.h>
 #include <vector>
-#include <omp.h>
 #include <iostream>
 #include "./lin_hist_stret.h"
 
