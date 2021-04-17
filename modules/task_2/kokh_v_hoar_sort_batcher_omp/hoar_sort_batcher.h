@@ -9,4 +9,4 @@ int getDelta(int n, int p);
 void sort_parallel(double* mas, int n, int proc);
 void splitter(double* mas, int start, int size1, int size2, int even);
 
-#endif // MODULES_TASK_2_KOKH_V_HOAR_SORT_BATCHER_OMP_HOAR_SORT_BATCHER_H_
+#endif     // MODULES_TASK_2_KOKH_V_HOAR_SORT_BATCHER_OMP_HOAR_SORT_BATCHER_H_
