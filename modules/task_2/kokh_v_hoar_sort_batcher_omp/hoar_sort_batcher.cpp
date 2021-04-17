@@ -5,9 +5,6 @@
 #include "../../modules/task_2/kokh_v_hoar_sort_batcher_omp/hoar_sort_batcher.h"
 
 
-const int int_max = INT_MAX;
-
-
 int getDelta(int n, int p) {
     int dop = n / p;
     int a = dop + dop % 2;
@@ -107,6 +104,7 @@ void sort_parallel(double* mas, int n, int proc) {
     int  dop, a, dop_for_b, b, delta, new_n, m, proc_div2, last_value;
     omp_set_num_threads(proc);
     dop = n / proc;
+    int int_max = 2147483647;
     a = dop % 2 + dop;
     dop_for_b = n - a * (proc - 1);
     b = dop_for_b + dop_for_b % 2;
