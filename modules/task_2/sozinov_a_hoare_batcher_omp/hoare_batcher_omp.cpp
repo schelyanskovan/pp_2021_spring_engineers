@@ -1,12 +1,12 @@
 // Copyright 2021 Sozinov Alex
 
+#include "../../../modules/task_2/sozinov_a_hoare_batcher_omp/hoare_batcher_omp.h"
+#include <omp.h>
 #include <algorithm>
 #include <random>
 #include <utility>
 #include <iostream>
 #include <vector>
-#include <omp.h>
-#include "../../../modules/task_2/sozinov_a_hoare_batcher_omp/hoare_batcher_omp.h"
 
 std::vector<double> GetRandomVector(int size) {
   std::vector<double> genVec;
