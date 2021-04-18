@@ -6,8 +6,7 @@ TEST(Convex_Hull_Bin, Test_Generate_Image) {
     int height = 20;
     int width = 40;
     std::vector<uint8_t> img(height * width);
-    img = generateImage(width, height);
-    ASSERT_NO_THROW(/*img = generateImage(width, height)*/ 0);
+    ASSERT_NO_THROW(img = generateImage(width, height));
 }
 
 TEST(Convex_Hull_Bin, Test_Convex_Bin_Random_Image) {
