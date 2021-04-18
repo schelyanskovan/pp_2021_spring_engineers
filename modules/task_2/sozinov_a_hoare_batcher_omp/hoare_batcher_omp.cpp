@@ -2,6 +2,7 @@
 
 #include <algorithm>
 #include <random>
+#include <utility>
 #include <iostream>
 #include <vector>
 #include <omp.h>
@@ -43,8 +44,7 @@ void Sort(std::vector<double>* vector, int begin, int end) {
     Sort(vector, begin, last);
 }
 
-void SeqSort(std::vector<double>* vector)
-{
+void SeqSort(std::vector<double>* vector) {
   std::vector<double> left(vector->begin(), vector->begin() + vector->size() / 2);
   std::vector<double> right(vector->begin() + vector->size() / 2, vector->end());
   Sort(&left, 0, left.size() - 1);
@@ -60,8 +60,7 @@ void EvenOddSplit(std::vector<double>* res, const std::vector<double>& left,
   if (type == EvenOdd::Even) {
     leftIndex = 0;
     rightIndex = 0;
-  }
-  else {
+  } else {
     leftIndex = 1;
     rightIndex = 1;
   }
@@ -70,8 +69,7 @@ void EvenOddSplit(std::vector<double>* res, const std::vector<double>& left,
     if (left[leftIndex] <= right[rightIndex]) {
       (*res).push_back(left[leftIndex]);
       leftIndex += 2;
-    }
-    else {
+    } else {
       (*res).push_back(right[rightIndex]);
       rightIndex += 2;
     }
@@ -81,8 +79,7 @@ void EvenOddSplit(std::vector<double>* res, const std::vector<double>& left,
     for (size_t i = rightIndex; i < right.size(); i += 2) {
       (*res).push_back(right[i]);
     }
-  }
-  else {
+  } else {
     for (size_t i = leftIndex; i < left.size(); i += 2) {
       (*res).push_back(left[i]);
     }
@@ -99,12 +96,10 @@ void BatcherMerge(std::vector<double>* res, const std::vector<double>& left, con
 
   size_t indexL = 0, indexR = 0;
   while (indexL < even.size() && indexR < odd.size()) {
-
     if (even[indexL] < odd[indexR]) {
       (*res).push_back(even[indexL]);
       ++indexL;
-    }
-    else {
+    } else {
       (*res).push_back(odd[indexR]);
       ++indexR;
     }
@@ -183,8 +178,7 @@ void ParSort(std::vector<double>* vector, int numThreads) {
   }
 }
 
-void FillOffset(std::vector<int>* offset, const int size, const int count)
-{
+void FillOffset(std::vector<int>* offset, const int size, const int count) {
   int del = size % count;
   (*offset)[0] = 0;
   for (int i = 1; i < count; ++i) {
@@ -194,8 +188,7 @@ void FillOffset(std::vector<int>* offset, const int size, const int count)
   offset->push_back(size);
 }
 
-int GetMaxNumThreads(const int numThread)
-{
+int GetMaxNumThreads(const int numThread) {
   int res = 1;
   while (res * 2 <= numThread)
     res *= 2;

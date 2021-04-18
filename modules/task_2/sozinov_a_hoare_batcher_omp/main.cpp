@@ -34,11 +34,11 @@ TEST(Sort, correct_sort_10000) {
   double seq_start = omp_get_wtime();
   SeqSort(&vect);
   double seq_end = omp_get_wtime();
-  
+
   double par_start = omp_get_wtime();
   ParSort(&par_vect, 1);
   double par_end = omp_get_wtime();
-  
+
   std::cout << "vector size = " << vect.size() << std::endl;
   std::cout << "Seq: " << seq_end - seq_start << std::endl;
   std::cout << "Par: " << par_end - par_start << std::endl;
@@ -80,7 +80,7 @@ TEST(Sort, correct_sort_100000) {
   double par_start = omp_get_wtime();
   ParSort(&par_vect, 3);
   double par_end = omp_get_wtime();
-  
+
   std::cout << "vector size = " << vect.size() << std::endl;
   std::cout << "Seq: " << seq_end - seq_start << std::endl;
   std::cout << "Par: " << par_end - par_start << std::endl;
