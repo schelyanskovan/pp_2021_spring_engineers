@@ -14,8 +14,8 @@ std::vector<int> RadixSort(std::vector<int> vect, int size);
 std::vector<int> RadixSortParallel(std::vector<int> vect, int size,
                                    int threads);
 
-std::vector<int> Merge(const std::vector<int> vect_left,
-                       const std::vector<int> vect_right);
+std::vector<int> Merge(const std::vector<int> &vect_left,
+                       const std::vector<int> &vect_right);
 
 
 

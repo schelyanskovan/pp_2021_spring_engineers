@@ -80,8 +80,8 @@ std::vector<int> RadixSort(std::vector<int> vect, int size) {
   }
   return vect1;
 }
-std::vector<int> Merge(std::vector<int> vect_left,
-                       std::vector<int> vect_right) {
+std::vector<int> Merge(std::vector<int> &vect_left,
+                       std::vector<int> &vect_right) {
   std::vector<int> result((vect_left.size() + vect_right.size()));
 
   int leftSize = static_cast<int>(vect_left.size());
