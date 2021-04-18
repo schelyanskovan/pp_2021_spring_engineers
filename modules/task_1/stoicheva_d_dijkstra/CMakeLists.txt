@@ -1,11 +1,25 @@
+cmake_minimum_required(VERSION 3.12)
+
 get_filename_component(ProjectId ${CMAKE_CURRENT_SOURCE_DIR} NAME)
+get_filename_component(PARENT_DIR ../../.. ABSOLUTE)
+message("PARENT_DIR ${PARENT_DIR}")
 
 if ( USE_SEQ )
     set(ProjectId "${ProjectId}_seq")
     project( ${ProjectId} )
     message( STATUS "-- " ${ProjectId} )
+    
+    add_subdirectory("${PARENT_DIR}/3rdparty/gtest" build)
+    include_directories("${PARENT_DIR}/3rdparty/gtest/googletest/include")
+    if( WIN32 )
+        include_directories("${PARENT_DIR}/3rdparty/gtest-mpi/win")
+    else( WIN32 )
+        include_directories("${PARENT_DIR}/3rdparty/gtest-mpi/linux")
+    endif( WIN32 )
 
-    file(GLOB_RECURSE ALL_SOURCE_FILES *.cpp *.h)
+    set(PACK_LIB "${ProjectId}_lib")
+
+    file(GLOB ALL_SOURCE_FILES *.cpp *.h)
 
     set(PACK_LIB "${ProjectId}_lib")
     add_library(${PACK_LIB} STATIC ${ALL_SOURCE_FILES} )
