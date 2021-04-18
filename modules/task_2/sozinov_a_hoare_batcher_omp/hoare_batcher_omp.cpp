@@ -117,7 +117,7 @@ void BatcherMerge(std::vector<double>* res, const std::vector<double>& left, con
   }
 }
 
-void ParSort(std::vector<double>* vector, int numThreads) {
+void ParSort(std::vector<double>* vector, unsigned int numThreads) {
   numThreads = GetMaxNumThreads(numThreads);
   if (vector->size() == 1)
     return;
@@ -128,8 +128,6 @@ void ParSort(std::vector<double>* vector, int numThreads) {
 
   std::vector<int> offset(numThreads, 0);
   std::vector<double> resVec = std::vector<double>(vector->size(), 0), locVec;
-  int del = vector->size() % numThreads;
-  int size = static_cast<int>(vector->size()) / numThreads;
   FillOffset(&offset, vector->size(), numThreads);
 
   omp_set_num_threads(numThreads);
@@ -147,7 +145,7 @@ void ParSort(std::vector<double>* vector, int numThreads) {
     }
   }
 
-  int mergeNumThreads = (numThreads + numThreads % 2) / 2;
+  unsigned int mergeNumThreads = (numThreads + numThreads % 2) / 2;
   if (mergeNumThreads < 1) {
     *vector = std::vector<double>(resVec);
     return;
@@ -188,8 +186,8 @@ void FillOffset(std::vector<int>* offset, const int size, const int count) {
   offset->push_back(size);
 }
 
-int GetMaxNumThreads(const int numThread) {
-  int res = 1;
+unsigned int GetMaxNumThreads(const unsigned int numThread) {
+  unsigned int res = 1;
   while (res * 2 <= numThread)
     res *= 2;
   return res;
