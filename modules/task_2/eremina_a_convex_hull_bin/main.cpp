@@ -29,7 +29,7 @@ TEST(Convex_Hull_Bin, Test_OMP_Convex_Bin_Random_Image) {
             }
         }
     }
-    double ratio = static_cast<double>(count/(width*height));
+    double ratio = static_cast<double>(count)/(width*height);
     ASSERT_TRUE(ratio >= 0.95);
 }
 
@@ -56,7 +56,7 @@ TEST(Convex_Hull_Bin, Test_Convex_Bin_Small_Image) {
             }
         }
     }
-    double ratio = static_cast<double>(count/(width*height));
+    double ratio = static_cast<double>(count)/(width*height);
     ASSERT_TRUE(ratio >= 0.95);
 }
 
@@ -96,7 +96,7 @@ TEST(Convex_Hull_Bin, Test_Convex_Bin_Medium_Image) {
             }
         }
     }
-    double ratio = static_cast<double>(count/(width*height));
+    double ratio = static_cast<double>(count)/(width*height);
     ASSERT_TRUE(ratio >= 0.95);
 }
 
@@ -181,7 +181,7 @@ TEST(Convex_Hull_Bin, Test_Convex_Bin_Large_Image) {
             }
         }
     }
-    double ratio = static_cast<double>(count/(width*height));
+    double ratio = static_cast<double>(count)/(width*height);
     ASSERT_TRUE(ratio >= 0.95);
 }
 
