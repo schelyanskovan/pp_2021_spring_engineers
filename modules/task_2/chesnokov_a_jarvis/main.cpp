@@ -190,13 +190,19 @@ TEST(JarvisTest, Big_Check_10000_Random_Points_With_Seq) {
   std::mt19937 generator;
   generator.seed(322);
 
-  std::uniform_real_distribution<> distribution(-50.0, 50.0);
-
   std::list<Point> pts;
 
-  const int count = 100000;
-  for (int i = 0; i < count; ++i)
-    pts.emplace_back(distribution(generator), distribution(generator));
+
+  std::uniform_real_distribution<> angle(0, 2 * std::_Pi);
+  std::uniform_real_distribution<> r(250.0, 300.0);
+
+  const int count = 10000;
+
+  for (int i = 0; i < count; ++i) {
+    double rad = r(generator);
+    double an = angle(generator);
+    pts.emplace_back(rad * std::sin(an), rad * std::cos(an));
+  }
 
   double t1, t2, t3;
 

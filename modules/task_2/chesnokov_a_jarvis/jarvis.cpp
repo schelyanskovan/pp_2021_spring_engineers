@@ -75,7 +75,7 @@ std::vector<Point> Jarvis::makeHullOmp(std::list<Point> in)
 
   int turn = 0;
 #pragma omp parallel shared(turn) num_threads(4)
-  {
+{
     int tid = omp_get_thread_num();
     int numThreads = omp_get_num_threads();
 
@@ -89,8 +89,13 @@ std::vector<Point> Jarvis::makeHullOmp(std::list<Point> in)
     Point start = findWithMaxProjection(startvec, in);
     Point end = findWithMaxProjection(endvec, in);
 
+/*#pragma omp critical
+    {
+      std::cout << "#" << tid << "start == " << start << "end == " << end << std::endl;
+    }*/
+
     std::vector<Point> subHull;
-    if (start != end) {
+    if (start != end || numThreads == 1) {
 
       // start will be the first point in subHull
       subHull.emplace_back(start);
@@ -100,6 +105,9 @@ std::vector<Point> Jarvis::makeHullOmp(std::list<Point> in)
       // find next point of hull while last found != end
       while (LAST(subHull) != end) {
         subHull.emplace_back(findWithMinAngle(PRE_LAST(subHull), LAST(subHull), &in));
+        /*if (tid == 2) {
+          std::cout << LAST(subHull) << " === " << end << std::endl;
+        }*/
       }
 
       subHull.pop_back();
@@ -156,8 +164,7 @@ Point Jarvis::findWithMinAngle(const Point& prev, const Point& cur, std::list<Po
   return res;
 }
 
-Point Jarvis::findWithMaxProjection(const Point vec, const std::list<Point>& in)
-{
+Point Jarvis::findWithMaxProjection(const Point vec, const std::list<Point>& in) {
   double maxProj = 0;
   std::list<Point>::const_iterator answer = in.begin();
   for (auto it = in.begin(); it != in.end(); it++) {
