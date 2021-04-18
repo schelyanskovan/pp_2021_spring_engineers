@@ -30,12 +30,12 @@ TEST(radix_sort_omp, correct_works) {
   ASSERT_EQ(correctAnswer, myAnswer);
 }
 
-TEST(simple_merge, simple_merge) {
-  std::vector<int> vect = {2, 9, 11, 7, 13, 4, 12, 8, 1, 15, 22};
-  std::vector<int> sorted = RadixSortParallel(vect, 1, 4);
-  std::vector<int> correctAnswer = {1, 2, 4, 7, 8, 9, 11, 12, 13, 15, 22};
-  ASSERT_EQ(sorted, correctAnswer);
-}
+// TEST(simple_merge, simple_merge) {
+//  std::vector<int> vect = {2, 9, 11, 7, 13, 4, 12, 8, 1, 15, 22};
+//  std::vector<int> sorted = RadixSortParallel(vect, 1, 4);
+//  std::vector<int> correctAnswer = {1, 2, 4, 7, 8, 9, 11, 12, 13, 15, 22};
+//  ASSERT_EQ(sorted, correctAnswer);
+// }
 
 int main(int argc, char **argv) {
   // int size = 10000000;
