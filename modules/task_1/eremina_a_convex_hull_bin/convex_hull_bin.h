@@ -5,6 +5,7 @@
 #include <vector>
 #include <map>
 #include <stack>
+#include <cstdint>
 
 typedef struct {
     int x;
