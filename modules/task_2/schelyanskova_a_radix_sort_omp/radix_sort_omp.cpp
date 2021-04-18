@@ -1,14 +1,16 @@
 // Copyright 2021 Schelyanskova Anastasiia
 
+#include "../../../modules/task_2/schelyanskova_a_radix_sort_omp/radix_sort_omp.h"
+
 #include <math.h>
 #include <omp.h>
+
 #include <algorithm>
 #include <ctime>
 #include <iostream>
 #include <random>
 #include <string>
 #include <vector>
-#include "../../../modules/task_2/schelyanskova_a_radix_sort_omp/radix_sort_omp.h"
 
 std::vector<int> getRandomVector(int sz) {
   std::random_device dev;
@@ -80,7 +82,6 @@ std::vector<int> RadixSort(std::vector<int> vect, int size) {
 }
 std::vector<int> Merge(std::vector<int> vect_left,
                        std::vector<int> vect_right) {
-
   std::vector<int> result((vect_left.size() + vect_right.size()));
 
   int leftSize = static_cast<int>(vect_left.size());
@@ -106,7 +107,7 @@ std::vector<int> Merge(std::vector<int> vect_left,
 
   return result;
 }
-//std::vector<int> MergeOmp(std::vector<int> vect_left,
+// std::vector<int> MergeOmp(std::vector<int> vect_left,
 //                          std::vector<int> vect_right) {
 //  std::vector<int> result((vect_left.size() + vect_right.size()));
 //
@@ -188,4 +189,3 @@ std::vector<int> RadixSortParallel(std::vector<int> vect, int size,
 
   return result;
 }
-

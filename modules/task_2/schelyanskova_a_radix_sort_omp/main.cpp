@@ -1,10 +1,11 @@
 // Copyright 2021 Schelyanskova Anastasiia
-#include <omp.h>
 #include <gtest/gtest.h>
-#include <vector>
-#include <algorithm>
-#include "./radix_sort_omp.h"
+#include <omp.h>
 
+#include <algorithm>
+#include <vector>
+
+#include "./radix_sort_omp.h"
 
 TEST(getRandomVector, wrong_size) { ASSERT_ANY_THROW(getRandomVector(-100)); }
 
@@ -30,8 +31,8 @@ TEST(radix_sort_omp, correct_works) {
 }
 
 TEST(simple_merge, simple_merge) {
-  std::vector<int> vect = {2, 9, 11, 7, 13, 4, 12, 8, 1, 15} ;
-  std::vector<int> sorted = RadixSortParallel(vect, 1,4);
+  std::vector<int> vect = {2, 9, 11, 7, 13, 4, 12, 8, 1, 15};
+  std::vector<int> sorted = RadixSortParallel(vect, 1, 4);
   std::vector<int> correctAnswer = {1, 2, 4, 7, 8, 9, 11, 12, 13, 15};
   ASSERT_EQ(sorted, correctAnswer);
 }

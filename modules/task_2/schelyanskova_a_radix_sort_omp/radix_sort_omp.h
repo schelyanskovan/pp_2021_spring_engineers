@@ -2,9 +2,10 @@
 #ifndef MODULES_TASK_2_SCHELYANSKOVA_A_RADIX_SORT_OMP_RADIX_SORT_OMP_H_
 #define MODULES_TASK_2_SCHELYANSKOVA_A_RADIX_SORT_OMP_RADIX_SORT_OMP_H_
 
+#include <omp.h>
+
 #include <string>
 #include <vector>
-#include <omp.h>
 
 std::vector<int> getRandomVector(int size);
 int get_max_power(std::vector<int> vect);
