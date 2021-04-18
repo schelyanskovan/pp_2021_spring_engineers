@@ -9,14 +9,12 @@
 
 TEST(getRandomVector, wrong_size) { ASSERT_ANY_THROW(getRandomVector(-100)); }
 
+TEST(getRandomVector, no_exceptions) { ASSERT_NO_THROW(getRandomVector(100)); }
+
 TEST(getRandomVector, works) {
   std::vector<int> vect = getRandomVector(100);
   ASSERT_EQ(static_cast<int>(vect.size()), 100);
 }
-
-TEST(getRandomVector, no_exceptions) { ASSERT_NO_THROW(getRandomVector(100)); }
-
-
 
 TEST(get_max_power, no_exceptions) {
   std::vector<int> vect = {1, 75, 87, 9, 400, 5};

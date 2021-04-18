@@ -84,8 +84,8 @@ std::vector<int> Merge(std::vector<int> &vect_left,
                        std::vector<int> &vect_right) {
   std::vector<int> result((vect_left.size() + vect_right.size()));
 
-  int leftSize = static_cast<int>(vect_left.size());
-  int rightSize = static_cast<int>(vect_right.size());
+  auto const leftSize = static_cast<int>(vect_left.size());
+  auto const rightSize = static_cast<int>(vect_right.size());
 
   auto i = 0, j = 0, k = 0;
   for (k = 0; k < leftSize + rightSize - 1; k++) {
