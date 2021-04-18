@@ -5,7 +5,6 @@
 #include <climits>
 #include <limits>
 #include "../../../modules/task_2/chesnokov_a_jarvis/jarvis.h"
-#include "jarvis.h"
 
 bool almost_equal(double x, double y, int ulp) {
   // the machine epsilon has to be scaled to the magnitude of the values used
@@ -49,9 +48,8 @@ std::vector<Point> Jarvis::makeHull(std::list<Point> in) {
   return hull;
 }
 
-std::vector<Point> Jarvis::makeHullOmp(std::list<Point> in)
-{
-  const static double Pi = 3.14159265358979;
+std::vector<Point> Jarvis::makeHullOmp(std::list<Point> in) {
+  static const double Pi = 3.14159265358979;
 
   if (in.empty()) {
     // empty hull for empty list
@@ -79,7 +77,7 @@ std::vector<Point> Jarvis::makeHullOmp(std::list<Point> in)
     int tid = omp_get_thread_num();
     int numThreads = omp_get_num_threads();
 
-    // divide the plane into sectors of responsibility 
+    // divide the plane into sectors of responsibility
     double sector = 2 * Pi / numThreads;
     // find start and end vectors
     Point startvec(cos(Pi - tid * sector), sin(Pi - tid * sector));
@@ -96,7 +94,6 @@ std::vector<Point> Jarvis::makeHullOmp(std::list<Point> in)
 
     std::vector<Point> subHull;
     if (start != end || numThreads == 1) {
-
       // start will be the first point in subHull
       subHull.emplace_back(start);
       // find imaginary point
@@ -112,7 +109,7 @@ std::vector<Point> Jarvis::makeHullOmp(std::list<Point> in)
 
       subHull.pop_back();
     }
-    //printf("%d\n", tid);
+    // printf("%d\n", tid);
     while (turn != tid) { printf(""); }
     hull.insert(hull.end(), subHull.begin(), subHull.end());
     turn++;
@@ -159,7 +156,7 @@ Point Jarvis::findWithMinAngle(const Point& prev, const Point& cur, std::list<Po
   }
 
   Point res = *min_point_it;
-  //in->erase(min_point_it);
+  // in->erase(min_point_it);
 
   return res;
 }
