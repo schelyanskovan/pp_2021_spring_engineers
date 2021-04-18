@@ -104,14 +104,12 @@ std::vector<double> serialRadixSort(const std::vector<double>& source) {
 std::vector<double> RadixSort(const std::vector<double>& source) {
   int threadCount = 4;
   std::vector<double> resultVector;
-  int bunch_size;
-  int bunchesCount;
-  std::vector<std::vector<double>> bunches;
   std::vector<std::vector<double>> sortedVectors;
 
-  bunch_size = (source.size() - 1) / threadCount + 1;
-  bunches = std::vector<std::vector<double>>((source.size() + bunch_size) /
-                                             bunch_size);
+  int bunch_size = (source.size() - 1) / threadCount + 1;
+  std::vector<std::vector<double>> bunches((source.size() + bunch_size) /
+                                           bunch_size);
+  int bunchesCount = bunches.size();
 
   for (size_t i = 0; i < source.size(); i += bunch_size) {
     auto last = std::min(source.size(), i + bunch_size);
@@ -124,11 +122,14 @@ std::vector<double> RadixSort(const std::vector<double>& source) {
   bunchesCount = bunches.size();
 
 #pragma omp parallel num_threads(threadCount)
+  {
 #pragma omp for
-  for (auto i = 0; i < bunchesCount; i++) {
-    auto sortedBunch = serialRadixSort(bunches[i]);
+    for (auto i = 0; i < bunchesCount; i++) {
+      auto sortedBunch = serialRadixSort(bunches[i]);
 #pragma omp critical
-    sortedVectors.push_back(sortedBunch);
+      sortedVectors.push_back(sortedBunch);
+      sortedBunch.clear();
+    }
   }
 
   resultVector = sortedVectors[0];
@@ -137,6 +138,8 @@ std::vector<double> RadixSort(const std::vector<double>& source) {
       resultVector = Merge(resultVector, sortedVectors[i + 1]);
     }
   }
+  sortedVectors.clear();
+  bunches.clear();
 
   return resultVector;
 }
