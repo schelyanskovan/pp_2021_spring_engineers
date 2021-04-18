@@ -110,7 +110,7 @@ std::vector<Point> Jarvis::makeHullOmp(std::list<Point> in) {
       subHull.pop_back();
     }
     // printf("%d\n", tid);
-    while (turn != tid);
+    while (turn != tid) {}
     hull.insert(hull.end(), subHull.begin(), subHull.end());
     turn++;
   }
