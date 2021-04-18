@@ -12,7 +12,7 @@ int get_max_power(std::vector<int> vect);
 bool vector_sort(std::vector<int> vect);
 std::vector<int> RadixSort(std::vector<int> vect, int size);
 // std::vector<int> Merge(const std::vector<int> &vect_left,
-                       const std::vector<int> &vect_right);
+//                      const std::vector<int> &vect_right);
 std::vector<int> RadixSortParallel(std::vector<int> vect, int size,
                                    int threads);
 

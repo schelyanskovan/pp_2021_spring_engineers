@@ -21,6 +21,17 @@ std::vector<int> getRandomVector(int sz) {
   }
   return vect;
 }
+
+bool vector_sort(std::vector<int> vect) {
+  int size = vect.size();
+  for (int i = 0; i < size - 1; i++) {
+    if (vect[i] > vect[i + 1]) {
+      return false;
+    }
+  }
+  return true;
+}
+
 int get_max_power(std::vector<int> vect) {
   int max_power = 0;
   int tmp = vect[0];
@@ -40,15 +51,7 @@ int get_max_power(std::vector<int> vect) {
   return max_power;
 }
 
-bool vector_sort(std::vector<int> vect) {
-  int size = vect.size();
-  for (int i = 0; i < size - 1; i++) {
-    if (vect[i] > vect[i + 1]) {
-      return false;
-    }
-  }
-  return true;
-}
+
 
 std::vector<int> RadixSort(std::vector<int> vect, int size) {
   std::vector<std::vector<int>> vect_start(10);
