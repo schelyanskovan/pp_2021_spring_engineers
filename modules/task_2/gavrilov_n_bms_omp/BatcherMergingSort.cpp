@@ -158,7 +158,7 @@ void Sort(std::vector<int>* data, int splitCount) {
             while (data->size() % size != 0) {
                 data->push_back(MY_INT_MAX);
             }
-            countPerProc = (int)data->size() / size;
+            countPerProc = static_cast<int>(data->size()) / size;
         }
 
         std::vector<int> localData;
