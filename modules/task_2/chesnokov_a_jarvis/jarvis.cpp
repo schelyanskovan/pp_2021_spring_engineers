@@ -71,7 +71,7 @@ std::vector<Point> Jarvis::makeHullOmp(std::list<Point> in) {
     return hull;
   }
 
-  int turn = 0;
+  volatile int turn = 0;
 #pragma omp parallel shared(turn) num_threads(4)
 {
     int tid = omp_get_thread_num();
@@ -110,7 +110,7 @@ std::vector<Point> Jarvis::makeHullOmp(std::list<Point> in) {
       subHull.pop_back();
     }
     // printf("%d\n", tid);
-    while (turn != tid) { printf(""); }
+    while (turn != tid);
     hull.insert(hull.end(), subHull.begin(), subHull.end());
     turn++;
   }

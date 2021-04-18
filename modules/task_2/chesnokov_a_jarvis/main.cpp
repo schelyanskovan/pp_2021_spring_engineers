@@ -193,7 +193,7 @@ TEST(JarvisTest, Big_Check_10000_Random_Points_With_Seq) {
   std::list<Point> pts;
 
 
-  std::uniform_real_distribution<> angle(0, 2 * std::_Pi);
+  std::uniform_real_distribution<> angle(0, 2 * 3.14);
   std::uniform_real_distribution<> r(250.0, 300.0);
 
   const int count = 10000;
