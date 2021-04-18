@@ -137,7 +137,7 @@ std::vector<int> RadixSortParallel(std::vector<int> vect, int size,
 
   std::vector<int> result;
 
-  double t3 = omp_get_wtime();
+  // double t3 = omp_get_wtime();
 
   for (int i = 0; i < localSortedVectors.size(); i++) {
     result = Merge(result, localSortedVectors[i]);
