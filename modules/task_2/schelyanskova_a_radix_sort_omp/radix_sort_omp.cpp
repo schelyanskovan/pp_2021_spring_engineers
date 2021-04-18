@@ -112,7 +112,7 @@ std::vector<int> RadixSortParallel(std::vector<int> vect, int size,
                                    int threads) {
   std::vector<std::vector<int>> localSortedVectors;
 
-  double t1 = omp_get_wtime();
+  //double t1 = omp_get_wtime();
 
 #pragma omp parallel num_threads(threads)
   {
@@ -133,7 +133,7 @@ std::vector<int> RadixSortParallel(std::vector<int> vect, int size,
     localSortedVectors[threadID] = RadixSort(local, local.size());
   }
 
-  double t2 = omp_get_wtime();
+  //double t2 = omp_get_wtime();
 
   std::vector<int> result;
 
@@ -143,10 +143,10 @@ std::vector<int> RadixSortParallel(std::vector<int> vect, int size,
     result = Merge(result, localSortedVectors[i]);
   }
 
-  double t4 = omp_get_wtime();
+  //double t4 = omp_get_wtime();
 
-  std::cout << "Sorting: " << t2 - t1 << "\n";
-  std::cout << "Merging: " << t4 - t3 << "\n";
+  /*std::cout << "Sorting: " << t2 - t1 << "\n";
+  std::cout << "Merging: " << t4 - t3 << "\n";*/
 
   return result;
 }

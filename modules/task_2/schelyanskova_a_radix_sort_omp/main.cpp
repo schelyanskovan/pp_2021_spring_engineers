@@ -38,27 +38,27 @@ TEST(simple_merge, simple_merge) {
 }
 
 int main(int argc, char **argv) {
-  int size = 10000000;
-  std::vector<int> unsorted = getRandomVector(size);
-  /*for (int i = 0; i < size; i++) {
-    std::cout << unsorted[i] << " ";
-  }
-  std::cout << "\n";*/
-  double t1 = omp_get_wtime();
-  std::vector<int> sorted = RadixSort(unsorted, size);
-  double t2 = omp_get_wtime();
-  std::vector<int> sortedParallel = RadixSortParallel(unsorted, size, 4);
-  double t3 = omp_get_wtime();
-  std::cout << "Sequential time: " << t2 - t1 << "\n";
-  std::cout << "Parallel time: " << t3 - t2 << "\n";
-  /*for (int i = 0; i < size; i++) {
-    std::cout << sorted[i] << " ";
-  }
-  std::cout << "\n";
-  for (int i = 0; i < sortedParallel.size(); i++) {
-    std::cout << sortedParallel[i] << " ";
-  }*/
-  std::cout << "\n";
+  //int size = 10000000;
+  //std::vector<int> unsorted = getRandomVector(size);
+  ///*for (int i = 0; i < size; i++) {
+  //  std::cout << unsorted[i] << " ";
+  //}
+  //std::cout << "\n";*/
+  //double t1 = omp_get_wtime();
+  //std::vector<int> sorted = RadixSort(unsorted, size);
+  //double t2 = omp_get_wtime();
+  //std::vector<int> sortedParallel = RadixSortParallel(unsorted, size, 4);
+  //double t3 = omp_get_wtime();
+  //std::cout << "Sequential time: " << t2 - t1 << "\n";
+  //std::cout << "Parallel time: " << t3 - t2 << "\n";
+  ///*for (int i = 0; i < size; i++) {
+  //  std::cout << sorted[i] << " ";
+  //}
+  //std::cout << "\n";
+  //for (int i = 0; i < sortedParallel.size(); i++) {
+  //  std::cout << sortedParallel[i] << " ";
+  //}*/
+  //std::cout << "\n";
   ::testing::InitGoogleTest(&argc, argv);
   return RUN_ALL_TESTS();
 }
