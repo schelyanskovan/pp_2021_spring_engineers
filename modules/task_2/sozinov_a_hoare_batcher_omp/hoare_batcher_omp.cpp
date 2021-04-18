@@ -132,7 +132,7 @@ void ParSort(std::vector<double>* vector, unsigned int numThreads) {
 
   omp_set_num_threads(numThreads);
 
-#pragma omp parallel private(locVec) shared(vector, offset, del)
+#pragma omp parallel private(locVec) shared(vector, offset)
   {
     int numThread = omp_get_thread_num();
     locVec = std::vector<double>(offset[numThread + 1] - offset[numThread], 0);
