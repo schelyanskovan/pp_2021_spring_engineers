@@ -146,7 +146,7 @@ void ParSort(std::vector<double>* vector, unsigned int numThreads) {
   }
 
   unsigned int mergeNumThreads = (numThreads + numThreads % 2) / 2;
-  if (mergeNumThreads < 1) {
+  if (mergeNumThreads < 1 || numThreads == 1) {
     *vector = std::vector<double>(resVec);
     return;
   }
