@@ -8,9 +8,9 @@
 void Random_Matrix_A(int S, double** A) {
     for (int i = 0; i < S; i++) {
         for (int j = 0; j < S; j++) {
-            A[i][i] = rand_r() % 2;
+            A[i][i] = std::rand() % 2;
             if ((i != j) && (i < j)) {
-                A[i][j] = rand_r() % 100 - rand_r() % 100;
+                A[i][j] = std::rand() % 100 - std::rand() % 100;
             }
             A[j][i] = A[i][j];
         }
@@ -19,7 +19,7 @@ void Random_Matrix_A(int S, double** A) {
 
 void Random_Matrix_B(int S, double* B) {
     for (int i = 0; i < S; i++) {
-        B[i] = rand_r() % 100 - rand_r() % 100;
+        B[i] = std::rand() % 100 - std::rand() % 100;
     }
 }
 
@@ -47,7 +47,7 @@ double conj_grad(double** A, double* B, int S, int proc) {
     double* r = new double[S];
     double* Ax = new double[S];
     double alpha, beta, sumB, num, R, den;
-    int i, j, IterNum = 1;
+    int i, IterNum = 1;
 
     double MaxIteration = 100000;
     for (i = 0; i < S; i++) {
@@ -93,8 +93,8 @@ double conj_grad(double** A, double* B, int S, int proc) {
         for (int j = 0; j < S; j++) {
             A1[i] += A[i][j]*x[j];
         }
-        if ((abs(A1[i]) > abs(B[i])) && (abs(A1[i]) - abs(B[i]) > fault)||
-        (abs(A1[i]) <= abs(B[i])) && (abs(B[i]) - abs(A1[i]) > fault)) {
+        if (((abs(A1[i]) > abs(B[i])) && (abs(A1[i]) - abs(B[i]) > fault))||
+        ((abs(A1[i]) <= abs(B[i])) && (abs(B[i]) - abs(A1[i]) > fault))) {
             res = 1;
             break;
         }
