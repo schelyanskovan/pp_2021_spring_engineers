@@ -87,7 +87,7 @@ double conj_grad(double** A, double* B, int S, int proc) {
     if (S / 10 == 0) {
         F = 1;
     }
-    double fault = 0.2 * F;
+    double fault = 0.3 * F;
     for (i = 0; i < S; i++) {
         A1[i] = 0;
         for (int j = 0; j < S; j++) {
