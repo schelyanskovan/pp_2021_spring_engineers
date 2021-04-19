@@ -5,7 +5,7 @@
 #include "../../../modules/task_2/gorbunova_v_conjugate_grad_omp/conjugate_gradient.h"
 #include <iostream>
 
-void Random_Matrix_A(int S,double** A) {
+void Random_Matrix_A(int S, double** A) {
     for (int i = 0; i < S; i++) {
         for (int j = 0; j < S; j++) {
             A[i][i] = rand_r() % 2;
@@ -23,7 +23,7 @@ void Random_Matrix_B(int S, double* B) {
     }
 }
 
-void MatrixMultiplicate(double** A, int S, double* Ax,double* x1){
+void MatrixMultiplicate(double** A, int S, double* Ax, double* x1) {
 #pragma omp parallel for
     for (int i = 0; i < S; i++){
         Ax[i] = 0;
@@ -32,7 +32,7 @@ void MatrixMultiplicate(double** A, int S, double* Ax,double* x1){
     }
 }
 
-double multiplicate(int S, double* x1, double* x2){
+double multiplicate(int S, double* x1, double* x2) {
     double result = 0;
 #pragma omp parallel for reduction(+:result)
     for (int i = 0; i < S; i++) {
@@ -41,7 +41,7 @@ double multiplicate(int S, double* x1, double* x2){
     return result;
 }
 
-double conj_grad(double** A, double* B, int S,int proc){
+double conj_grad(double** A, double* B, int S, int proc) {
     double* x = new double[S];
     double* d = new double[S];
     double* r = new double[S];
@@ -55,13 +55,11 @@ double conj_grad(double** A, double* B, int S,int proc){
     }
     omp_set_num_threads(proc);
     MatrixMultiplicate(A, S, Ax, x);
-    
-    for (int i = 0; i < S; i++){
+    for (int i = 0; i < S; i++) {
         r[i] = B[i] - Ax[i];
         d[i] = r[i];
     }
-    
-    for (sumB = 0, i = 0; i < S; i++){
+    for (sumB = 0, i = 0; i < S; i++) {
         sumB += B[i] * B[i];
     }
 
@@ -95,7 +93,7 @@ double conj_grad(double** A, double* B, int S,int proc){
         for (int j = 0; j < S; j++) {
             A1[i] += A[i][j]*x[j];
         }
-        if ((abs(A1[i])>abs(B[i])) && (abs(A1[i]) - abs(B[i]) > fault) || 
+        if ((abs(A1[i]) > abs(B[i])) && (abs(A1[i]) - abs(B[i]) > fault)||
         (abs(A1[i]) <= abs(B[i])) && (abs(B[i]) - abs(A1[i]) > fault)){
             res = 1;
             break;
