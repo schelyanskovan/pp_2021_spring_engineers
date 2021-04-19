@@ -16,40 +16,40 @@ class Disjoint_Set_Union {
     explicit Disjoint_Set_Union(int size) : rank(size), parent(size) {
     }
 
-    void make_set(int v) {
-        parent[v] = v;
-        rank[v] = 0;
+    void make_set(int vertex) {
+        parent[vertex] = vertex;
+        rank[vertex] = 0;
     }
 
     void Init() {
-        for (std::size_t i = 0; i < rank.size(); ++i) {
-            make_set(i);
+        for (std::size_t vertex = 0; vertex < rank.size(); ++vertex) {
+            make_set(vertex);
         }
     }
 
     void Init(int size) {
         rank.resize(size);
         parent.resize(size);
-        for (int i = 0; i < size; ++i) {
-            make_set(i);
+        for (int vertex = 0; vertex < size; ++vertex) {
+            make_set(vertex);
         }
     }
 
-    int find_set(int v) {
-        if (v == parent[v])
-            return v;
-        return parent[v] = find_set(parent[v]);
+    int find_set(int vertex) {
+        if (vertex == parent[vertex])
+            return vertex;
+        return parent[vertex] = find_set(parent[vertex]);
     }
 
-    void union_sets(int a, int b) {
-        a = find_set(a);
-        b = find_set(b);
-        if (a != b) {
-            if (rank[a] < rank[b])
-                std::swap(a, b);
-            parent[b] = a;
-            if (rank[a] == rank[b])
-                ++rank[a];
+    void union_sets(int fi_union, int se_union) {
+        fi_union = find_set(fi_union);
+        se_union = find_set(se_union);
+        if (fi_union != se_union) {
+            if (rank[fi_union] < rank[se_union])
+                std::swap(fi_union, se_union);
+            parent[se_union] = fi_union;
+            if (rank[fi_union] == rank[se_union])
+                ++rank[fi_union];
         }
     }
 
