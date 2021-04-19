@@ -2,8 +2,8 @@
 #include <stdio.h>
 #include <omp.h>
 #include <stdlib.h>
-#include "../../../modules/task_2/gorbunova_v_conjugate_grad_omp/conjugate_gradient.h"
 #include <iostream>
+#include "../../../modules/task_2/gorbunova_v_conjugate_grad_omp/conjugate_gradient.h"
 
 void Random_Matrix_A(int S, double** A) {
     for (int i = 0; i < S; i++) {
@@ -25,7 +25,7 @@ void Random_Matrix_B(int S, double* B) {
 
 void MatrixMultiplicate(double** A, int S, double* Ax, double* x1) {
 #pragma omp parallel for
-    for (int i = 0; i < S; i++){
+    for (int i = 0; i < S; i++) {
         Ax[i] = 0;
         for (int j = 0; j < S; j++)
             Ax[i] += A[i][j] * x1[j];
@@ -94,7 +94,7 @@ double conj_grad(double** A, double* B, int S, int proc) {
             A1[i] += A[i][j]*x[j];
         }
         if ((abs(A1[i]) > abs(B[i])) && (abs(A1[i]) - abs(B[i]) > fault)||
-        (abs(A1[i]) <= abs(B[i])) && (abs(B[i]) - abs(A1[i]) > fault)){
+        (abs(A1[i]) <= abs(B[i])) && (abs(B[i]) - abs(A1[i]) > fault)) {
             res = 1;
             break;
         }
