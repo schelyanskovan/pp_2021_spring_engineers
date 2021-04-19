@@ -67,7 +67,7 @@ TEST(Conj_Grad, test_5_Rand_Matrix_50x50_9_proc) {
 }
 
 TEST(Conj_Grad, test_6_Rand_Matrix_100x100_13_proc) {
-    int S = 100; 
+    int S = 100;
     double** A = new double* [S];
     for (int count = 0; count < S; count++)
         A[count] = new double[S];
