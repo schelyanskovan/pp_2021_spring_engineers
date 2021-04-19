@@ -96,7 +96,6 @@ std::pair<std::vector<int>, int> MarkComponentsPar(std::vector<int> *img, int he
             int cur = i * width + j;
             if (img_new[cur]) {
                 img_new[cur] = dsu.find_set(cur) + 1;
-
             }
             if (img_new[cur] == cur + 1) {
                 count_comp++;

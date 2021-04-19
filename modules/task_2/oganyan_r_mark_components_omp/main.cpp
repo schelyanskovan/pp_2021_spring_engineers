@@ -1,8 +1,40 @@
 // Copyright 2021 Oganyan Robert
 
+
 #include <gtest/gtest.h>
 #include <omp.h>
+#include <random>
 #include "../../modules/task_2/oganyan_r_mark_components_omp/mark_components_omp.h"
+
+
+void Create_Custom_Test(int height, int width) {
+    std::random_device rd;
+    std::default_random_engine generator(rd());
+    std::uniform_int_distribution<unsigned int> distribution(0, 1);
+    std::vector<int> seq(width * height);
+    for (int i = 0; i < width * height; ++i) {
+        seq[i] = distribution(generator);
+    }
+    auto paral = seq;
+
+    std::cout << height << "x" << width << ": \n";
+
+    double start = omp_get_wtime();
+    auto ans = MarkComponentsSeq(&seq, height, width);
+    double end = omp_get_wtime();
+    std::cout << "Sequential: " << (end - start) << "\n";
+    std::cout << " \n";
+
+    start = omp_get_wtime();
+    auto ans2 = MarkComponentsPar(&paral, height, width);
+    end = omp_get_wtime();
+    std::cout << "Parallel: " << (end - start) << "\n";
+
+    std::cout << " \n";
+
+    ASSERT_EQ(ans.second, ans2.second);
+}
+
 
 TEST(Comparing_to_a_sample, rectangle_image) {
     int width = 3;
@@ -279,196 +311,35 @@ TEST(Comparing_to_a_big_sample, square_image_3) {
 }
 
 TEST(Comparing_random_img, small_image) {
-    int n = 50, m = 50;
-    std::vector<int> seq(n * m);
-    for (int i = 0; i < n * m; ++i) {
-        seq[i] = rand() % 2;
-    }
-    auto paral = seq;
-
-    std::cout<<n<<"x"<<m<<": \n";
-    double start = omp_get_wtime();
-    auto ans = MarkComponentsSeq(&seq, n, m);
-    double end = omp_get_wtime();
-    std::cout << "Sequential: " << (end - start) << "\n";
-    std::cout << " \n";
-
-    start = omp_get_wtime();
-    auto ans2 = MarkComponentsPar(&paral, n, m);
-    end = omp_get_wtime();
-    std::cout << "Parallel: " << (end - start) << "\n";
-
-    std::cout << " \n";
-
-    ASSERT_EQ(ans.second, ans2.second);
+    Create_Custom_Test(50, 50);
 }
 
 TEST(Comparing_random_img, small_image_2) {
-    int n = 100, m = 100;
-    std::vector<int> seq(n * m);
-    for (int i = 0; i < n * m; ++i) {
-        seq[i] = rand() % 2;
-    }
-    auto paral = seq;
-    std::cout<<n<<"x"<<m<<": \n";
-    double start = omp_get_wtime();
-    auto ans = MarkComponentsSeq(&seq, n, m);
-    double end = omp_get_wtime();
-    std::cout << "Sequential: " << (end - start) << "\n";
-    std::cout << " \n";
-
-    start = omp_get_wtime();
-    auto ans2 = MarkComponentsPar(&paral, n, m);
-    end = omp_get_wtime();
-    std::cout << "Parallel: " << (end - start) << "\n";
-
-    std::cout << " \n";
-
-    ASSERT_EQ(ans.second, ans2.second);
+    Create_Custom_Test(100, 100);
 }
 
 TEST(Comparing_random_img, middle_image) {
-    int n = 500, m = 500;
-    std::vector<int> seq(n * m);
-    for (int i = 0; i < n * m; ++i) {
-        seq[i] = rand() % 2;
-    }
-    auto paral = seq;
-    std::cout<<n<<"x"<<m<<": \n";
-    double start = omp_get_wtime();
-    auto ans = MarkComponentsSeq(&seq, n, m);
-    double end = omp_get_wtime();
-    std::cout << "Sequential: " << (end - start) << "\n";
-    std::cout << " \n";
-
-    start = omp_get_wtime();
-    auto ans2 = MarkComponentsPar(&paral, n, m);
-    end = omp_get_wtime();
-    std::cout << "Parallel: " << (end - start) << "\n";
-
-    std::cout << " \n";
-
-    ASSERT_EQ(ans.second, ans2.second);
+    Create_Custom_Test(500, 500);
 }
 
 TEST(Comparing_random_img, middle_image_2) {
-    int n = 750, m = 750;
-    std::vector<int> seq(n * m);
-    for (int i = 0; i < n * m; ++i) {
-        seq[i] = rand() % 2;
-    }
-    auto paral = seq;
-    std::cout<<n<<"x"<<m<<": \n";
-    double start = omp_get_wtime();
-    auto ans = MarkComponentsSeq(&seq, n, m);
-    double end = omp_get_wtime();
-    std::cout << "Sequential: " << (end - start) << "\n";
-    std::cout << " \n";
-
-    start = omp_get_wtime();
-    auto ans2 = MarkComponentsPar(&paral, n, m);
-    end = omp_get_wtime();
-    std::cout << "Parallel: " << (end - start) << "\n";
-
-    std::cout << " \n";
-
-    ASSERT_EQ(ans.second, ans2.second);
+    Create_Custom_Test(750, 750);
 }
 
 TEST(Comparing_random_img, middle_image_3) {
-    int n = 1000, m = 1000;
-    std::vector<int> seq(n * m);
-    for (int i = 0; i < n * m; ++i) {
-        seq[i] = rand() % 2;
-    }
-    auto paral = seq;
-    std::cout<<n<<"x"<<m<<": \n";
-    double start = omp_get_wtime();
-    auto ans = MarkComponentsSeq(&seq, n, m);
-    double end = omp_get_wtime();
-    std::cout << "Sequential: " << (end - start) << "\n";
-    std::cout << " \n";
-
-    start = omp_get_wtime();
-    auto ans2 = MarkComponentsPar(&paral, n, m);
-    end = omp_get_wtime();
-    std::cout << "Parallel: " << (end - start) << "\n";
-
-    std::cout << " \n";
-
-    ASSERT_EQ(ans.second, ans2.second);
+    Create_Custom_Test(1000, 1000);
 }
 
 TEST(Comparing_random_img, big_image) {
-    int n = 2000, m = 2000;
-    std::vector<int> seq(n * m);
-    for (int i = 0; i < n * m; ++i) {
-        seq[i] = rand() % 2;
-    }
-    auto paral = seq;
-    std::cout<<n<<"x"<<m<<": \n";
-    double start = omp_get_wtime();
-    auto ans = MarkComponentsSeq(&seq, n, m);
-    double end = omp_get_wtime();
-    std::cout << "Sequential: " << (end - start) << "\n";
-    std::cout << " \n";
-
-    start = omp_get_wtime();
-    auto ans2 = MarkComponentsPar(&paral, n, m);
-    end = omp_get_wtime();
-    std::cout << "Parallel: " << (end - start) << "\n";
-
-    std::cout << " \n";
-
-    ASSERT_EQ(ans.second, ans2.second);
+    Create_Custom_Test(2000, 2000);
 }
 
 TEST(Comparing_random_img, big_image_2) {
-    int n = 3000, m = 3000;
-    std::vector<int> seq(n * m);
-    for (int i = 0; i < n * m; ++i) {
-        seq[i] = rand() % 2;
-    }
-    auto paral = seq;
-    std::cout<<n<<"x"<<m<<": \n";
-    double start = omp_get_wtime();
-    auto ans = MarkComponentsSeq(&seq, n, m);
-    double end = omp_get_wtime();
-    std::cout << "Sequential: " << (end - start) << "\n";
-    std::cout << " \n";
-
-    start = omp_get_wtime();
-    auto ans2 = MarkComponentsPar(&paral, n, m);
-    end = omp_get_wtime();
-    std::cout << "Parallel: " << (end - start) << "\n";
-
-    std::cout << " \n";
-
-    ASSERT_EQ(ans.second, ans2.second);
+    Create_Custom_Test(3000, 3000);
 }
 
 TEST(Comparing_random_img, big_image_3) {
-    int n = 5000, m = 5000;
-    std::vector<int> seq(n * m);
-    for (int i = 0; i < n * m; ++i) {
-        seq[i] = rand() % 2;
-    }
-    auto paral = seq;
-    std::cout<<n<<"x"<<m<<": \n";
-    double start = omp_get_wtime();
-    auto ans = MarkComponentsSeq(&seq, n, m);
-    double end = omp_get_wtime();
-    std::cout << "Sequential: " << (end - start) << "\n";
-    std::cout << " \n";
-
-    start = omp_get_wtime();
-    auto ans2 = MarkComponentsPar(&paral, n, m);
-    end = omp_get_wtime();
-    std::cout << "Parallel: " << (end - start) << "\n";
-
-    std::cout << " \n";
-
-    ASSERT_EQ(ans.second, ans2.second);
+    Create_Custom_Test(5000, 5000);
 }
 
 

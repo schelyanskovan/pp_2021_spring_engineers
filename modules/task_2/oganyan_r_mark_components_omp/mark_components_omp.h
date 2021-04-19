@@ -4,12 +4,13 @@
 #ifndef MODULES_TASK_2_OGANYAN_R_MARK_COMPONENTS_OMP_MARK_COMPONENTS_OMP_H_
 #define MODULES_TASK_2_OGANYAN_R_MARK_COMPONENTS_OMP_MARK_COMPONENTS_OMP_H_
 
-#include "../../modules/task_2/oganyan_r_mark_components_omp/Disjoint_Set_Union.h"
+
 #include <utility>
 #include <cstdint>
 #include <stdexcept>
 #include <vector>
 #include <queue>
+#include "../../modules/task_2/oganyan_r_mark_components_omp/Disjoint_Set_Union.h"
 
 
 
