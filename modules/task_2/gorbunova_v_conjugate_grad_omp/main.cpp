@@ -21,7 +21,7 @@ TEST(Conj_Grad, test_1_Rand_Matrix_5x5_5_proc) {
     ASSERT_EQ(0, conj_grad(A, B, S, 3));
 }
 
-TEST(Conj_Grad, test_2_Rand_Matrix_10x10_3_proc) {
+TEST(Conj_Grad, test_2_Rand_Matrix_10x10_6_proc) {
     int S = 10;
     double** A = new double* [S];
     for (int count = 0; count < S; count++)
@@ -29,7 +29,7 @@ TEST(Conj_Grad, test_2_Rand_Matrix_10x10_3_proc) {
     Random_Matrix_A(S, A);
     double* B = new double[S];
     Random_Matrix_B(S, B);
-    ASSERT_EQ(0, conj_grad(A, B, S, 3));
+    ASSERT_EQ(0, conj_grad(A, B, S, 6));
 }
 
 TEST(Conj_Grad, test_3_Rand_Matrix_10x10_10_proc) {
