@@ -5,8 +5,6 @@
 #include "../../../modules/task_2/gorbunova_v_conjugate_grad_omp/conjugate_gradient.h"
 #include <iostream>
 
-
-
 void Random_Matrix_A(int S,double** A) {
     for (int i = 0; i < S; i++) {
         for (int j = 0; j < S; j++) {
@@ -93,7 +91,7 @@ double conj_grad(double** A, double* B, int S,int proc) {
     if (S / 10 == 0) {
         F = 1;
     }
-    double fault = 0.2 * F; //Чем больше матрица,тем больше погрешность в расчетах
+    double fault = 0.2 * F; //пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ,пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
     for (i = 0; i < S; i++) {
         A1[i] = 0;
         for (int j = 0; j < S; j++) {
