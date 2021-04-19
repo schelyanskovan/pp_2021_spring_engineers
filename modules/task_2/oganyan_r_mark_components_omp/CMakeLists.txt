@@ -8,7 +8,7 @@ if ( USE_OMP )
     file(GLOB_RECURSE ALL_SOURCE_FILES *.cpp *.h)
 
     set(PACK_LIB "${ProjectId}_lib")
-    add_library(${PACK_LIB} STATIC ${ALL_SOURCE_FILES} )
+    add_library(${PACK_LIB} STATIC ${ALL_SOURCE_FILES} Disjoint_Set_Union.h)
 
     add_executable( ${ProjectId} ${ALL_SOURCE_FILES} )
 
