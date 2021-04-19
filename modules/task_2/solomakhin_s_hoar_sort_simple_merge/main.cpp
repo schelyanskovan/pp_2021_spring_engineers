@@ -1,8 +1,10 @@
 // Copyright 2021 Solomakhin Sergey
-#include <iostream>
-#include "gtest/gtest.h"
-#include "./hoar_sort_simple_merge.h"
 #include <omp.h>
+#include "gtest/gtest.h"
+
+
+
+#include "./hoar_sort_simple_merge.h"
 
 TEST(randomgen, run) {
     ASSERT_NO_THROW(random_gen(100));
@@ -64,6 +66,34 @@ TEST(hoarsort, runrandomsize1000) {
     std::cout << "Seq sort time -> " << end - start << std::endl;
     start = omp_get_wtime();
     hoar_sort_omp(0, 999, &vect2);
+    end = omp_get_wtime();
+    std::cout << "OMP sort time -> " << end - start << std::endl;
+    ASSERT_EQ(1, checker(&vect2));
+}
+
+TEST(hoarsort, runrandomsize10000) {
+    auto vect = random_gen(10000);
+    auto vect2 = random_gen(10000);
+    double start = omp_get_wtime();
+    hoar_sort(0, 9999, &vect);
+    double end = omp_get_wtime();
+    std::cout << "Seq sort time -> " << end - start << std::endl;
+    start = omp_get_wtime();
+    hoar_sort_omp(0, 9999, &vect2);
+    end = omp_get_wtime();
+    std::cout << "OMP sort time -> " << end - start << std::endl;
+    ASSERT_EQ(1, checker(&vect2));
+}
+
+TEST(hoarsort, runrandomsize100000) {
+    auto vect = random_gen(100000);
+    auto vect2 = random_gen(100000);
+    double start = omp_get_wtime();
+    hoar_sort(0, 99999, &vect);
+    double end = omp_get_wtime();
+    std::cout << "Seq sort time -> " << end - start << std::endl;
+    start = omp_get_wtime();
+    hoar_sort_omp(0, 99999, &vect2);
     end = omp_get_wtime();
     std::cout << "OMP sort time -> " << end - start << std::endl;
     ASSERT_EQ(1, checker(&vect2));

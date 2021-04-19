@@ -1,11 +1,11 @@
 // Copyright 2021 Solomakhin Sergey
-#include "../../../modules/task_1/solomakhin_s_hoar_sort_simple_merge/hoar_sort_simple_merge.h"
+#include "../../../modules/task_2/solomakhin_s_hoar_sort_simple_merge/hoar_sort_simple_merge.h"
+
 #include <random>
 #include <algorithm>
 #include <ctime>
 #include <utility>
 #include <vector>
-#include <omp.h>
 
 std::vector<int> random_gen(int size) {
     std::random_device dev;
@@ -75,44 +75,42 @@ std::vector<int>merge(const std::vector<int>& a, const std::vector<int>& b) {
 
     return result;
 }
+void hoar_sort_omp(int left, int right, std::vector <int>*arr) {
+        while (right > left) {
+            int it_l = left;
+            int it_r = right;
+            double pivot = arr->at((left + right) / 2);
 
-void hoar_sort_omp(int left, int right, std::vector <int>* arr) {
-    while (right > left) {
-        int it_l = left;
-        int it_r = right;
-        double pivot = arr->at((left + right) / 2);
-
-        while (it_l <= it_r) {
-            while (arr->at(it_l) < pivot) {
-                it_l++;
+            while (it_l <= it_r) {
+                while (arr->at(it_l) < pivot) {
+                    it_l++;
+                }
+                while (arr->at(it_r) > pivot) {
+                    it_r--;
+                }
+                if (it_l <= it_r) {
+                    std::swap(arr->at(it_l), arr->at(it_r));
+                    it_l++;
+                    it_r--;
+                }
             }
-            while (arr->at(it_r) > pivot) {
-                it_r--;
-            }
-            if (it_l <= it_r) {
-                std::swap(arr->at(it_l), arr->at(it_r));
-                it_l++;
-                it_r--;
-            }
-        }
 #pragma omp parallel sections
-        {
-#pragma omp section
             {
-                if (2 * it_l > left + right) {
-                    hoar_sort(it_l, right, arr);
-                    right = it_l - 1;
+#pragma omp section
+                {
+                    if (2 * it_l > left + right) {
+                        hoar_sort(it_l, right, arr);
+                        right = it_l - 1;
+                    }
                 }
-            }
-
 #pragma omp section
-            {
-                if (2 * it_l <= left + right) {
-                    hoar_sort(left, it_l - 1, arr);
-                    left = it_l;
+                {
+                    if (2 * it_l <= left + right) {
+                        hoar_sort(left, it_l - 1, arr);
+                        left = it_l;
+                    }
                 }
             }
         }
-    }
     return;
 }
