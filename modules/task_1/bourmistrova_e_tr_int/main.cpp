@@ -65,7 +65,7 @@ TEST(Parallel_Operations_OpenMP, Test_TwoDimSum) { // add SetPrecisionVariables
     ASSERT_NEAR(137.33, par_int, 7.00);
 }
 
-TEST(Parallel_Operations_OpenMP, Test_ThreeDimSum) { // add SetPrecisionVariables
+TEST(Parallel_Operations_OpenMP, Test_ThreeDimSum) {
     std::vector<std::pair<int, int>> vec(3);
     vec[0] = std::make_pair(1, 4);
     vec[1] = std::make_pair(1, 2);

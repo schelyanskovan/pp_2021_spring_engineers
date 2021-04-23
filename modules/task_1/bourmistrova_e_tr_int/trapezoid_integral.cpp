@@ -15,10 +15,6 @@ double CheckCoeff(int i, const std::pair<int, int>& pair) {
     return qju;
 }
 
-void SetPrecisionVariables(double &n, double &m, double &k) {
-	std::cout << "Input Precision Variable For Outermost Sum: ";
-	std::cin >> n >> m >> k;
-}
 double SolveSequential(const std::vector<std::pair<int, int>>& bord,
     std::function<double(double, double, double)> f) {   // add n,m,k;
     double sum = 0;
