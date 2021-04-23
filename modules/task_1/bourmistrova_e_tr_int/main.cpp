@@ -1,4 +1,4 @@
-// Copyright 2021 Ekaterina Burmistrova
+﻿// Copyright 2021 Ekaterina Burmistrova
 #include <gtest/gtest.h>
 #include <vector>
 #include <cmath>
