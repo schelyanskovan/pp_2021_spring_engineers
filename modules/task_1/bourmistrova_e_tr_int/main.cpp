@@ -25,7 +25,7 @@ double integral5(double x, double y, double z) {
     return x + y + z;
 }
 
-TEST(Parallel_Operations_OpenMP, Test_OneDim) { // add SetPrecisionVariables
+TEST(Parallel_Operations_OpenMP, Test_OneDim) {  // add SetPrecisionVariables
     std::vector<std::pair<int, int>> vec(1);
     vec[0] = std::make_pair(2, 5);
     std::function<double(double, double, double)> ptr1 = integral;
@@ -34,7 +34,7 @@ TEST(Parallel_Operations_OpenMP, Test_OneDim) { // add SetPrecisionVariables
     ASSERT_NEAR(39.0, par_int, 0.6);
 }
 
-TEST(Parallel_Operations_OpenMP, Test_TwoDim) { // add SetPrecisionVariables
+TEST(Parallel_Operations_OpenMP, Test_TwoDim) {  // add SetPrecisionVariables
     std::vector<std::pair<int, int>> vec(2);
     vec[0] = std::make_pair(1, 2);
     vec[1] = std::make_pair(2, 3);
@@ -44,7 +44,7 @@ TEST(Parallel_Operations_OpenMP, Test_TwoDim) { // add SetPrecisionVariables
     ASSERT_NEAR(1.73, par_int, 0.6);
 }
 
-TEST(Parallel_Operations_OpenMP, Test_ThreeDim) { // add SetPrecisionVariables
+TEST(Parallel_Operations_OpenMP, Test_ThreeDim) {  // add SetPrecisionVariables
     std::vector<std::pair<int, int>> vec(3);
     vec[0] = std::make_pair(1, 2);
     vec[1] = std::make_pair(2, 3);
@@ -55,7 +55,7 @@ TEST(Parallel_Operations_OpenMP, Test_ThreeDim) { // add SetPrecisionVariables
     ASSERT_NEAR(16.87, par_int, 0.999);
 }
 
-TEST(Parallel_Operations_OpenMP, Test_TwoDimSum) { // add SetPrecisionVariables
+TEST(Parallel_Operations_OpenMP, Test_TwoDimSum) {  // add SetPrecisionVariables
     std::vector<std::pair<int, int>> vec(2);
     vec[0] = std::make_pair(1, 3);
     vec[1] = std::make_pair(2, 4);
