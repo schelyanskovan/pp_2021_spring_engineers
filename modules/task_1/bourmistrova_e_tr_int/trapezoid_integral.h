@@ -1,4 +1,4 @@
-﻿// Copyright 2021 Ekaterina Burmistrova
+// Copyright 2021 Ekaterina Burmistrova
 #ifndef MODULES_TASK_1_BOURMISTROVA_E_TR_INT_TRAPEZOID_INTEGRAL_H_
 #define MODULES_TASK_1_BOURMISTROVA_E_TR_INT_TRAPEZOID_INTEGRAL_H_
 
