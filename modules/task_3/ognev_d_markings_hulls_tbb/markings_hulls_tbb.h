@@ -20,12 +20,12 @@ void findHull(std::vector<int> v, int leftX, int leftY, int rightX, int rightY,
               int maxIndexX, int maxIndexY, int width, int height);
 std::vector<int> quickHull(std::vector<int> map, int width, int height,
                            int mark, int leftPos, int rightPos);
+std::vector<int> convexQuickHull(std::vector<int> map, int width, int height);
 void findHullTBB(std::vector<int> v, std::vector<int>* hull, int leftX,
                  int leftY, int rightX, int rightY, int maxIndexX,
                  int maxIndexY, int width, int height);
 std::vector<int> quickHullTBB(std::vector<int> map, int width, int height,
                               int mark, int leftPos, int rightPos);
-std::vector<int> convexQuickHull(std::vector<int> map, int width, int height);
 std::vector<int> convexQuickHullTBB(std::vector<int> map, int width,
                                     int height);
 

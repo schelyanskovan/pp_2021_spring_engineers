@@ -1,8 +1,8 @@
 // Copyright 2021 Ognev Denis
 
 #include <../../modules/task_3/ognev_d_markings_hulls_tbb/markings_hulls_tbb.h>
-
 #include <tbb/tbb.h>
+
 #include <algorithm>
 #include <ctime>
 #include <iostream>
@@ -547,7 +547,6 @@ std::vector<int> convexQuickHullTBB(std::vector<int> map, int width,
   std::vector<std::vector<int>> hulls(vert.size());
   std::vector<int> borders(vert.size());
 
-  int vertSize = vert.size();
   int hullsSize = hulls.size();
 
   tbb::task_scheduler_init init;
