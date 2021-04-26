@@ -3,7 +3,6 @@
 #include <gtest/gtest.h>
 
 #include "../../task_3/ognev_d_markings_hulls_tbb/markings_hulls_tbb.h"
-#include "tbb/tbb.h"
 
 TEST(Sequential_Test, Marking_Test) {
   int width = 5, height = 6;
@@ -247,4 +246,4 @@ TEST(Parallel_Test, Convex_Quick_Hull_Test_2) {
 //   }*/
 
 // return 0;
-//}
+// }

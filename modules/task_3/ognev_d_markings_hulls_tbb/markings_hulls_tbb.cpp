@@ -1,8 +1,8 @@
 // Copyright 2021 Ognev Denis
 
 #include <../../modules/task_3/ognev_d_markings_hulls_tbb/markings_hulls_tbb.h>
-#include <tbb/tbb.h>
 
+#include <tbb/tbb.h>
 #include <algorithm>
 #include <ctime>
 #include <iostream>
