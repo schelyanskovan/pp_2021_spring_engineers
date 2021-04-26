@@ -31,7 +31,6 @@ std::vector<int> gaussianFilter(const std::vector<int> & img, int width, int hei
     int radius, float sigma, int count_thread) {
     resultImage = img;
     int size = 2 * radius + 1;
-    int color = 0;
     int l = 0;
     int k = 0;
     std::vector<float> kernel(size * size);
