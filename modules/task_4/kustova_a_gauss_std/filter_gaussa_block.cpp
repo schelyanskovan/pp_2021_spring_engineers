@@ -6,9 +6,10 @@
 #include "../../../3rdparty/unapproved/unapproved.h"
 #include "../../../modules/task_4/kustova_a_gauss_std/filter_gaussa_block.h"
 
-void threadFunction(std::vector<std::vector<int>> array, int i, int count_thread, std::vector<int> & resultImage,
-    int width, int height, std::vector<int> img, std::vector<float> kernel, int radius)
-{
+std::vector<int> resultImage;
+
+void threadFunction(std::vector<std::vector<int>> array, int i, int count_thread,
+    int width, int height, std::vector<int> img, std::vector<float> kernel, int radius) {
     for (int t = i; t < array.size(); t++) {
         if ((t % count_thread) == i) {
             int j_start = array[t][0];
@@ -26,8 +27,9 @@ void threadFunction(std::vector<std::vector<int>> array, int i, int count_thread
     }
 }
 
-std::vector<int> gaussianFilter(const std::vector<int> & img, int width, int height, int radius, float sigma, int count_thread) {
-    std::vector<int> resultImage(height * width);
+std::vector<int> gaussianFilter(const std::vector<int> & img, int width, int height,
+	int radius, float sigma, int count_thread) {
+    resultImage = img;
     int size = 2 * radius + 1;
     int color = 0;
     int l = 0;
@@ -45,14 +47,12 @@ std::vector<int> gaussianFilter(const std::vector<int> & img, int width, int hei
         while (k < width) {
             if (width - k < block_width + block_width / 2) {
                 block_w = width - k;
-            }
-            else {
+            } else {
                 block_w = block_width;
             }
             if (height - l < block_height / 2) {
                 block_h = height - l;
-            }
-            else {
+            } else {
                 block_h = block_height;
             }
             std::vector<int> tup = { l, k , block_h, block_w };
@@ -63,8 +63,7 @@ std::vector<int> gaussianFilter(const std::vector<int> & img, int width, int hei
     }
     std::vector<std::thread> threads;
     for (int i = 0; i < count_thread; i++) {
-        threads.push_back(std::thread(threadFunction, array, i, count_thread,
-            std::ref(resultImage), width, height, img, kernel, radius));
+        threads.push_back(std::thread(threadFunction, array, i, count_thread, width, height, img, kernel, radius));
     }
     for (int thread = 0; thread < count_thread; thread++) {
         threads[thread].join();
