@@ -9,7 +9,7 @@
 std::vector<int> resultImage;
 
 void threadFunction(std::vector<std::vector<int>> array, int i, int count_thread,
-    int width, int height, std::vector<int> img, std::vector<float> kernel, int radius) {
+    int width, int height,const std::vector<int> & img, std::vector<float> kernel, int radius) {
     for (int t = i; t < array.size(); t++) {
         if ((t % count_thread) == i) {
             int j_start = array[t][0];
@@ -63,7 +63,7 @@ std::vector<int> gaussianFilter(const std::vector<int> & img, int width, int hei
     }
     std::vector<std::thread> threads;
     for (int i = 0; i < count_thread; i++) {
-        threads.push_back(std::thread(threadFunction, array, i, count_thread, width, height, img, kernel, radius));
+        threads.push_back(std::thread(threadFunction, array, i, count_thread, width, height, std::ref(img), kernel, radius));
     }
     for (int thread = 0; thread < count_thread; thread++) {
         threads[thread].join();
