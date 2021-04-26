@@ -28,7 +28,7 @@ void threadFunction(std::vector<std::vector<int>> array, int i, int count_thread
 }
 
 std::vector<int> gaussianFilter(const std::vector<int> & img, int width, int height,
-	int radius, float sigma, int count_thread) {
+    int radius, float sigma, int count_thread) {
     resultImage = img;
     int size = 2 * radius + 1;
     int color = 0;
