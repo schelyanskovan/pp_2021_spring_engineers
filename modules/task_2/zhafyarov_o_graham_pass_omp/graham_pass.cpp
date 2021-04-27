@@ -4,8 +4,8 @@
 #include <random>
 #include <vector>
 
-bool CompareVectors(const std::vector<std::pair<int,int>> &vec1,
-                    const std::vector<std::pair<int,int>> &vec2) {
+bool CompareVectors(const std::vector<std::pair<int, int>> &vec1,
+                    const std::vector<std::pair<int, int>> &vec2) {
   if (vec1.size() != vec2.size()) {
     return false;
   }
@@ -19,9 +19,9 @@ bool CompareVectors(const std::vector<std::pair<int,int>> &vec1,
   return true;
 }
 
-std::vector<std::pair<int,int>> RandomVector(int size) {
+std::vector<std::pair<int, int>> RandomVector(int size) {
   bool flag = false;
-  std::vector<std::pair<int,int>> vec_tmp(size);
+  std::vector<std::pair<int, int>> vec_tmp(size);
   std::mt19937 gen;
   gen.seed(static_cast<unsigned int>(time(0)));
   for (int i = 0; i < size; i++) {
@@ -34,7 +34,8 @@ std::vector<std::pair<int,int>> RandomVector(int size) {
         if (i == j) {
           continue;
         }
-        if (vec_tmp[i].first == vec_tmp[j].first && vec_tmp[i].second == vec_tmp[j].second) {
+        if (vec_tmp[i].first == vec_tmp[j].first &&
+        vec_tmp[i].second == vec_tmp[j].second) {
           vec_tmp[i].first = gen() % 1700 + 100;
           vec_tmp[i].second = gen() % 900 + 100;
           i = 0;
@@ -47,13 +48,15 @@ std::vector<std::pair<int,int>> RandomVector(int size) {
   return vec_tmp;
 }
 
-double Rotation(std::pair<int,int> a, std::pair<int,int> b,
-                std::pair<int,int> c) {
-  return((b.first - a.first) * (c.second - b.second) - (b.second - a.second) * (c.first - b.first));
+double Rotation(std::pair<int, int> a, std::pair<int, int> b,
+                std::pair<int, int> c) {
+  return((b.first - a.first) * (c.second - b.second) -
+  (b.second - a.second) * (c.first - b.first));
 }
 
-std::vector<std::pair<int,int>> GrahamPassSeq(const std::vector<std::pair<int,int>>& basis_vec) {
-    std::vector<std::pair<int,int>> result_point;
+std::vector<std::pair<int, int>> GrahamPassSeq
+(const std::vector<std::pair<int, int>>& basis_vec) {
+    std::vector<std::pair<int, int>> result_point;
 
     std::vector<size_t> result_index;
 
@@ -111,10 +114,11 @@ std::vector<std::pair<int,int>> GrahamPassSeq(const std::vector<std::pair<int,in
 }
 
 
-std::vector<std::pair<int,int>> GrahamPassOmp(const std::vector<std::pair<int,int>>& basis_vec) {
-    std::vector<std::pair<int,int>> result_point;
+std::vector<std::pair<int, int>> GrahamPassOmp
+(const std::vector<std::pair<int, int>>& basis_vec) {
+    std::vector<std::pair<int, int>> result_point;
     std::vector<size_t> result_index;
-    std::vector<std::pair<int,int>> result;
+    std::vector<std::pair<int, int>> result;
 
     int block = static_cast<int>(basis_vec.size()) / omp_get_max_threads();
     int remainder = static_cast<int>(basis_vec.size()) % omp_get_max_threads();
@@ -129,8 +133,8 @@ std::vector<std::pair<int,int>> GrahamPassOmp(const std::vector<std::pair<int,in
 #pragma omp parallel
     {
         int id = omp_get_thread_num();
-        std::vector<std::pair<int,int>> result_thread;
-        std::vector<std::pair<int,int>> result_tmp_point;
+        std::vector<std::pair<int, int>> result_thread;
+        std::vector<std::pair<int, int>> result_tmp_point;
 
         if (id == 0) {
             result_thread.reserve(block + remainder);
@@ -150,7 +154,7 @@ std::vector<std::pair<int,int>> GrahamPassOmp(const std::vector<std::pair<int,in
 
 #pragma omp critical
         {
-            for (std::pair<int,int> result_from_tmp : result_tmp_point) {
+            for (std::pair<int, int> result_from_tmp : result_tmp_point) {
                 result_point.push_back(result_from_tmp);
             }
         }
