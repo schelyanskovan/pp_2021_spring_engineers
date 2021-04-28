@@ -4,14 +4,6 @@
 #include <random>
 #include <vector>
 
-std::vector<size_t> Convert(const std::vector<point>& basisVec) {
-  std::vector<size_t> result(basisVec.size());
-  for (int i = 0; i < static_cast<int>(basisVec.size()); i++) {
-    result[i] = i;
-  }
-  return result;
-}
-
 bool CompareVectors(const std::vector<point> &vec1,
                     const std::vector<point> &vec2) {
   if (vec1.size() != vec2.size()) {
@@ -42,8 +34,7 @@ std::vector<point> RandomVector(int size) {
         if (i == j) {
           continue;
         }
-        if (vec_tmp[i].x == vec_tmp[j].x &&
-        vec_tmp[i].y == vec_tmp[j].y) {
+        if (vec_tmp[i].x == vec_tmp[j].x && vec_tmp[i].y == vec_tmp[j].y) {
           vec_tmp[i].x = gen() % 1700 + 100;
           vec_tmp[i].y = gen() % 900 + 100;
           i = 0;
@@ -60,10 +51,8 @@ double Rotation(point a, point b, point c) {
   return((b.x - a.x) * (c.y - b.y) - (b.y - a.y) * (c.x - b.x));
 }
 
-std::vector<size_t> GrahamPassSeq(const std::vector<point>& basis_vec,
-                                  const std::vector<size_t>& IndexBasisVec) {
+std::vector<point> GrahamPassSeq(const std::vector<point>& basis_vec) {
   std::vector<size_t> result_index;
-  std::vector<size_t> result_index_tmp;
 
   std::vector<int> vec_tmp;
 
@@ -88,7 +77,8 @@ std::vector<size_t> GrahamPassSeq(const std::vector<point>& basis_vec,
 
   for (int i = 2; i < static_cast<int>(basis_vec.size()); i++) {
     int j = i;
-    while (j > 1 && Rotation(basis_vec.at(min), basis_vec.at(vec_tmp.at(j - 1)),
+    while (j > 1 && Rotation(basis_vec.at(min),
+                             basis_vec.at(vec_tmp.at(j - 1)),
                              basis_vec.at(vec_tmp.at(j))) < 0) {
       std::swap(vec_tmp.at(j), vec_tmp.at(j - 1));
       j--;
@@ -110,73 +100,60 @@ std::vector<size_t> GrahamPassSeq(const std::vector<point>& basis_vec,
     result_index.push_back(vec_tmp.at(i));
   }
 
-  for (size_t index : result_index) {
-    result_index_tmp.push_back(IndexBasisVec[index]);
+  std::vector<point> result_point(result_index.size());
+
+  for (int i = 0; i < static_cast<int>(result_point.size()); i++) {
+    result_point[i] = basis_vec[result_index[i]];
   }
 
-  return result_index_tmp;
+  return result_point;
 }
 
 
-std::vector<size_t> GrahamPassOmp(const std::vector<point>& basis_vec,
-                                  const std::vector<size_t>& IndexBasisVec) {
-  std::vector<size_t> result_after;
+std::vector<point> GrahamPassOmp(const std::vector<point>& basis_vec) {
+  std::vector<point> result_point;
   std::vector<size_t> result_index;
+  std::vector<point> result;
 
   int block = static_cast<int>(basis_vec.size()) / omp_get_max_threads();
   int remainder = static_cast<int>(basis_vec.size()) % omp_get_max_threads();
 
   if (4 * omp_get_max_threads() >= static_cast<int>(basis_vec.size())) {
-    result_index = GrahamPassSeq(basis_vec, IndexBasisVec);
-    return result_index;
+    result_point = GrahamPassSeq(basis_vec);
+    return result_point;
   }
 
 #pragma omp parallel
   {
     int id = omp_get_thread_num();
-    std::vector<size_t> index_thread;
     std::vector<point> result_thread;
-    std::vector<size_t> result_tmp_index;
+    std::vector<point> result_tmp_point;
 
     if (id == 0) {
       result_thread.reserve(block + remainder);
       result_thread.insert(result_thread.begin(), basis_vec.begin(),
                            basis_vec.begin() + block + remainder);
-      index_thread.reserve(block + remainder);
-      index_thread.insert(index_thread.begin(), IndexBasisVec.begin(),
-                          IndexBasisVec.begin() + block + remainder);
     } else {
       result_thread.reserve(basis_vec.size() / omp_get_num_threads());
       result_thread.insert(result_thread.begin(),
                            basis_vec.begin() + remainder + id * block,
-                           basis_vec.begin() + remainder + id * block + block);
-      index_thread.reserve(basis_vec.size() / omp_get_num_threads());
-      index_thread.insert(index_thread.begin(),
-                          IndexBasisVec.begin() + remainder + id * block,
-                          IndexBasisVec.begin() + remainder +
-                          id * block + block);
+                           basis_vec.begin() + remainder +
+                           id * block + block);
     }
 
 #pragma omp barrier
 
-    result_tmp_index = GrahamPassSeq(result_thread, index_thread);
+    result_tmp_point = GrahamPassSeq(result_thread);
 
 #pragma omp critical
     {
-      for (size_t result_from_tmp : result_tmp_index) {
-        result_after.push_back(result_from_tmp);
+      for (point result_from_tmp : result_tmp_point) {
+        result_point.push_back(result_from_tmp);
       }
     }
   }
 
-  std::vector<point> result(result_after.size());
-  for (int i = 0; i < static_cast<int>(result_after.size()); i++) {
-    result[i] = basis_vec[result_after[i]];
-  }
+  result = GrahamPassSeq(result_point);
 
-  std::vector<size_t> result_index_all;
-
-  result_index_all = GrahamPassSeq(result, result_after);
-
-  return result_index_all;
+  return result;
 }
