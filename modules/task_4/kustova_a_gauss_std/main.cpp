@@ -86,7 +86,7 @@ TEST(Gaussian_Method, Test_check_work_with_rectangle_matrix) {
 /* TEST(Gaussian_Method, Test_big_matrix) {
     int radius = 1;
     float sigma = 5.0;
-    int count_thread = 2;
+    int count_thread = 4;
     int height = 600;
     int width = 400;
     std::vector<int> image1_decimal(height * width);
