@@ -32,7 +32,7 @@ TEST(OpenMP, Count_Check_Omp) {
   std::vector<point> result;
   int count_tmp = 4;
   result = GrahamPassOmp(vec);
-  ASSERT_EQ(result.size(), count_tmp);
+  ASSERT_EQ(static_cast<int>(result.size()), count_tmp);
 }
 
 TEST(OpenMP, x100_Points_Omp) {
