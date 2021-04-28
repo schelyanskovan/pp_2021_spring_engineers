@@ -61,7 +61,7 @@ double Rotation(point a, point b, point c) {
 }
 
 std::vector<size_t> GrahamPassSeq(const std::vector<point>& basis_vec,
-                                  const std::vector<size_t> IndexBasisVec) {
+                                  const std::vector<size_t>& IndexBasisVec) {
   std::vector<size_t> result_index;
   std::vector<size_t> result_index_tmp;
 
@@ -119,7 +119,7 @@ std::vector<size_t> GrahamPassSeq(const std::vector<point>& basis_vec,
 
 
 std::vector<size_t> GrahamPassOmp(const std::vector<point>& basis_vec,
-                                  const std::vector<size_t> IndexBasisVec) {
+                                  const std::vector<size_t>& IndexBasisVec) {
   std::vector<size_t> result_after;
   std::vector<size_t> result_index;
 
