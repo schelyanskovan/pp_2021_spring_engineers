@@ -1,7 +1,8 @@
 // Copyright 2021 Eremina Alena
-#ifndef MODULES_TASK_1_EREMINA_A_CONVEX_HULL_BIN_CONVEX_HULL_BIN_H_
-#define MODULES_TASK_1_EREMINA_A_CONVEX_HULL_BIN_CONVEX_HULL_BIN_H_
+#ifndef MODULES_TASK_2_EREMINA_A_CONVEX_HULL_BIN_CONVEX_HULL_BIN_H_
+#define MODULES_TASK_2_EREMINA_A_CONVEX_HULL_BIN_CONVEX_HULL_BIN_H_
 
+#include <omp.h>
 #include <vector>
 #include <map>
 #include <stack>
@@ -13,6 +14,16 @@ typedef struct {
     double polar_angle;
     double distanse_p0;
 } point;
+
+typedef struct {
+    int mark;
+    int count;
+    int offsetX;
+    int offsetY;
+    int width;
+    int height;
+    int* buffer;
+} threadData;
 
 // Generate binary image
 std::vector<uint8_t> generateImage(const int wigth, const int height);
@@ -34,5 +45,7 @@ bool rightTurn(const point* a, const point* b, const point* c, bool flag);
 // a convex hull in two-dimensional space
 std::vector<uint8_t> Convex_Hull(std::vector<uint8_t> img_src,
     const int height, const int width);
+std::vector<uint8_t> Convex_Hull_OMP(std::vector<uint8_t> img_src,
+    const int height, const int width);
 
-#endif  // MODULES_TASK_1_EREMINA_A_CONVEX_HULL_BIN_CONVEX_HULL_BIN_H_
+#endif  // MODULES_TASK_2_EREMINA_A_CONVEX_HULL_BIN_CONVEX_HULL_BIN_H_
