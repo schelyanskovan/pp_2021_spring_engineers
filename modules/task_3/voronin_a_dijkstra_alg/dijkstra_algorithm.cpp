@@ -36,7 +36,7 @@ std::vector<int> dijkstra(const std::vector<int>& graph, int start, int end) {
         throw "Wrong size";
     }
 
-    int max_weight = std::numeric_limits<int>::max();
+    int max_weight =  INT32_MAX;
     int min, min_point, tmp;
     std::vector<int> points_len(points_count, max_weight);
     std::vector<int> path;
@@ -114,7 +114,7 @@ std::vector<int> dijkstraParallel(const std::vector<int>& graph, int start, int 
         throw "Wrong size";
     }
 
-    int max_weight = std::numeric_limits<int>::max();
+    int max_weight =  INT32_MAX;
     int min, min_point, tmp;
     std::vector<int> points_len(points_count, max_weight);
     std::vector<int> path;
