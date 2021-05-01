@@ -1,8 +1,9 @@
 // Copyright 2021 Zhafyarov Oleg
-#include "../../../modules/task_2/zhafyarov_o_graham_pass_omp/graham_pass.h"
+#include "../../../modules/task_3/zhafyarov_o_graham_pass_tbb/graham_pass.h"
 #include <time.h>
 #include <random>
 #include <vector>
+#include <iostream>
 
 bool CompareVectors(const std::vector<point> &vec1,
                     const std::vector<point> &vec2) {
@@ -109,7 +110,7 @@ std::vector<point> GrahamPassSeq(const std::vector<point>& basis_vec) {
   return result_point;
 }
 
-
+/*
 std::vector<point> GrahamPassOmp(const std::vector<point>& basis_vec) {
   std::vector<point> result_point;
   std::vector<size_t> result_index;
@@ -154,6 +155,79 @@ std::vector<point> GrahamPassOmp(const std::vector<point>& basis_vec) {
   }
 
   result = GrahamPassSeq(result_point);
+
+  return result;
+}
+*/
+
+std::vector<point> GrahamPassTbb(
+    const std::vector<point>& basis_vec, int grainsize) {
+  std::vector<point> result_point;
+
+  if (4 * grainsize >= static_cast<int>(basis_vec.size())) {
+    result_point = GrahamPassSeq(basis_vec);
+    return result_point;
+  }
+
+  int size = 0;
+  if (grainsize >= static_cast<int>(basis_vec.size())) {
+    grainsize = 5;
+  }
+
+  if (basis_vec.size() % grainsize > 0) {
+    size = basis_vec.size() / grainsize + 1;
+  } else {
+    size = basis_vec.size() / grainsize;
+  }
+
+  std::vector<std::vector<point>> vector_threads(size);
+
+  int block = static_cast<int>(basis_vec.size()) / size;
+  int remainder = static_cast<int>(basis_vec.size()) % size;
+
+  for (int i = 0; i < size; i++) {
+    if (i == 0) {
+      vector_threads[i].reserve(block + remainder);
+      vector_threads[i].insert(vector_threads[i].begin(), basis_vec.begin(),
+                               basis_vec.begin() + block + remainder);
+    } else {
+      vector_threads[i].reserve(block);
+      vector_threads[i].insert(
+          vector_threads[i].begin(), basis_vec.begin() + remainder + i * block,
+          basis_vec.begin() + remainder + i * block + block);
+    }
+  }
+
+  std::vector<std::vector<point>> result_after(size);
+
+  tbb::task_scheduler_init init;
+
+  tbb::parallel_for(tbb::blocked_range<int>(0, size),
+                   [&](tbb::blocked_range<int> r) {
+                     for (int i = r.begin(); i < r.end(); i++) {
+                       result_after[i] = GrahamPassSeq(vector_threads[i]);
+                     }
+                   });
+  init.terminate();
+
+  int count = 0;
+  for (int i = 0; i < static_cast<int>(result_after.size()); i++) {
+     count += result_after[i].size();
+  }
+
+  std::vector<point> result_for_seq(count);
+
+  int k = 0;
+  for (int i = 0; i < static_cast<int>(result_after.size()); i++) {
+    for (int j = 0; j < static_cast<int>(result_after[i].size()); j++) {
+      result_for_seq[k] = result_after[i][j];
+      k++;
+    }
+  }
+
+  std::vector<point> result;
+
+  result = GrahamPassSeq(result_for_seq);
 
   return result;
 }
