@@ -37,7 +37,7 @@ bool Compare(const T &lhs, const T &rhs) {
   return lhs == rhs;
 }
 
-template <class ValueType, typename UIntType = int16_t>
+template <class ValueType, typename UIntType = uint16_t>
 class CSRMatrixOMP {
  public:
   CSRMatrixOMP() = delete;
@@ -105,7 +105,7 @@ class CSRMatrixOMP {
     UIntType res_height = counts_.size() - 1;
     std::vector<ValueType> res_mat(res_width * res_height);
 #pragma omp parallel for schedule(dynamic)
-    for (UIntType row = 0; row < res_height; ++row) {
+    for (int32_t row = 0; row < static_cast<int32_t>(res_height); ++row) {
       for (UIntType col = 0; col < res_width; ++col) {
         UIntType l_row_cur = counts_[row], r_row_cur = rhs.counts_[col];
         ValueType cur_val = 0;
