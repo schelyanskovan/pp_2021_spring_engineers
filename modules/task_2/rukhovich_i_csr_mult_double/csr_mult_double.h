@@ -37,7 +37,7 @@ bool Compare(const T &lhs, const T &rhs) {
   return lhs == rhs;
 }
 
-template <class ValueType, typename UIntType = uint16_t>
+template <class ValueType, typename UIntType = int16_t>
 class CSRMatrixOMP {
  public:
   CSRMatrixOMP() = delete;
