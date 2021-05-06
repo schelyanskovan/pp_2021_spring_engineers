@@ -10,13 +10,13 @@
 #include <vector>
 
 class RandomDouble {
-public:
+ public:
   static double Next() {
     static RandomDouble rand = RandomDouble();
     return rand.dist_(rand.gen_);
   }
 
-private:
+ private:
   RandomDouble() : gen_(std::random_device()()), dist_(-1e3, 1e3) {
   }
 
@@ -39,7 +39,7 @@ bool Compare(const T &lhs, const T &rhs) {
 
 template <class ValueType, typename UIntType = uint16_t>
 class CSRMatrixOMP {
-public:
+ public:
   CSRMatrixOMP() = delete;
 
   CSRMatrixOMP(const CSRMatrixOMP &other) = default;
@@ -141,7 +141,7 @@ public:
     return *this;
   }
 
-protected:
+ protected:
   // We can think of it as converting CSR to CSC and back again
   const CSRMatrixOMP GetTransposed() const {
     CSRMatrixOMP other(num_cols_, counts_.size() - 1);
