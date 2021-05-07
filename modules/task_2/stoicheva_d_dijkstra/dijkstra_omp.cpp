@@ -273,10 +273,7 @@ std::vector<int> dijkstra_omp(const std::vector<int>& graph, int start, int end)
 
         #pragma omp parallel for
         for (int i = 0; i < points_count; i++) {
-            if (found) {
-                break;
-            }
-            if (graph[current * points_count + i] > 0) {
+            if (!found && graph[current * points_count + i] > 0) {
                 int tmp = weight - graph[current * points_count + i];
                 if (distances[i] == tmp) {
                     #pragma omp critical
@@ -286,7 +283,6 @@ std::vector<int> dijkstra_omp(const std::vector<int>& graph, int start, int end)
                         path.insert(path.begin(), i + 1);
                         found = true;
                     }
-                    break;
                 }
             }
         }
