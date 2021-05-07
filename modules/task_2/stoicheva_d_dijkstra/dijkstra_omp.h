@@ -10,13 +10,13 @@
 
 // #define DEBUG_PRINT
 
-void print_graph(const std::vector<int> graph, const size_t points, const std::string prefix = {});
-void print_vector(const std::vector<int> vector, const size_t size, const std::string prefix = {},
-    const std::string label = {}, std::ostream& out = std::cout);
+void print_graph(const std::vector<int>& graph, const size_t points, const std::string& prefix = {});
+void print_vector(const std::vector<int>& vector, const size_t size, const std::string& prefix = {},
+    const std::string& label = {}, std::ostream& out = std::cout);
 
 template<typename T>
-void print_vector(const std::vector<T> vector, const size_t size, const std::string prefix = {},
-    const std::string label = {}, std::ostream& out = std::cout);
+void print_vector(const std::vector<T>& vector, const size_t size, const std::string& prefix = {},
+    const std::string& label = {}, std::ostream& out = std::cout);
 
 std::vector<int> dijkstra(const std::vector<int>& graph, int start, int end);
 std::vector<int> dijkstra_omp(const std::vector<int>& graph, int start, int end);

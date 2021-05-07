@@ -6,7 +6,8 @@
 #include "../../../modules/task_2/stoicheva_d_dijkstra/dijkstra_omp.h"
 
 
-std::vector<int> create_random_graph(const size_t points, const size_t max_distance) {
+std::vector<int> create_random_graph(const size_t points,
+                                     const size_t max_distance) {
     size_t size = points * points;
     std::mt19937 gen(uint32_t(time(0)));
     std::uniform_int_distribution<int> uid(-static_cast<int>(max_distance*10),

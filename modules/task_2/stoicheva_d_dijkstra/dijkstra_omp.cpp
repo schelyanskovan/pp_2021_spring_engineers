@@ -8,7 +8,7 @@
 #include <sstream>
 #include "../../../modules/task_2/stoicheva_d_dijkstra/dijkstra_omp.h"
 
-void print_graph(const std::vector<int> graph, const size_t points, const std::string prefix) {
+void print_graph(const std::vector<int>& graph, const size_t points, const std::string& prefix) {
 #ifdef DEBUG_PRINT
     std::cout << "\n" << prefix << "Graph: {\n";
     for (size_t row = 0; row < points; row++) {
@@ -22,27 +22,27 @@ void print_graph(const std::vector<int> graph, const size_t points, const std::s
 #endif
 }
 
-void print_vector(const std::vector<int> vector, const size_t size, const std::string prefix,
-    const std::string label, std::ostream& out) {
+void print_vector(const std::vector<int>& vector, const size_t size, const std::string& prefix,
+    const std::string& label, std::ostream& out) {
     print_vector<int>(vector, size, prefix, label, out);
 }
 
 
-void print_vector(const std::vector<float> vector, const size_t size, const std::string prefix,
-    const std::string label, std::ostream& out) {
+void print_vector(const std::vector<float>& vector, const size_t size, const std::string& prefix,
+    const std::string& label, std::ostream& out) {
     print_vector<float>(vector, size, prefix, label, out);
 }
 
 
-void print_vector(const std::vector<double> vector, const size_t size, const std::string prefix,
-    const std::string label, std::ostream& out) {
+void print_vector(const std::vector<double>& vector, const size_t size, const std::string& prefix,
+    const std::string& label, std::ostream& out) {
     print_vector<double>(vector, size, prefix, label, out);
 }
 
 
 template<typename T>
-void print_vector(const std::vector<T> vector, const size_t size, const std::string prefix,
-    const std::string label, std::ostream& out) {
+void print_vector(const std::vector<T>& vector, const size_t size, const std::string& prefix,
+    const std::string& label, std::ostream& out) {
 #ifdef DEBUG_PRINT
     std::stringstream buffer;
     buffer << prefix + (label.empty() ? "Vector" : label) + ": {" << std::endl;
