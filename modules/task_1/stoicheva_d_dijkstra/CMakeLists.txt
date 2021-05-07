@@ -1,30 +1,16 @@
-cmake_minimum_required(VERSION 3.12)
-
 get_filename_component(ProjectId ${CMAKE_CURRENT_SOURCE_DIR} NAME)
-get_filename_component(PARENT_DIR ../../.. ABSOLUTE)
-message("PARENT_DIR ${PARENT_DIR}")
 
-if ( USE_SEQ )
+if (USE_SEQ)
     set(ProjectId "${ProjectId}_seq")
-    project( ${ProjectId} )
-    message( STATUS "-- " ${ProjectId} )
-    
-    add_subdirectory("${PARENT_DIR}/3rdparty/gtest" build)
-    include_directories("${PARENT_DIR}/3rdparty/gtest/googletest/include")
-    if( WIN32 )
-        include_directories("${PARENT_DIR}/3rdparty/gtest-mpi/win")
-    else( WIN32 )
-        include_directories("${PARENT_DIR}/3rdparty/gtest-mpi/linux")
-    endif( WIN32 )
+    project(${ProjectId})
+    message(STATUS "-- " ${ProjectId})
+
+    file(GLOB_RECURSE ALL_SOURCE_FILES *.cpp *.h)
 
     set(PACK_LIB "${ProjectId}_lib")
+    add_library(${PACK_LIB} STATIC ${ALL_SOURCE_FILES})
 
-    file(GLOB ALL_SOURCE_FILES *.cpp *.h)
-
-    set(PACK_LIB "${ProjectId}_lib")
-    add_library(${PACK_LIB} STATIC ${ALL_SOURCE_FILES} )
-
-    add_executable( ${ProjectId} ${ALL_SOURCE_FILES} )
+    add_executable(${ProjectId} ${ALL_SOURCE_FILES})
 
     target_link_libraries(${ProjectId} ${PACK_LIB})
     target_link_libraries(${ProjectId} gtest gtest_main)
@@ -32,7 +18,7 @@ if ( USE_SEQ )
     enable_testing()
     add_test(NAME ${ProjectId} COMMAND ${ProjectId})
 
-    if( UNIX )
+    if (UNIX)
         foreach (SOURCE_FILE ${ALL_SOURCE_FILES})
             string(FIND ${SOURCE_FILE} ${PROJECT_BINARY_DIR} PROJECT_TRDPARTY_DIR_FOUND)
             if (NOT ${PROJECT_TRDPARTY_DIR_FOUND} EQUAL -1)
@@ -53,7 +39,7 @@ if ( USE_SEQ )
                 --quiet
                 ${ALL_SOURCE_FILES}
         )
-    endif( UNIX )
+    endif (UNIX)
 
     SET(ARGS_FOR_CHECK_COUNT_TESTS "")
     foreach (FILE_ELEM ${ALL_SOURCE_FILES})
@@ -65,7 +51,7 @@ if ( USE_SEQ )
             ${CMAKE_SOURCE_DIR}/scripts/check_count_tests.py
             ${ProjectId}
             ${ARGS_FOR_CHECK_COUNT_TESTS}
-    )
-else( USE_SEQ )
-    message( STATUS "-- ${ProjectId} - NOT BUILD!"  )
-endif( USE_SEQ )
+            )
+else (USE_SEQ)
+    message(STATUS "-- ${ProjectId} - NOT BUILD!")
+endif (USE_SEQ)
