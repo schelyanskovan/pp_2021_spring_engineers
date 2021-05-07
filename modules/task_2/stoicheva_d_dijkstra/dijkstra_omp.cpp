@@ -8,7 +8,7 @@
 #include <sstream>
 #include "../../../modules/task_2/stoicheva_d_dijkstra/dijkstra_omp.h"
 
-void print_graph(std::vector<int> graph, const size_t points, std::string prefix) {
+void print_graph(const std::vector<int> graph, const size_t points, const std::string prefix) {
 #ifdef DEBUG_PRINT
     std::cout << "\n" << prefix << "Graph: {\n";
     for (size_t row = 0; row < points; row++) {
