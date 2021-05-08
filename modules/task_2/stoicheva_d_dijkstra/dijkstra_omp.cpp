@@ -79,7 +79,7 @@ int find_unprocessed_point_with_min_distance_omp(const std::vector<int>& graph,
         int local_found_point = found_point;
         int local_found_min_distance = found_min_distance;
         #pragma omp for
-        for (int point = 0; point < processed.size(); point++) {
+        for (int point = 0; point < static_cast<int>(processed.size()); point++) {
             if (!processed[point] && distances[point] < local_found_min_distance) {
                 local_found_min_distance = distances[point];
                 local_found_point = point;
@@ -102,7 +102,7 @@ int process_unprocessed_point(const std::vector<int>& graph,
 
     int min_distance = std::numeric_limits<int>::max();
     int min_distance_point = -1;
-    for (int point = 0; point < processed->size(); point++) {
+    for (int point = 0; point < static_cast<int>(processed->size()); point++) {
         int start_row_index = current_point * static_cast<int>(processed->size());
         int distance = graph[start_row_index + point];
         if (!(*processed)[point] && distance > 0) {
@@ -132,7 +132,7 @@ int process_unprocessed_point_omp(const std::vector<int>& graph,
         int local_min_distance = std::numeric_limits<int>::max();
         int local_min_distance_point = -1;
         #pragma omp for
-        for (int point = 0; point < processed->size(); point++) {
+        for (int point = 0; point < static_cast<int>(processed->size()); point++) {
             int start_row_index = current_point * static_cast<int>(processed->size());
             int distance = graph[start_row_index + point];
             if (!(*processed)[point] && distance > 0) {
@@ -157,26 +157,26 @@ int process_unprocessed_point_omp(const std::vector<int>& graph,
     return min_distance_point;
 }
 
-std::vector<int> dijkstra(const std::vector<int>& graph, int start, int end) {
+std::vector<int> dijkstra(const std::vector<int>& graph, size_t start, size_t end) {
     if (graph.size() == 0) {
         throw "Error: empty graph";
     }
 
     size_t points_count = static_cast<size_t>(sqrt(graph.size()));
-    if (points_count * points_count != static_cast<int>(graph.size())) {
-        std::cout << "Illegal size: expected " << graph.size() << " calculated "
+    if (points_count * points_count != graph.size()) {
+        std::cout << "Illegal graph size: expected " << graph.size() << " calculated "
                   << points_count * points_count << std::endl;
         throw "Error: incorrect graph";
     }
 
-    start--; end--;
-    if (start < 0 || end < 0 || start > points_count - 1 || end > points_count - 1) {
+    if (start < 1 || end < 1 || start > points_count || end > points_count) {
         std::cout << "Error: illegal start or end" << std::endl;
         throw "Error: illegal start or end";
     }
+    start--; end--;
 
     if (points_count == 1) {
-        return std::vector<int>({ start + 1 });
+        return { static_cast<int>(start) + 1 };
     }
 
     constexpr int max_int = std::numeric_limits<int>::max();
@@ -206,7 +206,7 @@ std::vector<int> dijkstra(const std::vector<int>& graph, int start, int end) {
     int current = end;
 
     while (current != start) {
-        for (int i = 0; i < points_count; i++) {
+        for (int i = 0; i < static_cast<int>(points_count); i++) {
             if (graph[current * points_count + i] > 0) {
                 int tmp = weight - graph[current * points_count + i];
                 if (distances[i] == tmp) {
@@ -222,26 +222,26 @@ std::vector<int> dijkstra(const std::vector<int>& graph, int start, int end) {
     return path;
 }
 
-std::vector<int> dijkstra_omp(const std::vector<int>& graph, int start, int end) {
+std::vector<int> dijkstra_omp(const std::vector<int>& graph, size_t start, size_t end) {
     if (graph.size() == 0)
         throw "Error: empty graph";
 
     size_t points_count = static_cast<size_t>(sqrt(graph.size()));
 
-    if (points_count * points_count != static_cast<int>(graph.size())) {
-        std::cout << "Illegal size: expected " << graph.size() << " calculated "
+    if (points_count * points_count != graph.size()) {
+        std::cout << "Illegal graph size: expected " << graph.size() << " calculated "
                   << points_count * points_count << std::endl;
         throw "Error: incorrect graph";
     }
 
-    start--; end--;
-
-    if (start < 0 || end < 0 || start > points_count - 1 || end > points_count - 1) {
+    if (start < 1 || end < 1 || start > points_count || end > points_count) {
         std::cout << "Error: illegal start or end" << std::endl;
         throw "Error: illegal start or end";
     }
+    start--; end--;
+
     if (points_count == 1) {
-        return std::vector<int>({ 0 });
+        return { static_cast<int>(start) + 1 };
     }
 
     constexpr int max_int = std::numeric_limits<int>::max();
@@ -264,24 +264,28 @@ std::vector<int> dijkstra_omp(const std::vector<int>& graph, int start, int end)
 
     std::vector<int> path;
     path.push_back(end + 1);
-    int weight = distances[end];
+    int distance = distances[end];
     int current = end;
     bool found = false;
 
-    while (current != start) {
+    while (current != static_cast<int>(start)) {
         found = false;
 
         #pragma omp parallel for
-        for (int i = 0; i < points_count; i++) {
+        for (int i = 0; i < static_cast<int>(points_count); i++) {
+            // if (found) {
+            //     std::cout << "################ Found and not skipped #################" << std::endl;
+            // }
             if (!found && graph[current * points_count + i] > 0) {
-                int tmp = weight - graph[current * points_count + i];
-                if (distances[i] == tmp) {
+                int tmp_distance = distance - graph[current * points_count + i];
+                if (distances[i] == tmp_distance) {
                     #pragma omp critical
                     {
-                        weight = tmp;
+                        distance = tmp_distance;
                         current = i;
                         path.insert(path.begin(), i + 1);
                         found = true;
+                        // std::cout << "################ Found - now request for skip #################" << std::endl;
                     }
                 }
             }

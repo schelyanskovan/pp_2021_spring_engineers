@@ -59,7 +59,7 @@ TEST(Omp, Test_EmptyGraph) {
 
 TEST(Omp, Test_Graph1) {
     std::vector<int> graph = { 0 };
-    std::vector<int> result = { 0 };
+    std::vector<int> result = { 1 };
 
     ASSERT_EQ(result, dijkstra_omp(graph, 1, 1));
 }

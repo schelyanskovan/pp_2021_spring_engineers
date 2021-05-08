@@ -18,7 +18,7 @@ template<typename T>
 void print_vector(const std::vector<T>& vector, const size_t size, const std::string& prefix = {},
     const std::string& label = {}, std::ostream& out = std::cout);
 
-std::vector<int> dijkstra(const std::vector<int>& graph, int start, int end);
-std::vector<int> dijkstra_omp(const std::vector<int>& graph, int start, int end);
+std::vector<int> dijkstra(const std::vector<int>& graph, size_t start, size_t end);
+std::vector<int> dijkstra_omp(const std::vector<int>& graph, size_t start, size_t end);
 
 #endif  // MODULES_TASK_2_STOICHEVA_D_DIJKSTRA_DIJKSTRA_OMP_H_
