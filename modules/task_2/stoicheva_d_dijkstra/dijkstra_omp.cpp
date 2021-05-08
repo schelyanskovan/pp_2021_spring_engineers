@@ -205,7 +205,7 @@ std::vector<int> dijkstra(const std::vector<int>& graph, size_t start, size_t en
     int weight = distances[end];
     int current = end;
 
-    while (current != start) {
+    while (current != static_cast<int>(start)) {
         for (int i = 0; i < static_cast<int>(points_count); i++) {
             if (graph[current * points_count + i] > 0) {
                 int tmp = weight - graph[current * points_count + i];
