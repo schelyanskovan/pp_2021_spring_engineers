@@ -70,7 +70,7 @@ TEST(STD, TestMultSimpleToDiag) {
 }
 
 TEST(STD, TestMultDense) {
-  size_t same = 255;
+  size_t same = 64;
   size_t a = same, b = same, c = same;
   std::vector<double> l_init_mat(a * b), r_init_mat(b * c);
   for (size_t i = 0; i < a; ++i) {
@@ -107,7 +107,7 @@ TEST(STD, TestMultDense) {
 }
 
 TEST(STD, TestMultSparse) {
-  size_t same = 255;
+  size_t same = 64;
   double zero_per_elem = 2;
   size_t a = same, b = same, c = same;
   std::random_device device;
