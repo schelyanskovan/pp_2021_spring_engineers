@@ -6,6 +6,7 @@
 #include <iostream>
 #include <vector>
 
+#include "../../3rdparty/unapproved/unapproved.h"
 #include "../../modules/task_4/rukhovich_i_csr_mult_double/csr_mult_double.h"
 
 using time_interval = std::chrono::duration<long double, std::milli>;
