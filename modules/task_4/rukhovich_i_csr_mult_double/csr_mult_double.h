@@ -8,6 +8,8 @@
 #include <utility>
 #include <vector>
 
+#include "../../3rdparty/unapproved/unapproved.h"
+
 class RandomDouble {
  public:
   static double Next() {
