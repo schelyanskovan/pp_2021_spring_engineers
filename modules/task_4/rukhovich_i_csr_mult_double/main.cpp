@@ -18,6 +18,7 @@ time_interval MeasureMulTimeBox(const Matrix lhs, const Matrix rhs, size_t num_t
   times.reserve(num_loops);
   for (size_t i = 0; i < num_loops; ++i) {
     Matrix lhs_tmp = lhs, rhs_tmp = rhs;
+    lhs_tmp.SetNumThreads(num_threads);
     auto start = precise_clock::now();
     lhs_tmp *= rhs_tmp;
     auto end = precise_clock::now();

@@ -45,12 +45,12 @@ class CSRMatrixSTD {
   CSRMatrixSTD(CSRMatrixSTD &&other) = default;
 
   explicit CSRMatrixSTD(UIntType height, UIntType width, size_t num_threads = 1)
-      : num_cols_(width), counts_(height + 1, 0), num_threads_(num_threads) {
+      : counts_(height + 1, 0), num_threads_(num_threads), num_cols_(width) {
   }
 
   explicit CSRMatrixSTD(UIntType height, UIntType width, const std::vector<ValueType> &matrix,
                         size_t num_threads = 1)
-      : num_cols_(width), counts_(height + 1), num_threads_(num_threads) {
+      : counts_(height + 1), num_threads_(num_threads), num_cols_(width) {
     if (static_cast<UIntType>(matrix.size()) != height * width) {
       throw std::runtime_error("Init matrix must consist of height*width elements");
     }
@@ -105,21 +105,35 @@ class CSRMatrixSTD {
     UIntType res_width = other.num_cols_;
     UIntType res_height = counts_.size() - 1;
     std::vector<ValueType> res_mat(res_width * res_height);
-    for (int32_t row = 0; row < static_cast<int32_t>(res_height); ++row) {
-      for (UIntType col = 0; col < res_width; ++col) {
-        UIntType l_row_cur = counts_[row], r_row_cur = rhs.counts_[col];
-        ValueType cur_val = 0;
-        while (l_row_cur < counts_[row + 1] && r_row_cur < rhs.counts_[col + 1]) {
-          if (cols_[l_row_cur] < rhs.cols_[r_row_cur]) {
-            ++l_row_cur;
-          } else if (cols_[l_row_cur] > rhs.cols_[r_row_cur]) {
-            ++r_row_cur;
-          } else {
-            cur_val += vals_[l_row_cur++] * rhs.vals_[r_row_cur++];
+    auto mult_fun = [&](UIntType first_row, UIntType last_row) {
+      for (UIntType row = first_row; row < last_row; ++row) {
+        for (UIntType col = 0; col < res_width; ++col) {
+          UIntType l_row_cur = counts_[row], r_row_cur = rhs.counts_[col];
+          ValueType cur_val = 0;
+          while (l_row_cur < counts_[row + 1] && r_row_cur < rhs.counts_[col + 1]) {
+            if (cols_[l_row_cur] < rhs.cols_[r_row_cur]) {
+              ++l_row_cur;
+            } else if (cols_[l_row_cur] > rhs.cols_[r_row_cur]) {
+              ++r_row_cur;
+            } else {
+              cur_val += vals_[l_row_cur++] * rhs.vals_[r_row_cur++];
+            }
           }
+          res_mat[row * res_width + col] = cur_val;
         }
-        res_mat[row * res_width + col] = cur_val;
       }
+    };
+    std::vector<std::thread> threads;
+    UIntType rows_per_thread = res_height / static_cast<UIntType>(num_threads_);
+    size_t num_threads_with_add = static_cast<size_t>(res_height) % num_threads_;
+    UIntType cur_row = 0;
+    for (size_t td = 0; td < num_threads_; ++td) {
+      UIntType num_row_for_cur_thread = rows_per_thread + (td < num_threads_with_add ? 1 : 0);
+      threads.emplace_back(mult_fun, cur_row, cur_row + num_row_for_cur_thread);
+      cur_row += num_row_for_cur_thread;
+    }
+    for (size_t td = 0; td < num_threads_; ++td) {
+      threads[td].join();
     }
 
     num_cols_ = res_width;
@@ -139,6 +153,10 @@ class CSRMatrixSTD {
       }
     }
     return *this;
+  }
+
+  void SetNumThreads(size_t num_threads) {
+    num_threads_ = num_threads;
   }
 
  protected:
