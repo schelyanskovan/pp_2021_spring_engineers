@@ -1,9 +1,8 @@
 // Copyright 2021 Tronin Dmitry
 #include "../../modules/task_4/tronin_d_lin_filter_vertical_part/lin_filter_vertical_part.h"
-#include "../../3rdparty/unapproved/unapproved.h"
-#include <cmath>
 #include <stdexcept>
-#include <iostream>
+#include <cmath>
+#include "../../3rdparty/unapproved/unapproved.h"
 
 static const double kPi = 3.141592653589793;
 
