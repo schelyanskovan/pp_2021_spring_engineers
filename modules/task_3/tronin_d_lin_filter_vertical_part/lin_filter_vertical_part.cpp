@@ -59,24 +59,13 @@ std::vector<uint8_t> ApplyFilterTBB(const std::vector<double> &filter,
     }
     std::vector<uint8_t> result_image(image.size(), 1);
 
-
-
-
     tbb::task_scheduler_init init(static_cast<int>(number_of_threads));
 
-//    tbb::tick_count start = tbb::tick_count::now();
-
-//    {
-//        for (int col = 0; col < static_cast<int>(width); ++col) {
-//    std::atomic<size_t> counter{0};
-
-
-    tbb::parallel_for(tbb::blocked_range<int>(0, static_cast<int>(width), 5 ),
-                      [height, width, &image, &result_image, filter_size, &filter](tbb::blocked_range<int> r) {
-//        std::cout << r.begin() << ' ' << r.end() << '\n';
+    tbb::parallel_for(tbb::blocked_range<int>(0, static_cast<int>(width), 5),
+                      [height, width, &image, &result_image, filter_size, &filter](tbb::blocked_range<
+                          int> r) {
                         for (int col = r.begin(); col != r.end(); ++col) {
                             for (int row = 0; row < static_cast<int>(height); ++row) {
-//                                ++counter;
                                 double pixel_value = 0;
                                 for (int filter_row = -static_cast<int>(filter_size) / 2;
                                      filter_row <= static_cast<int>(filter_size) / 2;
@@ -108,38 +97,6 @@ std::vector<uint8_t> ApplyFilterTBB(const std::vector<double> &filter,
                             }
                         }
                       });
-
-
-
-//    tbb::tick_count stop = tbb::tick_count::now();
-
-//    std::cout << (stop - start).seconds() << ' ' << counter << '\n';
-
-//            for (int row = 0; row < static_cast<int>(height); ++row) {
-//                pixel_value = 0;
-//                for (int filter_row = -static_cast<int>(filter_size) / 2;
-//                     filter_row <= static_cast<int>(filter_size) / 2; ++filter_row) {
-//                    for (int filter_col = -static_cast<int>(filter_size) / 2;
-//                         filter_col <= static_cast<int>(filter_size) / 2; ++filter_col) {
-//                        image_row =
-//                            static_cast<size_t>(ClampP(static_cast<int>(row) + filter_row,
-//                                                       0,
-//                                                       static_cast<int>(height) - 1));
-//                        image_col =
-//                            static_cast<size_t>(ClampP(static_cast<int>(col) + filter_col,
-//                                                       0,
-//                                                       static_cast<int>(width) - 1));
-//                        test = image[image_row * width + image_col]
-//                            * filter[
-//                                (filter_row + static_cast<int>(filter_size) / 2) * filter_size
-//                                    + filter_col + static_cast<int>(filter_size) / 2];
-//                        pixel_value += test;
-//                    }
-//                }
-//                result_image[row * width + col] =
-//                    static_cast<uint8_t>(ClampP(pixel_value, 0., 255.));
-//            }
-//        }
 
     return result_image;
 }
