@@ -5,7 +5,6 @@
 #include <cstdint>
 #include <vector>
 
-
 std::vector<double> CalculateGaussFilterSTD(size_t size, double sigma);
 std::vector<uint8_t> ApplyFilterSTD(const std::vector<double> &filter,
                                     const std::vector<uint8_t> &image,
