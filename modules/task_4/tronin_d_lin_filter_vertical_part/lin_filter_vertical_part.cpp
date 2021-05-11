@@ -64,7 +64,7 @@ std::vector<uint8_t> ApplyFilterSTD(const std::vector<double> &filter,
         threads.emplace_back([width, height, number_of_threads, &image, &result_image, filter_size, &filter, i]() {
           for (int col = static_cast<int>(width) / number_of_threads * i;
                col < static_cast<int>(width) / number_of_threads * (i + 1)
-                   + (i == number_of_threads ? width % number_of_threads : 0); ++col) {
+                   + (i == number_of_threads ? static_cast<int>(width) % number_of_threads : 0); ++col) {
               for (int row = 0; row < static_cast<int>(height); ++row) {
                   double pixel_value = 0;
                   for (int filter_row = -static_cast<int>(filter_size) / 2;
