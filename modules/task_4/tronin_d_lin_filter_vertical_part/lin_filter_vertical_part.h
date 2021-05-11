@@ -10,7 +10,7 @@ std::vector<uint8_t> ApplyFilterSTD(const std::vector<double> &filter,
                                     const std::vector<uint8_t> &image,
                                     size_t width,
                                     size_t height,
-                                    size_t filter_size, size_t number_of_threads);
+                                    size_t filter_size, int number_of_threads);
 
 template<class T>
 inline T ClampSTD(T value, T low, T high) {

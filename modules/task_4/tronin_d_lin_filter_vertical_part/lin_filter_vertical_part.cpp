@@ -46,7 +46,7 @@ std::vector<uint8_t> ApplyFilterSTD(const std::vector<double> &filter,
                                     const std::vector<uint8_t> &image,
                                     size_t width,
                                     size_t height,
-                                    size_t filter_size, size_t number_of_threads) {
+                                    size_t filter_size, int number_of_threads) {
     if (image.size() != width * height) {
         throw std::invalid_argument("Incorrect image size");
     }
@@ -60,7 +60,7 @@ std::vector<uint8_t> ApplyFilterSTD(const std::vector<double> &filter,
 
     std::vector<std::thread> threads;
 
-    for (size_t i = 0; i < number_of_threads; ++i) {
+    for (int i = 0; i < number_of_threads; ++i) {
         threads.emplace_back([width, height, number_of_threads, &image, &result_image, filter_size, &filter, i]() {
           for (int col = static_cast<int>(width) / number_of_threads * i;
                col < static_cast<int>(width) / number_of_threads * (i + 1)
