@@ -19,15 +19,15 @@ TEST(test_Shell_Betch_sort_Tbb, test_on_1000_elements_4_threads) {
 }
 TEST(test_Batcher_Shell_Dif_Size_Tbb, test_time_4_threads) {
     std::vector<int> vect = getRandomVector(1000001);
-    double start = omp_get_wtime();
+    tbb::tick_count start = tbb::tick_count::now();
     std::vector<int> res = batchShellSort(vect, 1000001);
-    double end = omp_get_wtime();
-    std::cout << "Seq sort time: " << end - start << std::endl;
+    tbb::tick_count end = tbb::tick_count::now();
+    std::cout << "Seq time: " << (end - start).seconds() << std::endl;
 
-    start = omp_get_wtime();
+    tbb::tick_count start2 = tbb::tick_count::now();
     std::vector<int> resOMP = batchShellSortTbb(vect, 4, 1000001);
-    end = omp_get_wtime();
-    std::cout << "TBB sort time: " << end - start << std::endl;
+    tbb::tick_count end2 = tbb::tick_count::now();
+    std::cout << "Tbb time: " << (end2 - start2).seconds() << std::endl;
 
     ASSERT_EQ(res, resOMP);
 }
