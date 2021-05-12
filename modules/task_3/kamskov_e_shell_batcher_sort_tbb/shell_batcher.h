@@ -3,10 +3,10 @@
 #define MODULES_TASK_3_KAMSKOV_E_SHELL_BATCHER_SORT_TBB_SHELL_BATCHER_H_
 
 #include <tbb/tbb.h>
+#include <omp.h>
 #include <vector>
 #include <utility>
 #include <functional>
-#include <omp.h>
 #include <ctime>
 #include <iostream>
 #include <iterator>
