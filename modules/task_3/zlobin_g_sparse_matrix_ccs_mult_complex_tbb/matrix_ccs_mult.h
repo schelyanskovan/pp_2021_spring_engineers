@@ -2,8 +2,8 @@
 #ifndef MODULES_TASK_3_ZLOBIN_G_SPARSE_MATRIX_CCS_MULT_COMPLEX_TBB_MATRIX_CCS_MULT_H_
 #define MODULES_TASK_3_ZLOBIN_G_SPARSE_MATRIX_CCS_MULT_COMPLEX_TBB_MATRIX_CCS_MULT_H_
 
-#include <vector>
 #include <tbb/tbb.h>
+#include <vector>
 #include <complex>
 
 class MatrixCCS {

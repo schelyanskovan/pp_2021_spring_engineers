@@ -5,8 +5,6 @@
 
 #include <iostream>
 
-#include <chrono>
-
 MatrixCCS::MatrixCCS(int nCollumns, int nRows, int nNotZero) {
     if (nCollumns <= 0 || nRows <= 0) {
         throw "Incorrect matrix size";
