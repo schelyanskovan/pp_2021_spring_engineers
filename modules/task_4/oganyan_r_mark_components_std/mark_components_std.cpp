@@ -2,8 +2,7 @@
 
 #include "../../modules/task_4/oganyan_r_mark_components_std/mark_components_std.h"
 #include <iostream>
-#include <thread>
-#include <iomanip>
+#include "../../3rdparty/unapproved/unapproved.h"
 
 static const std::vector<std::pair<int, int>> directions{
         {-1, 0},
@@ -80,10 +79,9 @@ std::pair<std::vector<int>, int> MarkComponentsParStd(std::vector<int> *img, int
 
 
     for (int proc = 0; proc < num_proc; ++proc) {
-
         threads.emplace_back([&img_new, width, height, &dsu, proc, div, mod, last]() {
-            int balance = (proc<mod)?1:0;
-            for (int i = last ; i < last + div + balance; ++i) {
+            int balance = (proc < mod) ? 1 : 0;
+            for (int i = last; i < last + div + balance; ++i) {
                 for (int j = 0; j < width; ++j) {
                     if (img_new[i * width + j]) {
                         for (auto &neighbor : directions) {
@@ -101,13 +99,12 @@ std::pair<std::vector<int>, int> MarkComponentsParStd(std::vector<int> *img, int
                 }
             }
         });
-        last += div + ((proc<mod)?1:0);
+        last += div + ((proc < mod) ? 1 : 0);
     }
 
     for (auto &thread : threads) {
         thread.join();
     }
-
 
 
     for (int i = 0; i < height; ++i) {
