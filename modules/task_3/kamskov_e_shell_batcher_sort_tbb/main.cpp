@@ -1,5 +1,7 @@
 // Copyright 2021 Kamskov Eugene
 #include <gtest/gtest.h>
+#include <omp.h>
+#include <tbb/tbb.h>
 #include "./shell_batcher.h"
 
 TEST(test_Shell, shell_Rand) {

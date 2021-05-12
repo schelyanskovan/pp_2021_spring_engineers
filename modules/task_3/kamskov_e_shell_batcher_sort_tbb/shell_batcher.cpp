@@ -1,6 +1,8 @@
 // Copyright 2021 Kamskov Eugene
 
 #include "../../../modules/task_3/kamskov_e_shell_batcher_sort_tbb/shell_batcher.h"
+#include <tbb/tbb.h>
+#include <omp.h>
 
 std::vector<int> getRandomVector(int size) {
     std::mt19937 gen;
