@@ -24,8 +24,7 @@ std::vector<std::vector<int>> splitV(const std::vector<int>& vec, size_t n) {
     for (size_t i = 0; i < n; ++i) {
         if (bal > 0) {
             end = end + (del + !!(bal--));
-        }
-        else {
+        }else {
             end = end + del;
         }
         res.push_back(std::vector<int>(vec.begin() + begin, vec.begin() + end));
@@ -89,8 +88,7 @@ std::vector<int> evenBatch(const std::vector<int>& A, const std::vector<int>& B)
         if (A[a] <= B[b]) {
             res[i] = A[a];
             a = a + 2;
-        }
-        else {
+        }else {
             res[i] = B[b];
             b = b + 2;
         }
@@ -101,8 +99,7 @@ std::vector<int> evenBatch(const std::vector<int>& A, const std::vector<int>& B)
             res[i] = B[j];
             ++i;
         }
-    }
-    else {
+    }else {
         for (size_t j = a; j < A.size(); j = j + 2) {
             res[i] = A[j];
             ++i;
@@ -118,8 +115,7 @@ std::vector<int> oddBatch(const std::vector<int>& A, const std::vector<int>& B) 
         if (A[a] <= B[b]) {
             res[i] = A[a];
             a = a + 2;
-        }
-        else {
+        }else {
             res[i] = B[b];
             b = b + 2;
         }
@@ -130,8 +126,7 @@ std::vector<int> oddBatch(const std::vector<int>& A, const std::vector<int>& B) 
             res[i] = B[j];
             ++i;
         }
-    }
-    else {
+    }else {
         for (size_t j = a; j < A.size(); j = j + 2) {
             res[i] = A[j];
             ++i;
