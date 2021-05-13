@@ -72,13 +72,13 @@ std::vector<Point> Jarvis::makeHullTbb(const std::list<Point>& in) {
 
   tbb::task_scheduler_init init(4);
   // tbb::task_scheduler_init init();  // auto-detection
-  tbb::parallel_for(tbb::blocked_range<int>(0, 4, 1), JarvisHull(in, hull, &turn, 4));
+  tbb::parallel_for(tbb::blocked_range<int>(0, 4, 1), JarvisHull(in, &hull, &turn, 4));
 
   return hull;
 }
 
-void Jarvis::makeHullTbbSubRoutine(const std::list<Point>& in, std::vector<Point>& out, int* turn, int sector_num, int div)
-{
+void Jarvis::makeHullTbbSubRoutine(const std::list<Point>& in, std::vector<Point>* out,
+  int* turn, int sector_num, int div) {
   static const double Pi = 3.14159265358979;
 
   // divide the plane into sectors of responsibility
@@ -110,7 +110,7 @@ void Jarvis::makeHullTbbSubRoutine(const std::list<Point>& in, std::vector<Point
     std::cout << "";
   }
 
-  out.insert(out.end(), subHull.begin(), subHull.end());
+  (*out).insert((*out).end(), subHull.begin(), subHull.end());
   (*turn)++;
 }
 

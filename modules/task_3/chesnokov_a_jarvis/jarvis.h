@@ -70,7 +70,8 @@ class Jarvis {
   // degenerate case 3: CH of set of 1 or 2 pts is this set itself;
   static std::vector<Point> makeHull(const std::list<Point>& in);
   static std::vector<Point> makeHullTbb(const std::list<Point>& in);
-  static void makeHullTbbSubRoutine(const std::list<Point>& in, std::vector<Point>& out, int* turn, int sector_num, int div);
+  static void makeHullTbbSubRoutine(const std::list<Point>& in, std::vector<Point>* out,
+    int* turn, int sector_num, int div);
 
  private:
   // Finds the leftmost point; if there are several, returns lowest one.
@@ -79,7 +80,7 @@ class Jarvis {
   // Finds from list in the point P, such that angle between vec(prev, cur) and vec(cur, P) is minimal.
   // If there are several, then it chooses the most distant one.
   // The found point will be deleted from the list.
-  static Point findWithMinAngle(const Point& prev, const Point& cur,const std::list<Point>* in);
+  static Point findWithMinAngle(const Point& prev, const Point& cur, const std::list<Point>* in);
 
   static Point findWithMaxProjection(const Point vec, const std::list<Point>& in);
 
@@ -94,11 +95,11 @@ class Jarvis {
 
 class JarvisHull {
   const std::list<Point>& in;
-  std::vector<Point>& out;
+  std::vector<Point>* out;
   int num_sectors;
   int* turn;
-public:
-  JarvisHull(const std::list<Point>& p_in, std::vector<Point>& p_out, int* p_turn, int t_num_sectors)
+ public:
+  JarvisHull(const std::list<Point>& p_in, std::vector<Point>* p_out, int* p_turn, int t_num_sectors)
     : in(p_in), out(p_out), turn(p_turn), num_sectors(t_num_sectors) {}
   void operator()(const tbb::blocked_range<int>& r) const {
     for (int i = r.begin(); i != r.end(); i++) {
