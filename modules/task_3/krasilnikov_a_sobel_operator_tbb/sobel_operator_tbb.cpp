@@ -9,7 +9,7 @@
 void SobelOperator_parallel(unsigned char* image, int height, int weight) {
     std::vector<unsigned char> ans(height * weight);
     tbb::parallel_for(tbb::blocked_range<int> (1, height - 1, 4),
-                      [&image, &ans, height, weight](
+                      [&image, &ans, weight](
                           tbb::blocked_range<int> r) {
     for (int i = r.begin(); i < r.end(); ++i) {
         for (int j = 1; j < weight - 1; ++j) {
