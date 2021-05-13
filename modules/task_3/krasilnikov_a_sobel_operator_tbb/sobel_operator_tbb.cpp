@@ -8,7 +8,9 @@
 
 void SobelOperator_parallel(unsigned char* image, int height, int weight) {
     std::vector<unsigned char> ans(height * weight);
-    tbb::parallel_for(tbb::blocked_range<int> (1, height - 1, 4), [&image, &ans, height, weight](tbb::blocked_range<int> r) {
+    tbb::parallel_for(tbb::blocked_range<int> (1, height - 1, 4),
+                      [&image, &ans, height, weight](
+                          tbb::blocked_range<int> r) {
     for (int i = r.begin(); i < r.end(); ++i) {
         for (int j = 1; j < weight - 1; ++j) {
             auto Gy = image[(i + 1) * weight + (j - 1)] -
@@ -28,7 +30,8 @@ void SobelOperator_parallel(unsigned char* image, int height, int weight) {
             ans[i * weight + j] = static_cast<unsigned char>(pixel);
         }
     }});
-    tbb::parallel_for(tbb::blocked_range<int> (0, height * weight, 4), [&image, &ans](tbb::blocked_range<int> r) {
+    tbb::parallel_for(tbb::blocked_range<int> (0, height * weight, 4),
+                      [&image, &ans](tbb::blocked_range<int> r) {
         for (int i = r.begin(); i < r.end(); ++i) {
             image[i] = ans[i];
         }
