@@ -1,7 +1,6 @@
 // Copyright 2021 Chesnokov Artyom
 
 #include <gtest/gtest.h>
-#include <omp.h>
 #include <vector>
 #include <list>
 #include <random>
@@ -204,17 +203,10 @@ TEST(JarvisTest, Big_Check_10000_Random_Points_With_Seq) {
     pts.emplace_back(rad * std::sin(an), rad * std::cos(an));
   }
 
-  double t1, t2, t3;
-
-  t1 = omp_get_wtime();
   std::vector<Point> res = Jarvis::makeHullTbb(pts);
 
-  t2 = omp_get_wtime();
-
   std::vector<Point> res2 = Jarvis::makeHull(pts);
-  t3 = omp_get_wtime();
 
-  std::cout << "TBB: " << t2 - t1 << std::endl << "SEQ: " << t3 - t2 << std::endl;
 
   ASSERT_EQ(res.size(), res2.size());
 
