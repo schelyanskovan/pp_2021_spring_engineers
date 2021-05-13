@@ -100,7 +100,7 @@ class JarvisHull {
   int* turn;
  public:
   JarvisHull(const std::list<Point>& p_in, std::vector<Point>* p_out, int* p_turn, int t_num_sectors)
-    : in(p_in), out(p_out), turn(p_turn), num_sectors(t_num_sectors) {}
+    : in(p_in), out(p_out), num_sectors(t_num_sectors), turn(p_turn) {}
   void operator()(const tbb::blocked_range<int>& r) const {
     for (int i = r.begin(); i != r.end(); i++) {
       Jarvis::makeHullTbbSubRoutine(in, out, turn, i, num_sectors);
