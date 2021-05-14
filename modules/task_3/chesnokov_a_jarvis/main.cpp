@@ -6,6 +6,7 @@
 #include <random>
 
 #include "../../../modules/task_3/chesnokov_a_jarvis/jarvis.h"
+#include "tbb/tick_count.h"
 
 enum { LEFT, RIGHT, BEYOND, BEHIND, BETWEEN, ORIGIN, DESTINATION };
 
@@ -203,9 +204,12 @@ TEST(JarvisTest, Big_Check_10000_Random_Points_With_Seq) {
     pts.emplace_back(rad * std::sin(an), rad * std::cos(an));
   }
 
+  tbb::tick_count t1 = tbb::tick_count::now();
   std::vector<Point> res = Jarvis::makeHullTbb(pts);
-
+  tbb::tick_count t2 = tbb::tick_count::now();
   std::vector<Point> res2 = Jarvis::makeHull(pts);
+  tbb::tick_count t3 = tbb::tick_count::now();
+  std::cout << "TBB: " << (t2 - t1).seconds() << "\nSEQ: " << (t3 - t2).seconds() << std::endl;
 
 
   ASSERT_EQ(res.size(), res2.size());
