@@ -6,6 +6,7 @@ if ( USE_OMP )
     project( ${ProjectId} )
     message( STATUS "-- " ${ProjectId} )
 
+
     file(GLOB_RECURSE ALL_SOURCE_FILES *.cpp *.h)
 
     set(PACK_LIB "${ProjectId}_lib")
