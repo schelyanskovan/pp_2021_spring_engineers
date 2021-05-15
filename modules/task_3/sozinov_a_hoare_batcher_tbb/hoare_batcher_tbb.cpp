@@ -79,7 +79,7 @@ void ParSort(std::vector<double>* vector, unsigned int numThreads) {
   tbb::task_scheduler_init initTaskScheduler(numThreads);
   tbb::parallel_for(tbb::blocked_range<size_t>(0, numThreads, 1),
             [offset, &resVec](const tbb::blocked_range<size_t>& r) {
-              for (int i = r.begin(); i != r.end(); ++i) {
+              for (size_t i = r.begin(); i != r.end(); ++i) {
                 int numThread = tbb::this_task_arena::current_thread_index();
                 Sort(&resVec, offset[numThread], offset[numThread + 1] - 1);
               }
