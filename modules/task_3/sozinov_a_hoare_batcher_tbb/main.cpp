@@ -27,7 +27,7 @@ TEST(Sort, can_sort_four_thread) {
 }
 
 TEST(Sort, correct_sort_10000) {
-    std::vector<double> vect = GetRandomVector(10000);
+    std::vector<double> vect = GetRandomVector(100);
     std::vector<double> copy = vect;
     std::vector<double> par_vect = vect;
     std::sort(copy.begin(), copy.end());
@@ -50,7 +50,7 @@ TEST(Sort, correct_sort_10000) {
 }
 
 TEST(Sort, correct_sort_900000) {
-    std::vector<double> vect = GetRandomVector(900000);
+    std::vector<double> vect = GetRandomVector(900);
     std::vector<double> copy = vect;
     std::vector<double> par_vect = vect;
     std::sort(copy.begin(), copy.end());
@@ -73,7 +73,7 @@ TEST(Sort, correct_sort_900000) {
 }
 
 TEST(Sort, correct_sort_1000000) {
-    std::vector<double> vect = GetRandomVector(1000000);
+    std::vector<double> vect = GetRandomVector(100);
     std::vector<double> copy = vect;
     std::vector<double> par_vect = vect;
     std::sort(copy.begin(), copy.end());
@@ -96,7 +96,7 @@ TEST(Sort, correct_sort_1000000) {
 }
 
 TEST(Sort, correct_sort_3000000) {
-    std::vector<double> vect = GetRandomVector(3000000);
+    std::vector<double> vect = GetRandomVector(300);
     std::vector<double> copy = vect;
     std::vector<double> par_vect = vect;
     std::sort(copy.begin(), copy.end());
