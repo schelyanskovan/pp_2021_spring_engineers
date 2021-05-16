@@ -57,10 +57,10 @@ void SeqSort(std::vector<double>* vector) {
   vector->clear();
   BatcherMerge(vector, left, right);
   tbb::tick_count merge_end = tbb::tick_count::now();
-  /*std::cout << std::endl << "-------------SEQUENTIAL---------------" << std::endl;
+  std::cout << std::endl << "-------------SEQUENTIAL---------------" << std::endl;
   std::cout << "vector size = " << vector->size() << std::endl;
   std::cout << "SORT: " << (sort_end - sort_start).seconds() << std::endl;
-  std::cout << "MERGE: " << (merge_end - merge_start).seconds() << std::endl << std::endl;*/
+  std::cout << "MERGE: " << (merge_end - merge_start).seconds() << std::endl << std::endl;
 }
 
 void ParSort(std::vector<double>* vector, unsigned int numThreads) {
@@ -102,10 +102,10 @@ void ParSort(std::vector<double>* vector, unsigned int numThreads) {
       BatcherMergePar(vector, left, right);
     }
   tbb::tick_count merge_end = tbb::tick_count::now();
-  /*std::cout << "-------------PARALLEL---------------" << std::endl;
+  std::cout << "-------------PARALLEL---------------" << std::endl;
   std::cout << "vector size = " << vector->size() << std::endl;
   std::cout << "SORT: " << (sort_end - sort_start).seconds() << std::endl;
-  std::cout << "MERGE: " << (merge_end - merge_start).seconds() << std::endl << std::endl;*/
+  std::cout << "MERGE: " << (merge_end - merge_start).seconds() << std::endl << std::endl;
 }
 
 void EvenOddSplit(std::vector<double>* res, const std::vector<double>& left,
