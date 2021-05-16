@@ -76,21 +76,12 @@ void ParSort(std::vector<double>* vector, unsigned int numThreads) {
   std::vector<double> resVec = *vector, locVec;
   FillOffset(&offset, vector->size(), numThreads);
 
-    std::cout << "---------------------SORT----------------------\n";
-    tbb::task_scheduler_init initTaskScheduler(numThreads);
+  tbb::task_scheduler_init initTaskScheduler(numThreads);
   tbb::parallel_for(tbb::blocked_range<size_t>(0, numThreads, 1),
             [offset, &resVec](const tbb::blocked_range<size_t>& r) {
               for (size_t i = r.begin(); i != r.end(); ++i) {
-                //int numThread = tbb::this_task_arena::current_thread_index();
+                // int numThread = tbb::this_task_arena::current_thread_index();
                 Sort(&resVec, offset[i], offset[i + 1] - 1);
-                if (!std::is_sorted(resVec.begin() + offset[i], resVec.begin() + offset[i + 1])) {
-                    std::string text = "Vector part from:";
-                    text +=std::to_string(offset[i]);
-                    text += " to: ";
-                    text += std::to_string(offset[i + 1]);
-                    text += "ISN'T sorted!\n";
-                    std::cout << text;
-                }
               }
     }, tbb::simple_partitioner());
 
@@ -103,30 +94,13 @@ void ParSort(std::vector<double>* vector, unsigned int numThreads) {
   tbb::tick_count sort_end = tbb::tick_count::now();
   tbb::tick_count merge_start = tbb::tick_count::now();
   vector->clear();
-    std::cout << "---------------------MERGE----------------------\n";
     for (unsigned int index = 0; index < numThreads; ++index) {
-    std::vector<double> left, right;
-    right = std::vector<double>(offset[index + 1] - offset[index], 0);
-    std::copy(resVec.begin() + offset[index], resVec.begin() + offset[index + 1], right.begin());
+      std::vector<double> left, right;
+      right = std::vector<double>(offset[index + 1] - offset[index], 0);
+      std::copy(resVec.begin() + offset[index], resVec.begin() + offset[index + 1], right.begin());
 
-    BatcherMergePar(vector, left, right);
-        if (!std::is_sorted(vector->begin() + offset[index], vector->begin() + offset[index + 1])) {
-            std::string text = "Vector part from:";
-            text +=std::to_string(offset[index]);
-            text += " to: ";
-            text += std::to_string(offset[index + 1]);
-            text += "ISN'T sorted!\n";
-            std::cout << text;
-        }
-        if (!std::is_sorted(vector->begin() + offset[index], vector->begin() + offset[index + 1])) {
-            std::string text = "Vector part from:";
-            text +=std::to_string(offset[index]);
-            text += " to: ";
-            text += std::to_string(offset[index + 1]);
-            text += "ISN'T sorted!\n";
-            std::cout << text;
-        }
-  }
+      BatcherMergePar(vector, left, right);
+    }
   tbb::tick_count merge_end = tbb::tick_count::now();
   /*std::cout << "-------------PARALLEL---------------" << std::endl;
   std::cout << "vector size = " << vector->size() << std::endl;
