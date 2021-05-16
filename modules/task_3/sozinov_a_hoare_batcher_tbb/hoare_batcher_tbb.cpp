@@ -57,10 +57,10 @@ void SeqSort(std::vector<double>* vector) {
   vector->clear();
   BatcherMerge(vector, left, right);
   tbb::tick_count merge_end = tbb::tick_count::now();
-  std::cout << std::endl << "-------------SEQUENTIAL---------------" << std::endl;
+ /* std::cout << std::endl << "-------------SEQUENTIAL---------------" << std::endl;
   std::cout << "vector size = " << vector->size() << std::endl;
   std::cout << "SORT: " << (sort_end - sort_start).seconds() << std::endl;
-  std::cout << "MERGE: " << (merge_end - merge_start).seconds() << std::endl << std::endl;
+  std::cout << "MERGE: " << (merge_end - merge_start).seconds() << std::endl << std::endl;*/
 }
 
 void ParSort(std::vector<double>* vector, unsigned int numThreads) {
@@ -76,12 +76,14 @@ void ParSort(std::vector<double>* vector, unsigned int numThreads) {
   std::vector<double> resVec = *vector, locVec;
   FillOffset(&offset, vector->size(), numThreads);
 
+  std::cout << numThreads << std::endl;
   tbb::task_scheduler_init initTaskScheduler(numThreads);
   tbb::parallel_for(tbb::blocked_range<size_t>(0, numThreads, 1),
             [offset, &resVec](const tbb::blocked_range<size_t>& r) {
               for (size_t i = r.begin(); i != r.end(); ++i) {
-                int numThread = tbb::this_task_arena::current_thread_index();
-                Sort(&resVec, offset[numThread], offset[numThread + 1] - 1);
+                //int numThread = tbb::this_task_arena::current_thread_index();
+                std::cout << offset[i] << "\t" << offset[i + 1] << "\t" << i << std::endl;
+                Sort(&resVec, offset[i], offset[i + 1] - 1);
               }
     }, tbb::simple_partitioner());
 
@@ -102,10 +104,10 @@ void ParSort(std::vector<double>* vector, unsigned int numThreads) {
     BatcherMergePar(vector, left, right);
   }
   tbb::tick_count merge_end = tbb::tick_count::now();
-  std::cout << "-------------PARALLEL---------------" << std::endl;
+  /*std::cout << "-------------PARALLEL---------------" << std::endl;
   std::cout << "vector size = " << vector->size() << std::endl;
   std::cout << "SORT: " << (sort_end - sort_start).seconds() << std::endl;
-  std::cout << "MERGE: " << (merge_end - merge_start).seconds() << std::endl << std::endl;
+  std::cout << "MERGE: " << (merge_end - merge_start).seconds() << std::endl << std::endl;*/
 }
 
 void EvenOddSplit(std::vector<double>* res, const std::vector<double>& left,
