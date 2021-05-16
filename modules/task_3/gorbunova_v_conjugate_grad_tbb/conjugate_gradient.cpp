@@ -2,12 +2,12 @@
 #include <stdio.h>
 #include <tbb/tbb.h>
 #include <tbb/blocked_range.h>
-#include "tbb/blocked_range2d.h"
 #include <stdlib.h>
 #include <iostream>
+#include "tbb/blocked_range2d.h"
 #include "../../../modules/task_3/gorbunova_v_conjugate_grad_tbb/conjugate_gradient.h"
 
-using namespace tbb;
+
 
 void Random_Matrix_A(int S, double** A) {
     for (int i = 0; i < S; i++) {
@@ -27,14 +27,14 @@ void Random_Matrix_B(int S, double* B) {
     }
 }
 
-void MatrixMultiplicateP(double** A, int S, double* Ax, double* x1,int grainsize) {
+void MatrixMultiplicateP(double** A, int S, double* Ax, double* x1, int grainsize) {
     tbb::parallel_for(tbb::blocked_range2d<int>(0 , S, grainsize , 0, S, S),
         [&](tbb::blocked_range2d<int> r) {
             for (int i = r.rows().begin(); i < r.rows().end(); i++) {
                 Ax[i] = 0;
                 for (int j = r.cols().begin(); j < r.cols().end(); j++)
                     Ax[i] += A[i][j] * x1[j];
-            } 
+            }
         });
 }
 

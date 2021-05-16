@@ -5,7 +5,7 @@
 #include <tbb/tbb.h>
 #include "./conjugate_gradient.h"
 
-using namespace tbb;
+
 
 TEST(Conj_Grad, test_1_Rand_Matrix_10x10_4_proc) {
     int S = 10;
