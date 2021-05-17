@@ -6,10 +6,10 @@
 
 #include <algorithm>
 #include <iostream>
+#include <limits>
 #include <random>
 #include <string>
 #include <vector>
-#include <limits>
 
 int const MAX = INT_MAX;
 std::vector<std::pair<int, int>> comps;
@@ -232,9 +232,8 @@ std::vector<double> radix_sort_batcher_omp(std::vector<double> vec,
                     vec.begin() + localSize * (tid + 1));
     localVec = radixSort(localVec);
     int u = 0;
-    for (int i =  localSize * tid;
-         i < localSize * (tid + 1); i++) {
-      vec[i] = localVec[u++];    
+    for (int i = localSize * tid; i < localSize * (tid + 1); i++) {
+      vec[i] = localVec[u++];
     }
     int countPair = static_cast<int>(comps.size());
     std::vector<double> localVec1(localSize);
@@ -287,20 +286,20 @@ std::vector<double> radix_sort_batcher_omp(std::vector<double> vec,
   return vec;
 }
 
-void time(std::vector<double> vec, int num_threads) { 
-    double startTimeParal;
-    double endTimeParal;
-    double startTimeSeq;
-    double endTimeSeq;
-    startTimeParal = omp_get_wtime();
-    radix_sort_batcher_omp(vec, num_threads);
-    endTimeParal = omp_get_wtime();
-    startTimeSeq = omp_get_wtime();
-    radixSort(vec);
-    endTimeSeq = omp_get_wtime();
-    double paralTime = endTimeParal - startTimeParal;
-    double seqTime = endTimeSeq - startTimeSeq;
-    std::cout << "time Paral = " << paralTime << std::endl;
-    std::cout << "time Seq = " << seqTime << std::endl;
-    std::cout << "time seq / time paral = " << seqTime / paralTime << std::endl;
+void time(std::vector<double> vec, int num_threads) {
+  double startTimeParal;
+  double endTimeParal;
+  double startTimeSeq;
+  double endTimeSeq;
+  startTimeParal = omp_get_wtime();
+  radix_sort_batcher_omp(vec, num_threads);
+  endTimeParal = omp_get_wtime();
+  startTimeSeq = omp_get_wtime();
+  radixSort(vec);
+  endTimeSeq = omp_get_wtime();
+  double paralTime = endTimeParal - startTimeParal;
+  double seqTime = endTimeSeq - startTimeSeq;
+  std::cout << "time Paral = " << paralTime << std::endl;
+  std::cout << "time Seq = " << seqTime << std::endl;
+  std::cout << "time seq / time paral = " << seqTime / paralTime << std::endl;
 }
