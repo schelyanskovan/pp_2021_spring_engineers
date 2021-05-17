@@ -209,8 +209,7 @@ void oddEvenMerge(std::vector<int> left, std::vector<int> right) {
   }
 }
 
-std::vector<double> radix_sort_batcher_omp(std::vector<double> vec,
-                                           int num_threads) {
+std::vector<double> radix_sort_batcher_omp(std::vector<double> vec, int num_threads) {
   int size = static_cast<int>(vec.size());
   if (num_threads == 1) {
     return radixSort(vec);
@@ -221,12 +220,11 @@ std::vector<double> radix_sort_batcher_omp(std::vector<double> vec,
     vec.push_back(MAX);
     addition++;
   }
-  int localSize = vec.size() / num_threads;
+  int localSize = static_cast<int>(vec.size()) / num_threads;
   std::vector<double> localVec(localSize);
   int currentPoint, pairPoint;
-#pragma omp parallel num_threads(num_threads) private( \
-    localVec, currentPoint, pairPoint) shared(localSize, vec)
-  {
+#pragma omp parallel num_threads(num_threads) private(localVec, currentPoint, pairPoint) shared(localSize, vec) 
+ {
     int tid = omp_get_thread_num();
     localVec.assign(vec.begin() + localSize * tid,
                     vec.begin() + localSize * (tid + 1));
