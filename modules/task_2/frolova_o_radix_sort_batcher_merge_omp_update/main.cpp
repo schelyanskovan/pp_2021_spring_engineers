@@ -5,7 +5,7 @@
 #include <iostream>
 #include <vector>
 
-#include "../../../modules/task_2/frolova_o_radix_sort_batcher_merge_omp/radix_sort_batcher_merge.h"
+#include "../../../modules/task_2/frolova_o_radix_sort_batcher_merge_omp_update/radix_sort_batcher_merge_update.h"
 
 TEST(getRandomVector, check_size) {
   std::vector<double> vect = getRandomVector(100);

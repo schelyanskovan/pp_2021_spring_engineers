@@ -1,5 +1,5 @@
 // Copyright 2021 Frolova Olga
-#include "../../../modules/task_2/frolova_o_radix_sort_batcher_merge_omp/radix_sort_batcher_merge.h"
+#include "../../../modules/task_2/frolova_o_radix_sort_batcher_merge_omp_update/radix_sort_batcher_merge_update.h"
 
 #include <math.h>
 #include <omp.h>
