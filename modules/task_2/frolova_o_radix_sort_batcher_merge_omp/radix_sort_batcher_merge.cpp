@@ -6,7 +6,7 @@
 
 #include <algorithm>
 #include <iostream>
-#include <limits>
+#include <climits>
 #include <random>
 #include <string>
 #include <vector>
@@ -210,7 +210,6 @@ void oddEvenMerge(std::vector<int> left, std::vector<int> right) {
 }
 
 std::vector<double> radix_sort_batcher_omp(std::vector<double> vec, int num_threads) {
-  int size = static_cast<int>(vec.size());
   if (num_threads == 1) {
     return radixSort(vec);
   }
