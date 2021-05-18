@@ -222,8 +222,8 @@ std::vector<double> radix_sort_batcher_omp(std::vector<double> vec, int num_thre
   int localSize = static_cast<int>(vec.size()) / num_threads;
   std::vector<double> localVec(localSize);
   int currentPoint, pairPoint;
-#pragma omp parallel num_threads(num_threads) private(localVec, currentPoint, pairPoint) shared(localSize, vec) 
- {
+#pragma omp parallel num_threads(num_threads) private(localVec, currentPoint, pairPoint) shared(localSize, vec)
+    {
     int tid = omp_get_thread_num();
     localVec.assign(vec.begin() + localSize * tid,
                     vec.begin() + localSize * (tid + 1));
