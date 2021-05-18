@@ -283,21 +283,3 @@ std::vector<double> radix_sort_batcher_omp(std::vector<double> vec, int num_thre
   comps.clear();
   return vec;
 }
-
-void time(std::vector<double> vec, int num_threads) {
-  double startTimeParal;
-  double endTimeParal;
-  double startTimeSeq;
-  double endTimeSeq;
-  startTimeParal = omp_get_wtime();
-  radix_sort_batcher_omp(vec, num_threads);
-  endTimeParal = omp_get_wtime();
-  startTimeSeq = omp_get_wtime();
-  radixSort(vec);
-  endTimeSeq = omp_get_wtime();
-  double paralTime = endTimeParal - startTimeParal;
-  double seqTime = endTimeSeq - startTimeSeq;
-  std::cout << "time Paral = " << paralTime << std::endl;
-  std::cout << "time Seq = " << seqTime << std::endl;
-  std::cout << "time seq / time paral = " << seqTime / paralTime << std::endl;
-}
