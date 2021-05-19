@@ -43,7 +43,7 @@ std::vector<double> transit_tbb(std::vector<double> inputNumbers, std::vector<do
 
     tbb::task_scheduler_init init(n);
     tbb::parallel_for(tbb::blocked_range<size_t>(0, size),
-        [size, &counters, pmem, add](const tbb::blocked_range<size_t> r) {
+        [&counters, pmem, add](const tbb::blocked_range<size_t> r) {
         size_t begin = r.begin(), end = r.end();
         for (size_t i = begin; i < end; i++) {
             counters[pmem[8 * i + add]]++;
