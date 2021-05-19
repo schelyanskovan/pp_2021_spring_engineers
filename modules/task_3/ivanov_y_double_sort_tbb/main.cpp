@@ -21,7 +21,7 @@ TEST(Local_compare, Test_works_sort_tbb) {
     // double end_time = omp_get_wtime();
     // std::cout << "Sort: " << end_time - start_time << std::endl;
     // start_time = omp_get_wtime();
-    vec1 = loc_sort_tbb(vec1, size, 4);
+    vec1 = loc_sort(vec1, size);
     // end_time = omp_get_wtime();
     // std::cout << "TBB:" << end_time - start_time << std::endl;
     ASSERT_EQ(vec, vec1);
