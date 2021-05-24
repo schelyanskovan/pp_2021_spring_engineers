@@ -2,15 +2,15 @@
 #include "../../../modules/task_3/frolova_o_radix_sort_batcher_merge_tbb/radix_sort_batcher_merge_tbb.h"
 
 #include <math.h>
+#include <tbb/blocked_range.h>
 #include <tbb/tbb.h>
 
-#include <utility>
-#include <tbb/blocked_range.h>
 #include <algorithm>
 #include <climits>
 #include <iostream>
 #include <random>
 #include <string>
+#include <utility>
 #include <vector>
 
 int const MAX = INT_MAX;
@@ -211,7 +211,8 @@ void oddEvenMerge(std::vector<int> left, std::vector<int> right) {
   }
 }
 
-std::vector<double> radix_sort_batcher_tbb(std::vector<double> vec, int num_threads) {
+std::vector<double> radix_sort_batcher_tbb(std::vector<double> vec,
+                                           int num_threads) {
   if (num_threads == 1) {
     return radixSort(vec);
   }
@@ -227,7 +228,7 @@ std::vector<double> radix_sort_batcher_tbb(std::vector<double> vec, int num_thre
   std::vector<double> localVec;
   for (int tId = 0; tId < num_threads; tId++) {
     localVec.insert(localVec.end(), vec.begin() + localSize * tId,
-               vec.begin() + localSize * (tId + 1));
+                    vec.begin() + localSize * (tId + 1));
     local_vecs.push_back(localVec);
     localVec.clear();
   }
@@ -241,7 +242,7 @@ std::vector<double> radix_sort_batcher_tbb(std::vector<double> vec, int num_thre
       },
       tbb::simple_partitioner());
   int p = 0;
-  int countLocals = static_cast<int> (local_vecs.size());
+  int countLocals = static_cast<int>(local_vecs.size());
   for (int i = 0; i < countLocals; i++) {
     for (int j = 0; j < localSize; j++) vec[p++] = local_vecs[i][j];
   }
@@ -288,4 +289,3 @@ std::vector<double> radix_sort_batcher_tbb(std::vector<double> vec, int num_thre
   comps.clear();
   return vec;
 }
-
