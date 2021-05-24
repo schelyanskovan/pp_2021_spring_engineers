@@ -4,6 +4,8 @@
 #include <math.h>
 #include <tbb/tbb.h>
 
+#include <utility>
+#include <tbb/blocked_range.h>
 #include <algorithm>
 #include <climits>
 #include <iostream>
