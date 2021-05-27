@@ -333,6 +333,7 @@ TEST(Comparing_random_img, middle_image_3) {
     Create_Custom_Test(1000, 1000);
 }
 
+/*
 TEST(Comparing_random_img, big_image) {
     Create_Custom_Test(2000, 2000);
 }
@@ -344,7 +345,7 @@ TEST(Comparing_random_img, big_image_2) {
 TEST(Comparing_random_img, big_image_3) {
     Create_Custom_Test(5000, 5000);
 }
-
+*/
 
 int main() {
     testing::InitGoogleTest();
