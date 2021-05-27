@@ -4,7 +4,6 @@
 #include <cmath>
 #include <algorithm>
 #include <vector>
-#include <thread>
 
 void SobelOperator_parallel(unsigned char* image, int height, int weight) {
     std::vector<u_char> ans(height * weight);
