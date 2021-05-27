@@ -8,7 +8,7 @@
 #include "./hoare_batcher_tbb.h"
 
 TEST(GetRandomVector, get_vector) {
-    ASSERT_NO_THROW(GetRandomVector(100));
+    ASSERT_NO_THROW(GetRandomVector(110));
 }
 
 TEST(GetRandomVector, vector_have_correct_size) {
