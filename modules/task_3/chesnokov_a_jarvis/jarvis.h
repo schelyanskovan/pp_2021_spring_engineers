@@ -65,7 +65,7 @@ class Point {
 class Jarvis {
  public:
   // Computes the convex hull of a given set of points (in).
-  // degenerate case 1: from set of identical points, only one arbitrary is taken;
+  // degenerate case 1: from set of identical points, only 1 arbitrary is taken;
   // degenerate case 2: from colinear vertices of CH only extreme pts are taken;
   // degenerate case 3: CH of set of 1 or 2 pts is this set itself;
   static std::vector<Point> makeHull(const std::list<Point>& in);
