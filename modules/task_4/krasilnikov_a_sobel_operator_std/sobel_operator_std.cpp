@@ -4,14 +4,15 @@
 #include <cmath>
 #include <algorithm>
 #include <vector>
+#include <thread>
 
 void SobelOperator_parallel(unsigned char* image, int height, int weight) {
-    std::vector<uchar> ans(height * weight);
+    std::vector<u_char> ans(height * weight);
     std::vector<std::thread> threads;
     for (int q = 1; q < 5; ++q) {
         threads.emplace_back([&, q](){
             for (int i = q; i < height - 1; i += 4) {
-                for (std::size_t j = 1; j < weight - 1; ++j) {
+                for (int j = 1; j < weight - 1; ++j) {
                     auto Gy = image[(i + 1) * weight + (j - 1)] -
                               image[(i - 1) * weight + (j - 1)] +
                               2 * image[(i + 1) * weight + (j)] -
