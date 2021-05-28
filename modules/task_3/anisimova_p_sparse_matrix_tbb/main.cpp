@@ -93,8 +93,8 @@ TEST(SparseMatrixTest, MatrixRandomMultParallel1) {
 }
 
 TEST(SparseMatrixTest, MatrixRandomMultParallel2) {
-  SparseMatrix A = SparseMatrix(3000, 100);
-  SparseMatrix B = SparseMatrix(3000, 100);
+  SparseMatrix A = SparseMatrix(3000, 1001);
+  SparseMatrix B = SparseMatrix(3000, 1001);
 
   auto t1 = tbb::tick_count::now();
   SparseMatrix C1 = A * B;
