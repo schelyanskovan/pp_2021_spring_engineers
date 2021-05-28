@@ -7,7 +7,7 @@
 #include "../../3rdparty/unapproved/unapproved.h"
 
 void SobelOperator_parallel(unsigned char* image, int height, int weight) {
-    std::vector<u_char> ans(height * weight);
+    std::vector<unsigned char> ans(height * weight);
     std::vector<std::thread> threads;
     for (int q = 1; q < 5; ++q) {
         threads.emplace_back([&, q](){
@@ -25,8 +25,14 @@ void SobelOperator_parallel(unsigned char* image, int height, int weight) {
                               2 * image[(i) * weight + (j - 1)] +
                               image[(i - 1) * weight + (j + 1)] -
                               image[(i + 1) * weight + (j - 1)];
-                    auto pixel = round(
-                            std::max(0., std::min(255., sqrt(Gy * Gy + Gx * Gx))));
+                    auto pp = sqrt(Gy * Gy + Gx * Gx);
+                    if (pp > 255) {
+                        pp = 255;
+                    }
+                    if (pp < 0) {
+                        pp = 0;
+                    }
+                    auto pixel = round(pp);
                     ans[i * weight + j] = static_cast<unsigned char>(pixel);
                 }
             }
@@ -64,8 +70,14 @@ void SobelOperator(unsigned char* image, int height, int weight) {
                       2 * image[(i) * weight + (j - 1)] +
                       image[(i - 1) * weight + (j + 1)] -
                       image[(i + 1) * weight + (j - 1)];
-            auto pixel = round(
-                    std::max(0., std::min(255., sqrt(Gy * Gy + Gx * Gx))));
+            auto pp = sqrt(Gy * Gy + Gx * Gx);
+                if (pp > 255) {
+                    pp = 255;
+                }
+                if (pp < 0) {
+                    pp = 0;
+                }
+                auto pixel = round(pp);
             ans[i * weight + j] = static_cast<unsigned char>(pixel);
         }
     }
