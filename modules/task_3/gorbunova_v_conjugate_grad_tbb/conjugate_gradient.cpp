@@ -8,7 +8,6 @@
 #include "../../../modules/task_3/gorbunova_v_conjugate_grad_tbb/conjugate_gradient.h"
 
 
-
 void Random_Matrix_A(int S, double** A) {
     for (int i = 0; i < S; i++) {
         for (int j = 0; j < S; j++) {
