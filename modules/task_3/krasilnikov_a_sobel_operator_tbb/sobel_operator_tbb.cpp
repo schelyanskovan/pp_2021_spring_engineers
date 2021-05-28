@@ -25,11 +25,11 @@ void SobelOperator_parallel(unsigned char* image, int height, int weight) {
                       image[(i - 1) * weight + (j + 1)] -
                       image[(i + 1) * weight + (j - 1)];
             auto pp = sqrt(Gy * Gy + Gx * Gx);
-            if (pp > 255) {
-                pp = 255;
-            }
             if (pp < 0) {
                 pp = 0;
+            }
+            if (pp > 255) {
+                pp = 255;
             }
             auto pixel = round(pp);
             ans[i * weight + j] = static_cast<unsigned char>(pixel);
@@ -60,11 +60,11 @@ void SobelOperator(unsigned char* image, int height, int weight) {
                       image[(i - 1) * weight + (j + 1)] -
                       image[(i + 1) * weight + (j - 1)];
             auto pp = sqrt(Gy * Gy + Gx * Gx);
-            if (pp > 255) {
-                pp = 255;
-            }
             if (pp < 0) {
                 pp = 0;
+            }
+            if (pp > 255) {
+                pp = 255;
             }
             auto pixel = round(pp);
             ans[i * weight + j] = static_cast<unsigned char>(pixel);
