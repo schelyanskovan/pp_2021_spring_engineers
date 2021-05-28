@@ -9,7 +9,7 @@
 
 using std::vector;
 
-TEST(Local_compare, Test_works_sort_tbb) {
+TEST(Local_compare, Test_works_sort_tbb1) {
     const int size = 1000;
     std::vector<double> vec(size);
     std::vector<double> vec1(size);
