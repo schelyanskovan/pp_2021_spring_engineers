@@ -3,7 +3,6 @@
 
 #include <tbb/tbb.h>
 #include <cmath>
-#include <algorithm>
 #include <vector>
 
 void SobelOperator_parallel(unsigned char* image, int height, int weight) {
@@ -25,8 +24,14 @@ void SobelOperator_parallel(unsigned char* image, int height, int weight) {
                       2 * image[(i) * weight + (j - 1)] +
                       image[(i - 1) * weight + (j + 1)] -
                       image[(i + 1) * weight + (j - 1)];
-            auto pixel = round(
-                    std::max(0., std::min(255., sqrt(Gy * Gy + Gx * Gx))));
+            auto pp = sqrt(Gy * Gy + Gx * Gx);
+            if (pp > 255) {
+                pp = 255;
+            }
+            if (pp < 0) {
+                pp = 0;
+            }
+            auto pixel = round(pp);
             ans[i * weight + j] = static_cast<unsigned char>(pixel);
         }
     }});
@@ -54,8 +59,14 @@ void SobelOperator(unsigned char* image, int height, int weight) {
                       2 * image[(i) * weight + (j - 1)] +
                       image[(i - 1) * weight + (j + 1)] -
                       image[(i + 1) * weight + (j - 1)];
-            auto pixel = round(
-                    std::max(0., std::min(255., sqrt(Gy * Gy + Gx * Gx))));
+            auto pp = sqrt(Gy * Gy + Gx * Gx);
+            if (pp > 255) {
+                pp = 255;
+            }
+            if (pp < 0) {
+                pp = 0;
+            }
+            auto pixel = round(pp);
             ans[i * weight + j] = static_cast<unsigned char>(pixel);
         }
     }
